@@ -1,9 +1,12 @@
 import axios from 'axios'
 
-export default ()=> {
+export default (config)=> {
   const instance = axios.create({
-    baseURL:"http://121.4.98.241:3000",
-    timeout:1000
+    // 线上地址
+    // baseURL:"http://121.4.98.241:3000",
+    baseURL:"http://localhost:3000",
+    timeout:10000,
+    withCredentials:true
   })
   // 请求拦截
   instance.interceptors.request.use(config=> {
@@ -20,5 +23,5 @@ export default ()=> {
   })
 
   // 返回实例
-  return instance
+  return instance(config)
 }

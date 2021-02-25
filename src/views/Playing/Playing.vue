@@ -1,12 +1,17 @@
 <template>
-  <div class='tab-bar'>
-    <slot></slot>
+  <div class=''>
+    playing page id:
+    {{$route.params.id}}
   </div>
 </template>
 
 <script>
+
 export default {
-  name:"TabBar",
+  name:"Playing",
+  components: {
+    
+  },
   data () {
     return {
       
@@ -22,4 +27,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  
 </style>

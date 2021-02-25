@@ -1,12 +1,16 @@
 <template>
-  <div class='tab-bar'>
-    <slot></slot>
+  <div class=''>
+    rank page
   </div>
 </template>
 
 <script>
+
 export default {
-  name:"TabBar",
+  name:"Rank",
+  components: {
+    
+  },
   data () {
     return {
       
@@ -22,4 +26,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  
 </style>
