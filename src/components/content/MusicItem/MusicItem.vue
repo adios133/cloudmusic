@@ -13,7 +13,7 @@
         <span v-for="(item, index) in songInfo.ar" :key="index">
             {{ item.name }}<span v-if="index < songInfo.ar.length - 1">/</span>
         </span>
-        <span v-if="songInfo.al.name != ''"> - {{songInfo.al.name}}</span>
+        <span v-if="songInfo.al.name "> - {{songInfo.al.name}}</span>
       </div>
     </div>
     <div class="more">

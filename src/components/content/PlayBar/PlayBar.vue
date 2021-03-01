@@ -119,12 +119,15 @@ export default {
         border: 6px solid #161616;
         border-radius: 15px;
         .playing {
-          animation: rotateCover 8s linear infinite;
+          // animation: rotateCover 8s linear infinite;
+          animation-play-state: running;
         }
         img {
           width: 100%;
           vertical-align: top;
           border-radius: 15px;
+          animation: rotateCover 8s linear infinite;
+          animation-play-state: paused;
         }
       }
       span {

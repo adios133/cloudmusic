@@ -38,14 +38,14 @@ export default {
     justify-content: space-evenly;
     text-align: center;
     .iconfont {
-      width: 50px;
-      height: 50px;
-      line-height: 50px;
+      width: 3.125rem;
+      height: 3.125rem;
+      line-height: 3.125rem;
       margin: 5px;
-      font-size: 26px;
+      font-size: 1.625rem;
       background-color: #EC4141;
       color: #fff;
-      border-radius: 25px;
+      border-radius: 1.5625rem;
     }
     i {
       font-style: normal;

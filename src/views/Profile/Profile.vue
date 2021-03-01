@@ -49,7 +49,7 @@ export default {
       vm.path = from.path
     })
   },
-  mounted() {
+  created() {
     // keepalive 只会调用一次
       if(this.$store.state.userId === '') {
         // this._getUserId() mixin ,返回 id

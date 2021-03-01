@@ -2,12 +2,12 @@
     <van-popup 
     v-model="show" 
     position="bottom" 
-    :style="{height:'70%',width:'100%'}" 
+    :style="{'height':'70%','width':'100%'}" 
     duration=".2" 
     @click-overlay="closeList" 
     class="play-list" closeable 
     @click-close-icon="closeList">
-      1111
+      播放列表
     </van-popup>
 </template>
 

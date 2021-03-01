@@ -12,14 +12,17 @@ export default (config)=> {
   instance.interceptors.request.use(config=> {
     return config
   },err=> {
-    console.log(err);
+    throw err
   })
 
   // 响应拦截
   instance.interceptors.response.use(response=> {
     return response.data
   },err=> {
-    console.log(err);
+    throw err
+    // if (instance.response.code === 301) {
+    //   return response.msg
+    // }
   })
 
   // 返回实例

@@ -1,7 +1,7 @@
 <template>
   <div class='recent-play'>
     <recent-nav @switchItem="switchItem" />
-    <scroll class="content" ref="">
+    <scroll class="content" ref="scroll">
       <music-item v-for="(item,index) in songList" :key="index"
       :songInfo="item.song"
       :isCount="true"
@@ -37,7 +37,8 @@ export default {
   },
   data() {
     return {
-      songList:[]
+      songList:[],
+      index:1
     }
   },
   methods: {
@@ -65,6 +66,7 @@ export default {
     _getRecent(uid,type) {
       getRecent(uid,type).then(res=>{
         Toast.clear()
+        this.$refs.scroll.scrollTo(0,0,300)
         if(type === 0) {
           this.songList = res.allData
         }else {
@@ -76,8 +78,10 @@ export default {
     switchItem(index) {
       Toast.loading('加载中...')
       if(index === 1) {
+        this.index = 0
         this._getRecent(this.$store.state.userId,0)
       }else {
+        this.index = 1
         this._getRecent(this.$store.state.userId)
       }
     }
@@ -85,7 +89,7 @@ export default {
   activated() {
     this._getUserId().then(res=> {
       Toast.loading('加载中...')
-      this._getRecent(res)
+      this._getRecent(res,this.index)
     }).catch(err=> {
       Toast.fail({
         message:err,
@@ -95,7 +99,7 @@ export default {
         }
       })
     })
-  }
+  },
   }
 </script>
 

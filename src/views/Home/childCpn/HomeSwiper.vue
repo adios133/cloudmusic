@@ -40,7 +40,7 @@ export default {
 <style lang="scss" scoped>
   .home-swiper {
     width: 100vw;
-    height: 9.375rem;
+    // height: 9.375rem;
     text-align: center;
     .my-swipe {
       overflow: hidden;

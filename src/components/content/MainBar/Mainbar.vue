@@ -44,11 +44,6 @@ export default {
     TabBar,
     TabBarItem,
   },
-  data() {
-    return {};
-  },
-  computed: {},
-  methods: {},
 };
 </script>
 
@@ -61,11 +56,13 @@ export default {
   left: 0;
   width: 100vw;
   height: 49px;
+  font-size: 0;
   box-shadow: 0 -1px 1px 1px #eee;
   background-color: #fff;
   .iconfont {
-    margin-top: 2px;
+    margin: 3px 0;
     font-size: 24px;
+    line-height: 24px;
   }
   i {
     font-style: normal;

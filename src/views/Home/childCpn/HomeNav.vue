@@ -43,6 +43,7 @@ export default {
 <style lang="scss" scoped>
   .home-nav {
     background-color: rgba(237, 238, 220,.2);
+    font-size: 16px;
     .search-box {
     width: 95%;
     height: 35px;

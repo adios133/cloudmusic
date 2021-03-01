@@ -42,10 +42,8 @@ export default {
 
 <style lang="scss" scoped>
   .home-song-rec {
-    height: 150px;
     .home-scroll {
       width: 100vw;
-      white-space: nowrap;
       .scroll-item {
       display: inline-block;
       margin: 4px 8px;

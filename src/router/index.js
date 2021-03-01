@@ -19,7 +19,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path:'',
-    redirect:'/home',
+    redirect:'/rank',
     meta: {
       showTab:true,
       showPlaybar:true

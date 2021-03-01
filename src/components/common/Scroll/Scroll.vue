@@ -1,6 +1,6 @@
 <template>
-  <div class='wrapper' ref="wrapper">
-    <div class="content" :style="modeX">
+  <div class='wrapper' ref="wrapper" :style="wrapperModeX">
+    <div class="content" :style="contentModeX">
       <slot></slot>
     </div>
   </div>
@@ -54,8 +54,11 @@ export default {
     };
   },
   computed: {
-    modeX() {
-      return this.scrollX ? {display:'inline-block'} : {}
+    contentModeX() {
+      return this.scrollX ? {'display':'inline-block'} : {}
+    },
+    wrapperModeX() {
+      return this.scrollX ? {'white-space':'nowrap'} : {}
     }
   },
   mounted() {
@@ -65,19 +68,19 @@ export default {
       observeDOM: true,
       observeImage: true,
       pullDownRefresh: this.pullDownRefresh,
-      pullUpLoad: this.pullUpLoad,
+      pullUpLoad: this.pullUpLoad ? {threshold:350} : false,
       probeType:this.probeType,
       scrollX:this.scrollX,
       scrollY:this.scrollY,
       momentum:this.momentum
     })
     // 当检测类型为 2 或者 3 时，监听滚动事件，向外发出自定义事件
-    if(this.probeType ===2 || this.probeType === 3) {
+    if(this.probeType === 2 || this.probeType === 3) {
       this.scroll.on("scroll",position=> {
         this.$emit("scrolling",position)
       })
     }
-    // 监听下来加载更多
+    // 监听上来加载更多
     if(this.pullUpLoad) {
       this.scroll.on('pullingUp',()=> {
         console.log('pullingup');

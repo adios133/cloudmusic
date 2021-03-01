@@ -58,6 +58,7 @@ export default {
   .my-favor {
     width: 90%;
     margin: 10px auto;
+    font-size: 16px;
     border-radius: 10px;
     background-color: #fff;
     .favor-item {
