@@ -82,7 +82,7 @@ export default {
     },
     // 在搜索界面和播放界面都存在,但不显示
     PlayPage() {
-      return this.$route.path.startsWith('/playing') || this.$route.path.startsWith('/search')
+      return this.$route.path.startsWith('/playing') || this.$route.path.startsWith('/search') || this.$route.path.startsWith('/fm')
     },
     isPlaying() {
       return this.$store.state.isplay

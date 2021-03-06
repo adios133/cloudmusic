@@ -1,29 +1,19 @@
 <template>
-  <div class='music-item' v-if="songInfo.name" @click="toPlay">
+  <div class='music-item' @click="toPlay">
     <div class="cover">
-      <img :src="songInfo.al.picUrl" alt="" v-if="isRecommend">
-      <span v-else>{{rank + 1}}</span>
+      <span>{{rank + 1}}</span>
     </div>
     <div class="song-info">
       <div class="song-name">
-        <span>{{songInfo.name}}</span>
-          <span v-if="songInfo.alia[0]" class="alia">({{songInfo.alia[0]}})</span> 
+        <span>{{songInfo.songName}}</span>
       </div>
       <div class="artists">
-        <span v-for="(item, index) in songInfo.ar" :key="index">
-            {{ item.name }}<span v-if="index < songInfo.ar.length - 1">/</span>
-        </span>
-          <span v-if="songInfo.al.name "> - {{songInfo.al.name}}</span>
+        <span>{{songInfo.artist}}</span>
+        <span v-if="songInfo.al"> - {{songInfo.al.name}}</span>
       </div>
     </div>
     <div class="more">
-      <span v-if="isCount" class="count" >
-        <i class="iconfont icon-24gl-play-copy"></i>
-        {{songInfo.playCount}}次
-      </span>
-      <span v-else class="not-count">
         <i class="iconfont icon-moreif"></i>
-      </span>
     </div>
   </div>
 </template>
@@ -33,19 +23,11 @@
 export default {
   name:"MusicItem",
   props:{
-    isRecommend:{
-      type:Boolean,
-      default:false
-    },
     songInfo:{
       type:Object,
       default() {
         return {}
       }
-    },
-    isCount:{
-      type:Boolean,
-      default:false
     },
     rank:{
       type:Number,
@@ -60,9 +42,9 @@ export default {
       // 向父组件发送事件,将列表保存在vuex中
       this.$emit("saveList")
       // 跳转到playing页面
-      this.$router.push('/playing/' + this.songInfo.id)
+      this.$router.push('/playing/' + this.songInfo.songId)
       // 向playbar发送事件(事件总线),获取播放url
-      this.$bus.$emit('playsong',this.songInfo.id)  
+      this.$bus.$emit('playsong',this.songInfo.songId)  
     }
   },
   }

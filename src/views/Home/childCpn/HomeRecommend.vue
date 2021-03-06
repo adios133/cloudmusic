@@ -15,7 +15,7 @@ export default {
     return {
       recommend:[
         {class:'icon-rili',name:'每日推荐',path:'/recommend'},
-        {class:'icon-diantai',name:'私人FM',path:'/playing'},
+        {class:'icon-diantai',name:'私人FM',path:'/fm'},
         {class:'icon-gedan',name:'歌单',path:'/songlist'},
         {class:'icon-paixing',name:'排行榜',path:'/rank'}
       ]

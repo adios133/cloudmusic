@@ -54,3 +54,13 @@ export function getDefault() {
     url:'/search/default'
   })
 }
+
+// 签到
+export function getSignIn(type=1) {
+  return request({
+    url:'/daily_signin',
+    params:{
+      type
+    }
+  })
+}

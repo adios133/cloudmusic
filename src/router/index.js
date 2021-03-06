@@ -12,6 +12,9 @@ const SongList = ()=> import('views/SongList/SongList')
 const Rank = ()=> import('views/Rank/Rank')
 const Recommend = ()=> import('views/Recommend/Recommend')
 const RecentPlay = ()=> import('views/RecentPlay/RecentPlay')
+const Fm = ()=> import('views/FM/Fm')
+const Cloud = ()=> import('views/Cloud/Cloud')
+
 
 
 Vue.use(VueRouter)
@@ -74,6 +77,14 @@ const routes = [
     }
   },
   {
+    path:'/fm',
+    component:Fm,
+    meta: {
+      showTab:false,
+      showPlaybar:true
+    }
+  },
+  {
     path:'/rank',
     component:Rank,
     meta: {
@@ -116,6 +127,14 @@ const routes = [
   {
     path:'/recent',
     component:RecentPlay,
+    meta:{
+      showTab:false,
+      showPlaybar:true
+    }
+  },
+  {
+    path:'/cloud',
+    component:Cloud,
     meta:{
       showTab:false,
       showPlaybar:true
