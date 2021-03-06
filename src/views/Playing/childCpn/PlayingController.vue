@@ -12,12 +12,10 @@
 import Vue from 'vue'
 import {Toast} from 'vant'
 Vue.use(Toast)
-
+import {randomFn} from 'common/mixin'
 export default {
   name:"PlayingController",
-  components: {
-    
-  },
+  mixins:[randomFn],
   data () {
     return {
       order:'list',
@@ -113,11 +111,7 @@ export default {
       this.$bus.$emit("showList")
     },
     // 随机播放获取随机数
-    getRandom(min, max) {
-      const mins = Math.floor(min);
-      const maxs = Math.ceil(max);
-      return Math.floor(Math.random() * (maxs - mins)) + mins;
-    }
+    
   },
   created() {
     

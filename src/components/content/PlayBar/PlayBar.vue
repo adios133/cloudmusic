@@ -47,9 +47,12 @@ import {Circle} from 'vant'
 Vue.use(Circle)
 
 import {getMusicUrl} from 'network/playbar'
+import {randomFn} from 'common/mixin'
+
 
 export default {
   name:"PlayBar",
+  mixins:[randomFn],
   // to be modify
   props: {
     playState:{

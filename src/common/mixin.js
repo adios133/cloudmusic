@@ -71,4 +71,14 @@ export const fixedNum = {
   }
 }
 
+export const randomFn = {
+  methods: {
+    getRandom(min, max) {
+      const mins = Math.floor(min);
+      const maxs = Math.ceil(max);
+      return Math.floor(Math.random() * (maxs - mins)) + mins;
+    }
+  },
+}
+
 
