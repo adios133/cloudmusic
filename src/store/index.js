@@ -6,7 +6,11 @@ import getters from './getters'
 
 Vue.use(Vuex)
 const state = {
-  userId:''
+  userId:'',
+  playlist:null,
+  playing:null,
+  isplay:false,
+  playorder:'list'
 }
 
 export default new Vuex.Store({

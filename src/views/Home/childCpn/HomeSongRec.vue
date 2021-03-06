@@ -2,7 +2,7 @@
   <div class='home-song-rec' v-if="recommendList[0]">
     <scroll :scrollX="true" class="home-scroll" >
       <div class="scroll-item" v-for="item in recommendList" :key="item.id" @click="songClick(item.id)">
-        <list-item  :imgSrc="item.picUrl" :desc="item.name" />
+        <list-item  :imgSrc="item.picUrl" :desc="item.name" :playCount="item.playCount" />
       </div>
     </scroll>
   </div>

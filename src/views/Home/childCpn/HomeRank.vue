@@ -1,10 +1,10 @@
 <template>
   <div class="home-rank">
     <van-swipe class="rank-scroll" :show-indicators="false" :stop-propagation="false">
-      <van-swipe-item v-for="item in rankIdList" :key="item.id">
+      <van-swipe-item v-for="(item,index) in rankIdList" :key="item.id" class="van-item">
         <div class="rank-item">
           <h4 class="title" @click="toListDetail(item.id)">{{ item.title }}</h4>
-        <div class="list" v-for="(song, indey) in item.songList" :key="indey" @click="toPlaying(song.id)">
+        <div class="list" v-for="(song, indey) in item.songList" :key="indey" @click="toPlaying(song.id,index)">
           <img :src="song.al.picUrl" alt="" />
           <div class="rank">{{ indey + 1 }}</div>
           <div class="song-info">
@@ -49,12 +49,14 @@ export default {
     toListDetail(id) {
       // 会打印两次
       // console.log(id);
-      this.$router.push("/listdetail/" + id).catch(e=>e);
+      this.$router.push("/listdetail/" + id);
     },
     // 跳转到播放页面，传递id
-    toPlaying(id) {
-      // console.log(id);
-      this.$router.push("/playing/" + id).catch(e=>e);
+    toPlaying(id,index) {
+      this.$store.commit('setPlaylist',this.rankIdList[index].songList)
+      this.$router.push("/playing/" + id);
+      this.$bus.$emit('playsong',id)
+      // this.$store.commit('setState',true)
     },
   },
 };
@@ -65,7 +67,7 @@ export default {
   width: 100vw;
   height: 255px;
   .rank-scroll {
-    width: 100%; 
+    width: 100%;
     .rank-item {
       width: 90%;
       margin: 0 auto;

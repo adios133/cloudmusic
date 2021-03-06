@@ -12,7 +12,10 @@ export class ListInfo {
   constructor(playlist) {
     this.coverUrl = playlist.coverImgUrl;
     this.name = playlist.name;
-    this.id = playlist.id
+    this.id = playlist.id;
+    this.shareCount = playlist.shareCount;
+    this.commentCount = playlist.commentCount;
+    this.subscribedCount = playlist.subscribedCount;
   }
 }
 export class CreatorInfo {

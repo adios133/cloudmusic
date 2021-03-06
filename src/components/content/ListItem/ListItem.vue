@@ -3,13 +3,15 @@
     <img src="~assets/img/default/default.jpg" alt="" v-if="imgSrc === ''">
     <img :src="imgSrc" alt="" v-else>
     <div class="desc">{{desc}}</div>
+    <div class="count"><span class="iconfont icon-24gl-play-copy"></span>{{playCount | count}}</div>
   </div>
 </template>
 
 <script>
-
+import {fixedNum} from 'common/mixin'
 export default {
   name:"ListItem",
+  mixins:[fixedNum],
   props:{
     imgSrc:{
       type:String,
@@ -18,19 +20,18 @@ export default {
     desc:{
       type:String,
       default:'歌单'
+    },
+    playCount:{
+      type:Number,
+      default:0
     }
   },
-  computed: {
-    
-  },
-  methods: {
-    
-  },
-  }
+}
 </script>
 
 <style lang="scss" scoped>
   .list-item {
+    position: relative;
     width: 6.25rem;
     img {
       width: 6.25rem;
@@ -50,6 +51,15 @@ export default {
       line-height: 1.2;
       word-break:break-all;  
       // 英文单词过长，空间利用率不高，不美观
+    }
+    .count {
+      position: absolute;
+      top:0;
+      right: 7px;
+      font-size: 12px;
+      color: #fff;
+      background-color: rgba($color: #000000, $alpha: .1);
+      border-radius: 6px;
     }
   }
 </style>

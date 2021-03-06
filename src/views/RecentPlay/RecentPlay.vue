@@ -3,10 +3,10 @@
     <recent-nav @switchItem="switchItem" />
     <scroll class="content" ref="scroll">
       <music-item v-for="(item,index) in songList" :key="index"
-      :songInfo="item.song"
+      :songInfo="item"
       :isCount="true"
-      :playCount="item.playCount"
       :rank="index"
+      @saveList="saveList"
       />
     </scroll>
   </div>
@@ -17,8 +17,6 @@ import RecentNav from './childCpn/RecentNav'
 import MusicItem from 'components/content/MusicItem/MusicItem'
 import Scroll from 'components/common/Scroll/Scroll'
 import {getRecent} from 'network/recent'
-
-// import {getUserId} from 'network/common'
 
 import {getUserID} from 'common/mixin'
 
@@ -68,9 +66,22 @@ export default {
         Toast.clear()
         this.$refs.scroll.scrollTo(0,0,300)
         if(type === 0) {
-          this.songList = res.allData
+          // playcount在外,组织进入song中,做到与其他页面统一
+          const temp = []
+          res.allData.map(item => {
+            item.song.playCount = item.playCount;
+            item.song.score = item.score;
+            temp.push(item.song)
+          })
+          this.songList = temp
         }else {
-          this.songList = res.weekData
+          const temp = []
+          res.weekData.map(item => {
+            item.song.playCount = item.playCount;
+            item.song.score = item.score;
+            temp.push(item.song)
+          })
+          this.songList = temp
         }
       })
     },
@@ -84,6 +95,9 @@ export default {
         this.index = 1
         this._getRecent(this.$store.state.userId)
       }
+    },
+    saveList() {
+      this.$store.commit('setPlaylist',this.songList)
     }
   },
   activated() {

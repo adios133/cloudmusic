@@ -1,6 +1,6 @@
 <template>
   <div id='home'>
-    <home-nav @showSlide="showSlide" />
+    <home-nav @showSlide="showSlide" :keyword="keyword" />
     <home-slide :isShow="show" @closeSlide="closeSlide" />
     <scroll class="home-scroller">
       <home-swiper :bannerList="bannerList" />
@@ -23,7 +23,7 @@ import HomeSongRec from './childCpn/HomeSongRec'
 import Scroll from 'components/common/Scroll/Scroll'
 import HomeRank from './childCpn/HomeRank'
 
-import {getSwiper,getRecommend,getRankList,getListDetail,homeRank} from 'network/home'
+import {getSwiper,getRecommend,getRankList,getListDetail,homeRank,getDefault} from 'network/home'
 
 
 export default {
@@ -43,7 +43,8 @@ export default {
       show:false,
       bannerList:[],
       recommendList:[],
-      rankIdList:[]
+      rankIdList:[],
+      keyword:''
     };
   },
   computed: {
@@ -81,6 +82,11 @@ export default {
         const item = new homeRank(res.playlist,songList)
         this.rankIdList.push(item)
       })
+    },
+    _getDefault() {
+      getDefault().then( res=> {
+        this.keyword = res.data.showKeyword
+      })
     }
   },
   created() {
@@ -90,6 +96,7 @@ export default {
     this._getRecommend()
     // 获取排行榜id
     this._getRankListId()
+    this._getDefault()
 
   }
   }

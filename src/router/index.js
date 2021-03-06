@@ -19,7 +19,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path:'',
-    redirect:'/rank',
+    redirect:'/home',
     meta: {
       showTab:true,
       showPlaybar:true
@@ -70,7 +70,7 @@ const routes = [
     component:Playing,
     meta: {
       showTab:false,
-      showPlaybar:false
+      showPlaybar:true
     }
   },
   {
@@ -94,7 +94,7 @@ const routes = [
     component:Search,
     meta: {
       showTab:false,
-      showPlaybar:false
+      showPlaybar:true
     }
   },
   {

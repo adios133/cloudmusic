@@ -6,7 +6,7 @@
         <img src="~assets/img/default/arc1.png" alt="" class="arc">
         <recommend-play-all />
         <div class="list" v-for="(item,index) in recList" :key="index">
-          <music-item :isRecommend="true" :songInfo="item"/>
+          <music-item :isRecommend="true" :songInfo="item" :rank="index" @saveList="saveList" />
         </div>
       </div>
     </scroll>
@@ -54,6 +54,9 @@ export default {
           }
         })
       })
+    },
+    saveList() {
+      this.$store.commit('setPlaylist',this.recList)
     }
   },
   created() {

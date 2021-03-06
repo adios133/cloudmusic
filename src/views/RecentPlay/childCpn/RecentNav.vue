@@ -44,6 +44,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.recent-nav {
+  font-size: 16px;
   .bar-item {
     display: flex;
     justify-content: space-evenly;
@@ -55,4 +57,6 @@ export default {
       border-bottom: 2px solid #D43C33;
     }
   }
+}
+  
 </style>

@@ -38,6 +38,7 @@ export default {
     height: 40px;
     line-height: 40px;
     font-weight: 700;
+    font-size: 16px;
     border-bottom: 1px solid #eee;
     span {
       color: #d43c33;

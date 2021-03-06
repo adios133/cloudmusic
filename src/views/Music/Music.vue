@@ -65,7 +65,7 @@ export default {
     },
     scrolling(position) {
       // console.log(position);
-      if(-position.y >= 0 && -position.y < this.$refs.subscribled.offsetTop) {
+      if(-position.y < this.$refs.subscribled.offsetTop) {
         this.$refs.musicNav.currentIndex = 0
       }else {
         this.$refs.musicNav.currentIndex = 1

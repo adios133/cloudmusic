@@ -19,7 +19,7 @@
     <div class="more">
       <span v-if="isCount" class="count" >
         <i class="iconfont icon-24gl-play-copy"></i>
-        {{playCount}}次
+        {{songInfo.playCount}}次
       </span>
       <span v-else class="not-count">
         <i class="iconfont icon-moreif"></i>
@@ -43,10 +43,6 @@ export default {
         return {}
       }
     },
-    playCount:{
-      type:Number,
-      default:0
-    },
     isCount:{
       type:Boolean,
       default:false
@@ -54,14 +50,19 @@ export default {
     rank:{
       type:Number,
       default:0
-    }
+    },
   },
   computed: {
     
   },
   methods: {
     toPlay() {
+      // 向父组件发送事件,将列表保存在vuex中
+      this.$emit("saveList")
+      // 跳转到playing页面
       this.$router.push('/playing/' + this.songInfo.id)
+      // 向playbar发送事件(事件总线),获取播放url
+      this.$bus.$emit('playsong',this.songInfo.id)  
     }
   },
   }
@@ -85,6 +86,9 @@ export default {
         height: 48px;
         vertical-align: middle;
         border-radius: 10px;
+      }
+      span {
+        font-size: 16px;
       }
     }
     .song-info {

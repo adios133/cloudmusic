@@ -1,9 +1,11 @@
 import request from './request'
-export function getMusicUrl(id) {
+
+// 获取歌曲信息
+export function getMusicInfo(ids) {
   return request({
-    url:'/song/url',
+    url:'/song/detail',
     params:{
-      id
+      ids
     }
   })
 }

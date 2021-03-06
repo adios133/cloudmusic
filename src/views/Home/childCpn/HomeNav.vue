@@ -7,7 +7,7 @@
       <div class="search" @click="searchClick">
         <div class="search-box">
           <span class="iconfont icon-iconfontzhizuobiaozhun22"></span>
-          <span> content</span>
+          <span class="keyword">{{keyword}}</span>
         </div>
       </div>
     </template>
@@ -21,10 +21,8 @@ export default {
   components: {
     NavBar,
   },
-  data () {
-    return {
-      
-    };
+  props: {
+    keyword:String
   },
   computed: {
     
@@ -45,15 +43,22 @@ export default {
     background-color: rgba(237, 238, 220,.2);
     font-size: 16px;
     .search-box {
-    width: 95%;
-    height: 35px;
-    line-height: 35px;
-    margin: 4.5px auto;
-    text-align: center;
-    color: #ccc;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    border-radius: 18px;
+      width: 95%;
+      height: 35px;
+      line-height: 35px;
+      margin: 4.5px auto;
+      text-align: center;
+      color: #ccc;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      border-radius: 18px;
+      .keyword {
+        // width: 70%;
+        // overflow: hidden;
+        // text-overflow: ellipsis;
+        // white-space: nowrap;
+        font-size: 14px;
+      }
   }
   }
 </style>

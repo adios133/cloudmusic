@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <keep-alive>
+    <keep-alive exclude="Search,Playing">
       <router-view/>
     </keep-alive>
-  <play-bar v-if="this.$route.meta.showPlaybar" @showList="showList" :atBottom="!this.$route.meta.showTab" />
+  <play-bar v-if="this.$route.meta.showPlaybar" :atBottom="!this.$route.meta.showTab" />
   <main-bar v-if="this.$route.meta.showTab" />
   <play-list :isShow="show" @closeList="closeList" />
   </div>
@@ -25,17 +25,19 @@ export default {
     }
   },
   methods: {
-    showList() {
-      this.show = true
-    },
     closeList() {
       this.show = false
     }
+  },
+  beforeUpdate() {
+    this.$bus.$on('showList',()=> {
+      this.show = true
+    })
   }
 }
 </script>
 
 <style lang="scss">
 @import url(~assets/css/base.css);
-@import url(//at.alicdn.com/t/font_2360697_9fecoyi5lo.css);
+@import url(//at.alicdn.com/t/font_2360697_oh3s4906279.css);
 </style>

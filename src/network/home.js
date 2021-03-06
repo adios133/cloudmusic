@@ -39,10 +39,18 @@ export function getListDetail(id) {
   })
 }
 
+// 数据整合
 export class homeRank {
   constructor(playlist,tracks) {
     this.title = playlist.name;
     this.id = playlist.id;
     this.songList = tracks
   }
+}
+
+// 搜索默认关键字
+export function getDefault() {
+  return request({
+    url:'/search/default'
+  })
 }

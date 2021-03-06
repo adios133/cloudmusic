@@ -1,19 +1,41 @@
 <template>
-  <div class='play-bar' :class="{'at-bottom':atBottom}">
-    <div class="music-info left" @click="toPlaying">
+  <div class='play-bar' :class="{'at-bottom':atBottom}" v-show="!PlayPage">
+    <div class="music-info left" @click="toPlaying" v-if="this.$store.state.playing">
+      <div class="song-cover" >
+        <!-- to be modify -->
+        <img :src="this.$store.state.playing.al.picUrl" alt="" :class="{playing:isPlaying}">
+      </div>
+      <div class="info">
+        <span class="song-name">{{this.$store.state.playing.name}}</span>
+        <span class="singer"> - {{this.$store.state.playing.ar[0].name}}</span>
+      </div>
+      
+    </div>
+    <div class="music-info left" @click="toPlaying" v-else>
       <div class="song-cover">
         <!-- to be modify -->
-        <img src="~assets/img/test/test.jpg" alt="" :class="{playing:isPlaying}">
+        <img src="~assets/img/default/default.jpg" alt="" :class="{playing:isPlaying}">
       </div>
-      <span class="song-name">歌曲名称 - </span>
-      <span class="singer">歌手</span>
+      <div class="info">
+        <span class="song-name">暂无播放</span>
+        <span class="singer"></span>
+      </div>
     </div>
     <div class="music-controll right">
       <!-- to be modify -->
-      <van-circle layer-color="#E4E4E4" color="#5A5A5A" :stroke-width="30" size="24px" v-model="currentRate" :rate="50" class="song-rate"  />
+      <van-circle layer-color="#E4E4E4" color="#D43C33" :stroke-width="30" size="24px" v-model="currentRate" :rate="rate" class="song-rate"  />
       <!-- to be modify -->
       <span class="iconfont  play" :class="iconDisplay" @click="playSong"></span>
       <span class="iconfont icon-24gl-playlist" @click="showList"></span>
+      <audio 
+      :src="musicUrl" 
+      autoplay 
+      @timeupdate="songPlaying"
+      @play="songPlay"
+      @pause="songPause" 
+      @ended="songEnd"
+      ref="audio"
+      ></audio>
     </div>
   </div>
 </template>
@@ -23,6 +45,8 @@
 import Vue from 'vue'
 import {Circle} from 'vant'
 Vue.use(Circle)
+
+import {getMusicUrl} from 'network/playbar'
 
 export default {
   name:"PlayBar",
@@ -41,29 +65,118 @@ export default {
     return {
       // to be modify
       currentRate:90,
-      isPlaying:this.playState
-
+      // isPlay:this.$store.state.isplay,
+      musicUrl:'',
+      id:'',
+      rate:0,
+      
     };
   },
   computed:{
     // 计算边播放按键
     iconDisplay() {
       return this.isPlaying ? 'icon-24gl-pause' :'icon-24gl-play'
+    },
+    // 在搜索界面和播放界面都存在,但不显示
+    PlayPage() {
+      return this.$route.path.startsWith('/playing') || this.$route.path.startsWith('/search')
+    },
+    isPlaying() {
+      return this.$store.state.isplay
+    },
+    audioContrl() {
+      this.isPlaying ? this.$refs.audio.pause() : this.$refs.audio.play()
     }
   },
   methods: {
     // 控制右边播放按键
     playSong() {
-      this.isPlaying = !this.isPlaying
+      this.$store.commit("setState",!this.isPlaying)
+      if (!this.isPlaying) {
+        this.$refs.audio.pause()
+      }else {
+        this.$refs.audio.play()
+      }
     },
-    // 跳转到播放页面
+    // 跳转到播放页面,但没有音乐播放时阻止跳转
     toPlaying() {
-      this.$router.push('/playing').catch(e=>e)
+      if (this.id) {
+        this.$router.push('/playing/'+ this.id)
+      }else {
+        return
+      }
     },
     // 弹出播放列表
     showList() {
-      this.$emit("showList")
+      this.$bus.$emit("showList")
+    },
+    // 当音乐播放时持续触发传递播放进度
+    songPlaying() {
+          this.$bus.$emit('playingsong',{
+          id:this.id,
+          duration:this.$refs.audio.duration,
+          currentTime:this.$refs.audio.currentTime
+          })
+          if (this.$refs.audio.currentTime !=0) {
+            this.rate = this.$refs.audio.currentTime / this.$refs.audio.duration *100
+          }  
+    },
+    // 控制播放状态,自动播放,播放时设置为true
+    songPlay() {
+      this.$store.commit('setState',true)
+    },
+    // 当音乐停止时设置为false
+    songPause() {
+      this.$store.commit('setState',false)
+    },
+    songEnd() {
+      // 顺序播放
+      if (this.$store.state.playorder === 'list') {
+        const id = this.$store.state.playing.id
+        let idx
+        this.$store.state.playlist.forEach((item,index) => {
+          if (item.id === id) return idx = index
+        })
+        if (idx === this.$store.state.playlist.length -1 ) idx = -1
+        this.$bus.$emit('nextSong',idx + 1)
+      }else if (this.$store.state.playorder === 'random') {
+        // 随机播放
+        let idx = this.getRandom(0,this.$store.state.playlist.length)
+        this.$bus.$emit('nextSong',idx)
+
+      }else {
+        // 单曲循环
+        this.$bus.$emit('oneSong')
+      }
+    },
+
+    // 获取音乐播放地址
+    _getMusicUrl(id) {
+      getMusicUrl(id).then(res => {
+        this.id = res.data[0].id
+        this.musicUrl = res.data[0].url
+      })
     }
+    
+  },
+  mounted() {
+    this.$bus.$on('playsong',id=> {
+      this._getMusicUrl(id)
+    })
+    this.$bus.$on('stateChange',data => {
+      if (data) {
+        this.$refs.audio.play()
+      }else {
+        this.$refs.audio.pause()
+      }
+    })
+    this.$bus.$on('nextSong',index => {
+      const id = this.$store.state.playlist[index].id
+      this._getMusicUrl(id)
+    })
+    this.$bus.$on('oneSong',()=> {
+      this.$refs.audio.currentTime = 0
+    })
   },
   }
 </script>
@@ -83,12 +196,14 @@ export default {
     .music-info {
       line-height: 49px;
       .song-cover {
+        overflow: hidden;
       top: 7px;
       width: 35px;
       height: 35px;
       border: 7px solid #161616;
       border-radius: 18px;
       img {
+        width: 100%;
       border-radius: 18px;
       }
     }
@@ -130,15 +245,23 @@ export default {
           animation-play-state: paused;
         }
       }
-      span {
-          margin-left: 5px;
-        }
+      .info {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 55vw;
+        margin-left: 10px;
+        // span {
+        //   margin-left: 5px;
+        // }
       .song-name {
         font-size: 16px;
+        color: #333;
       }
       .singer {
         color: #999;
-        font-size: 14px;
+        font-size: 12px;
+      }
       }
     }
     .music-controll {

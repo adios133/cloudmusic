@@ -37,6 +37,7 @@ export default {
     }
   } ,
   methods: {
+    // 每日日期
     getToday() {
       const now = new Date()
       const month = now.getMonth() + 1
@@ -44,6 +45,7 @@ export default {
       this.month = padLeftZero(month.toString())
       this.day = padLeftZero(day.toString())
     },
+    // back
     backClick() {
       this.$router.push('/home')
     }
@@ -55,6 +57,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@mixin trans-bg {
+  background-color: rgba(255,255,255,.3);
+  box-shadow: 0 0 10px 10px rgba(255,255,255,.3);
+}
   .recommend-cover {
     position: relative;
     overflow: hidden;
@@ -68,10 +74,14 @@ export default {
       position: absolute;
       left: 20px;
       font-weight: 600;
-      background-color: rgba(255,255,255,.5);
-      box-shadow: 0 0 10px 10px rgba(255,255,255,.5);
+      &::before {
+      @include trans-bg;
+      color: #333;
+      border-radius: 10px
+      }
     }
     .date {
+      @include trans-bg;
       position: absolute;
       left: 15px;
       bottom: 30px;
@@ -80,9 +90,7 @@ export default {
       line-height: 30px;
       color: #333;
       text-align: center;
-      background-color: rgba(255,255,255,.5);
-      border-radius: 10px;
-      box-shadow: 0 0 10px 10px rgba(255,255,255,.5);
+      border-radius: 15px;
       z-index: 0;
       .day {
         font-size: 24px;

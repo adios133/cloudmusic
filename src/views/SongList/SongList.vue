@@ -8,7 +8,8 @@
           :key="index" @click="goListDetail(item.id)">
           <list-item  
           :imgSrc="item.coverImgUrl" 
-          :desc="item.name" 
+          :desc="item.name"
+          :playCount="item.playCount" 
           class="songlist-item"
            />
         </div>

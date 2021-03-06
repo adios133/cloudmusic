@@ -1,53 +1,92 @@
 <template>
-  <div class=''>
-    <div class="back" @click="goBack">back</div>
-    playing page id:
-    {{$route.params.id}}
-    <audio :src="url" controls ref="audio"></audio>
+  <div class='playing' v-if="musicInfo">
+    <playing-bg :picUrl="musicInfo.al.picUrl" />
+    <div class="container">
+      <playing-nav :musicInfo="musicInfo" />
+      <playing-cover :picUrl="musicInfo.al.picUrl" />
+      <playing-progress-bar />
+      <playing-controller />
+    </div>
   </div>
 </template>
 
 <script>
-import {getMusicUrl} from 'network/playing'
+
+import PlayingBg from './childCpn/PlayingBg'
+import PlayingNav from './childCpn/PlayingNav'
+import PlayingCover from './childCpn/PlayingCover'
+import PlayingProgressBar from './childCpn/PlayingProgressBar'
+import PlayingController from './childCpn/PlayingController'
+
+import {getMusicInfo} from 'network/playing'
 export default {
   name:"Playing",
   components: {
-    
+    PlayingNav,
+    PlayingBg,
+    PlayingCover,
+    PlayingProgressBar,
+    PlayingController
   },
   data () {
     return {
-      url:''
+      musicInfo:null,
+      
     };
   },
-  computed: {
-    
+  // 由于search的页面的数据没有picUrl,重新获取
+  beforeRouteEnter (to, from, next) { 
+    next(vm => {
+      if (from.path === '/search') {
+        vm._getMusicInfo(vm.$route.params.id)
+      }
+    })
   },
-  methods: {
-    _getMusicUrl(id) {
-      getMusicUrl(id).then(res=> {
-        this.url = res.data[0].url  
-      }).then(res=> {
-        // 在回调中播放
-          this.$refs.audio.play()
+  methods:{
+    _getMusicInfo(id) {
+      getMusicInfo(id).then(res => {
+        this.musicInfo = res.songs[0]
+        this.$store.commit('setPlaylist',[this.musicInfo])
       })
-    },
-    goBack() {
-      this.$router.go(-1)
     }
   },
-  activated() {
-    this._getMusicUrl(this.$route.params.id)
+  
+  created() {
+    
+    if (!this.$store.state.playlist) {
+      this.$router.push('/home')
+      return
+    }
+    
+    this.musicInfo = this.$store.state.playlist.find(item => {
+      // params传过来的是string ==
+      return item.id == this.$route.params.id
+    });
+    this.$store.commit('setPlaying',this.musicInfo)
+    // fix
+    
+  },
+  mounted() {
+    this.$bus.$on('nextSong', index => {
+      this.musicInfo = this.$store.state.playlist[index]
+      this.$store.commit('setPlaying',this.musicInfo)
+    })
   }
-  }
+}
 </script>
 
 <style lang="scss" scoped>
-  .back {
-    width: 100px;
-    height: 100px;
-    color: #fff;
-    line-height: 100px;
-    text-align: center;
-    background-color: red;
+  .playing {
+    width: 100vw;
+    overflow: hidden;
+    .container {
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+    }
   }
+  
+
+  
 </style>
