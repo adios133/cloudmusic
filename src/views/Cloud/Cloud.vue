@@ -1,7 +1,7 @@
 <template>
   <div class='cloud'>
     <cloud-nav />
-    <scroll :pullUpLoad="true" @pullingUpLoad="pullingUpLoad" class="scroll" v-if="songList.length > 1">
+    <scroll :pullUpLoad="true" @pullingUpLoad="pullingUpLoad" class="scroll" v-if="songList.length > 1" ref="scroll">
       <cloud-item v-for="(item,index) in songList" :key="index" :rank="index" :songInfo="item" @saveList="saveList" />
     </scroll>
   </div>
@@ -22,7 +22,9 @@ export default {
   },
   data () {
     return {
-      songList:[]
+      songList:[],
+      limit:100,
+      offset:0
     };
   },
   computed: {
@@ -35,7 +37,9 @@ export default {
       })
     },
     pullingUpLoad() {
-      console.log(1);
+      this.offset+=this.limit
+      this._getCloudMusic(this.limit,this.offset)
+      this.$refs.scroll.scroll.finishPullUp();
     },
     saveList() {
       const list =[]
