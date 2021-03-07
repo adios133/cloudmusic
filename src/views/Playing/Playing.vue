@@ -50,21 +50,16 @@ export default {
       })
     }
   },
-  
   created() {
-    
     if (!this.$store.state.playlist) {
       this.$router.push('/home')
       return
     }
-    
     this.musicInfo = this.$store.state.playlist.find(item => {
       // params传过来的是string ==
       return item.id == this.$route.params.id
     });
-    this.$store.commit('setPlaying',this.musicInfo)
-    // fix
-    
+    this.$store.commit('setPlaying',this.musicInfo) 
   },
   mounted() {
     this.$bus.$on('nextSong', index => {

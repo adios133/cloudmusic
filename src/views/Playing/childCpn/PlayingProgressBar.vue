@@ -42,7 +42,6 @@ export default {
     this.$bus.$on('playingsong',data=> {
       if(data.currentTime !=0 ) {
         this.data = data
-        
       }
     })
   }

@@ -9,19 +9,11 @@
 
 export default {
   name:"ProfileBackground",
-  components: {
-    
-  },
   props: {
     picUrl:{
       type:String,
       default:''
     }
-  },
-  computed: {
-  },
-  methods: {
-    
   },
   }
 </script>

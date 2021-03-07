@@ -19,9 +19,6 @@
 
 export default {
   name:"ProfileUserCart",
-  components: {
-    
-  },
   props: {
     userInfo:{
       type:Object,
@@ -29,9 +26,6 @@ export default {
         return {}
       }
     }
-  },
-  computed: {
-    
   },
   methods: {
     logIn() {

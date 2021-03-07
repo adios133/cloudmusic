@@ -16,7 +16,6 @@ export default {
       word:''
     };
   },
-  computed: {},
   methods: {
     getKeyWord(e) {
       this.$emit('getContent',e.target.value)

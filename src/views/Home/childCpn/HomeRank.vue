@@ -48,7 +48,6 @@ export default {
     // 跳转到歌单详情页面，携带id
     toListDetail(id) {
       // 会打印两次
-      // console.log(id);
       this.$router.push("/listdetail/" + id);
     },
     // 跳转到播放页面，传递id
@@ -56,7 +55,6 @@ export default {
       this.$store.commit('setPlaylist',this.rankIdList[index].songList)
       this.$router.push("/playing/" + id);
       this.$bus.$emit('playsong',id)
-      // this.$store.commit('setState',true)
     },
   },
 };

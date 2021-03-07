@@ -36,7 +36,6 @@ export default {
       },
     },
   },
-  computed: {},
   methods: {
     goDetail(id) {
       this.$router.push("/listdetail/" + id);

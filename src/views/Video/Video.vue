@@ -40,9 +40,6 @@ export default {
       currentPlayId:''
     };
   },
-  computed: {
-
-  },
   methods: {
     _getViedoList(id,offset) {
       getViedoList(id,offset).then(res=> {
@@ -58,8 +55,6 @@ export default {
     _getVideoUrl(info) {
       getVideoUrl(info.id).then(res => {
         this.$refs.vItem[info.index].url= res.urls[0].url
-        // currentTime 可实现指定位置播放
-        // this.$refs.vItem[info.index].$el.children[0].children[0].currentTime = 20
       })
     },
     cateClick(id) {

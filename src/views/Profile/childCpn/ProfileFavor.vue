@@ -35,9 +35,6 @@ export default {
       this.itemList[1].path = '/listdetail/' + this.favorListId
     }
   },
-  computed: {
-    
-  },
   methods: {
     itemClick(index) {
       // 如果没有登陆，提示用户登录，停止向下执行,toast，自己封装 or 直接使用vant插件

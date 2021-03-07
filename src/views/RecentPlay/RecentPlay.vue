@@ -40,26 +40,6 @@ export default {
     }
   },
   methods: {
-    
-    // get userId mixins
-    // _getUserId() {
-    //   getUserId().then(res=> {
-    //     if(res.profile) {
-    //       Toast.loading('加载中...')
-    //       this.$store.commit("setUid",res.profile.userId)
-    //       this._getRecent(res.profile.userId)
-    //     }else {
-    //       Toast.fail({
-    //         message:'需要登陆',
-    //         duration:1500,
-    //         onClose:()=>{
-    //           this.$router.push('/login')
-    //         }
-    //       })
-    //     }
-    //   })
-    // },
-
     // get list based on userId
     _getRecent(uid,type) {
       getRecent(uid,type).then(res=>{

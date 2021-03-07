@@ -43,9 +43,11 @@ export default {
     nextSong() {
       this.$emit('nextFm')
     },
+    // 垃圾桶
     trashSong() {
       this.$emit('trashSong')
     },
+    // 喜欢
     likeSong() {
       this.$emit('likeSong')
     }

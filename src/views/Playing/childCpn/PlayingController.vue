@@ -109,13 +109,8 @@ export default {
     },
     showList() {
       this.$bus.$emit("showList")
-    },
-    // 随机播放获取随机数
-    
+    }, 
   },
-  created() {
-    
-  }
   }
 </script>
 

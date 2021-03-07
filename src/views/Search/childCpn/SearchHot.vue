@@ -16,14 +16,6 @@
 
 export default {
   name:"SearchHot",
-  components: {
-    
-  },
-  data () {
-    return {
-      
-    };
-  },
   props: {
     hotSearch: {
       type:Array,
@@ -31,9 +23,6 @@ export default {
         return []
       }
     }
-  },
-  methods: {
-    
   },
   }
 </script>

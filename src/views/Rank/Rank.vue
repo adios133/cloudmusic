@@ -59,7 +59,6 @@ export default {
         Toast.clear()
         console.log(res);
         this.rankList = res.list
-
       })
     },
     listClick(id) {

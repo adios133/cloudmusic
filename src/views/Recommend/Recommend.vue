@@ -36,16 +36,12 @@ export default {
       recList:[]
     };
   },
-  computed: {
-    
-  },
   methods: {
     _getRecommend() {
       getRecommend().then(res=> {
         Toast.clear()
         this.recList = res.data.dailySongs
       }).catch(err=> {
-        // console.dir(err.response.data);
         Toast.fail({
           message:err.response.data.msg,
           duration:1500,

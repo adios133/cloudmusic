@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     seeMore() {
-      this.$router.push(this.path).catch(e=>e)
+      this.$router.push(this.path)
     }
   }
   }

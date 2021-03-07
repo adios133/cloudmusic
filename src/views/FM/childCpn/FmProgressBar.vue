@@ -1,7 +1,7 @@
 <template>
   <div class='progress-bar'>
     <div class="current-time">{{data.currentTime | times}}</div>
-    <div class="bar">
+    <div class="bar" @click="seekTo" ref="bar">
       <div class="now" :style="{'width':data.currentTime / data.duration *100 + '%'}"></div>
       <div class="dot" :style="{'left':data.currentTime / data.duration *100 + '%'}"></div>
     </div>
@@ -32,13 +32,18 @@ export default {
     }
   },
   methods: {
-    
+    // 点击跳转到指定播放位置
+    seekTo(e) {
+      const x = e.pageX - this.$refs.bar.offsetLeft;
+      const percent = x / this.$refs.bar.offsetWidth
+      this.$bus.$emit('seekTo',percent)
+    }
   },
   mounted() {
+    // 监听音乐播放进度
     this.$bus.$on('playingsong',data=> {
       if(data.currentTime !=0 ) {
         this.data = data
-        
       }
     })
   }

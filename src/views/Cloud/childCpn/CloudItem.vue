@@ -34,9 +34,6 @@ export default {
       default:0
     },
   },
-  computed: {
-    
-  },
   methods: {
     toPlay() {
       // 向父组件发送事件,将列表保存在vuex中

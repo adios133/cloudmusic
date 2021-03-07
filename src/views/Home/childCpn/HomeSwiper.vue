@@ -23,24 +23,12 @@ export default {
       }
     }
   },
-  data () {
-    return {
-      
-    };
-  },
-  computed: {
-    
-  },
-  methods: {
-    
-  },
   }
 </script>
 
 <style lang="scss" scoped>
   .home-swiper {
     width: 100vw;
-    // height: 9.375rem;
     text-align: center;
     .my-swipe {
       overflow: hidden;
@@ -52,7 +40,6 @@ export default {
         width: 100%;
         border-radius: 20px;
       }
-    
     }
   }
 </style>

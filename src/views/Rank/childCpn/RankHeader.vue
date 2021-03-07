@@ -18,14 +18,6 @@ export default {
   components: {
     NavBar
   },
-  data () {
-    return {
-      
-    };
-  },
-  computed: {
-    
-  },
   methods: {
     goBack() {
       this.$router.go(-1)

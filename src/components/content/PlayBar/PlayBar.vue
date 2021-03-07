@@ -2,7 +2,6 @@
   <div class='play-bar' :class="{'at-bottom':atBottom}" v-show="!PlayPage">
     <div class="music-info left" @click="toPlaying" v-if="this.$store.state.playing">
       <div class="song-cover" >
-        <!-- to be modify -->
         <img :src="this.$store.state.playing.al.picUrl" alt="" :class="{playing:isPlaying}">
       </div>
       <div class="info">
@@ -13,7 +12,6 @@
     </div>
     <div class="music-info left" @click="toPlaying" v-else>
       <div class="song-cover">
-        <!-- to be modify -->
         <img src="~assets/img/default/default.jpg" alt="" :class="{playing:isPlaying}">
       </div>
       <div class="info">
@@ -22,9 +20,7 @@
       </div>
     </div>
     <div class="music-controll right">
-      <!-- to be modify -->
       <van-circle layer-color="#E4E4E4" color="#D43C33" :stroke-width="30" size="24px" v-model="currentRate" :rate="rate" class="song-rate"  />
-      <!-- to be modify -->
       <span class="iconfont  play" :class="iconDisplay" @click="playSong"></span>
       <span class="iconfont icon-24gl-playlist" @click="showList"></span>
       <audio 
@@ -53,7 +49,6 @@ import {randomFn} from 'common/mixin'
 export default {
   name:"PlayBar",
   mixins:[randomFn],
-  // to be modify
   props: {
     playState:{
       type:Boolean,
@@ -66,9 +61,7 @@ export default {
   },
   data () {
     return {
-      // to be modify
       currentRate:90,
-      // isPlay:this.$store.state.isplay,
       musicUrl:'',
       id:'',
       rate:0,
@@ -87,9 +80,6 @@ export default {
     isPlaying() {
       return this.$store.state.isplay
     },
-    audioContrl() {
-      this.isPlaying ? this.$refs.audio.pause() : this.$refs.audio.play()
-    }
   },
   methods: {
     // 由于移动端autoplay失效，监听当音乐可以播放时，播放

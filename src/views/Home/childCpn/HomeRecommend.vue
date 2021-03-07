@@ -21,12 +21,9 @@ export default {
       ]
     };
   },
-  computed: {
-    
-  },
   methods: {
     recClick(index) {
-      this.$router.push(this.recommend[index].path).catch(e=>e)
+      this.$router.push(this.recommend[index].path)
     }
   },
   }

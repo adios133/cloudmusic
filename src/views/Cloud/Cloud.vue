@@ -31,16 +31,19 @@ export default {
     
   },
   methods: {
+    // 获取音乐信息
     _getCloudMusic(limit,offset) {
       getCloudMusic(limit,offset).then(res => {
         this.songList.push(...res.data)
       })
     },
+    // 上拉加载更多
     pullingUpLoad() {
       this.offset+=this.limit
       this._getCloudMusic(this.limit,this.offset)
       this.$refs.scroll.scroll.finishPullUp();
     },
+    // 播放，保存播放列表
     saveList() {
       const list =[]
       this.songList.forEach(item => {

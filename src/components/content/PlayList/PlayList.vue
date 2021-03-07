@@ -44,6 +44,7 @@ export default {
     };
   },
   watch: {
+    // 点击显示popup
     isShow() {
       this.show = this.isShow
       this.list = this.$store.state.playlist
@@ -51,6 +52,7 @@ export default {
     }
   },
   computed: {
+    // 列表当前 播放项 idx
     playingSong() {
       const id = this.$store.state.playing.id
       let idx
@@ -61,6 +63,7 @@ export default {
     }
   },
   methods: {
+    // 关闭播放列表
    closeList() {
      this.$emit('closeList')
    },
@@ -68,6 +71,7 @@ export default {
    pageShow() {
      this.$refs.container.scroll(0,this.$refs.container.children[this.playingSong].offsetTop-50)
    },
+  //  播放列表点击项目 播放对应音乐
    goPlay(item,index) {
     this.$bus.$emit('playsong',item.id)
     this.$bus.$emit('nextSong',index)

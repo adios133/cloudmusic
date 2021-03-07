@@ -29,8 +29,6 @@ export default {
       currentIndex:0
     };
   },
-  computed: {
-  },
   methods: {
     switchItem(index) {
       this.currentIndex = index

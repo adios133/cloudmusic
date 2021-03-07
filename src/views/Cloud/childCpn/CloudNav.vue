@@ -18,15 +18,8 @@ export default {
   components: {
     NavBar
   },
-  data () {
-    return {
-      
-    };
-  },
-  computed: {
-    
-  },
   methods: {
+    // 返回
     goBack() {
       this.$router.push('/home')
     }

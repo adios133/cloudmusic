@@ -10,25 +10,11 @@
 
 export default {
   name:"ListDetailPLayAll",
-  components: {
-    
-  },
   props:{
     num:{
       type:Number,
       default:0
     }
-  },
-  data () {
-    return {
-      
-    };
-  },
-  computed: {
-    
-  },
-  methods: {
-    
   },
   }
 </script>

@@ -26,13 +26,8 @@ export default {
       }
     }
   },
-  data () {
-    return {
-      
-    };
-  },
-  
   methods: {
+    // 点击跳转到歌单详情
     songClick(id) {
       this.$router.push('/listdetail/'+ id)
     }

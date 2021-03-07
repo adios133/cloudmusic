@@ -94,12 +94,15 @@ export default {
     }
   },
   methods: {
+    // 封装滚动到指定位置函数
     scrollTo(x,y,time=500) {
       this.scroll && this.scroll.scrollTo(x,y,time)
     },
+    // 上拉加载更多，结束上拉
     finishPullUp() {
       this.scroll && this.sroll.finishPullUp()
     },
+    // 下拉加载更多，结束下拉
     finishPullDown() {
       this.scroll && this.scroll.finishPullDown()
     }

@@ -47,6 +47,7 @@ export default {
       topath:''
     };
   },
+  // 记录来时路由
   beforeRouteEnter (to, from, next) {
     next(vm=> {
       vm.topath = from.path
@@ -97,7 +98,6 @@ export default {
           }
       });
       }
-      
     },
   },
 };

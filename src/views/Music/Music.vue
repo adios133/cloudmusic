@@ -54,7 +54,6 @@ export default {
         })
       })
     },
-
     // 操作方法
     musicNavClick(index) {
       if (index === 0) {
@@ -64,7 +63,6 @@ export default {
       }
     },
     scrolling(position) {
-      // console.log(position);
       if(-position.y < this.$refs.subscribled.offsetTop) {
         this.$refs.musicNav.currentIndex = 0
       }else {

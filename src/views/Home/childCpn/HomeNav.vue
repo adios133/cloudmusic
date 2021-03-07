@@ -24,9 +24,6 @@ export default {
   props: {
     keyword:String
   },
-  computed: {
-    
-  },
   methods: {
     showSlide() {
       this.$emit('showSlide')

@@ -49,9 +49,6 @@ export default {
       tag:''
     };
   },
-  computed: {
-    
-  },
   methods: {
     // 获取分类列表
     _getListCategory() {

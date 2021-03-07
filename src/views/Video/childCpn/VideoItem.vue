@@ -48,7 +48,6 @@ export default {
   },
   methods: {
     coverClick(id) {
-      // this.isCover = false
       this.$emit('coverClick',{id,'index':this.videoInfo.index})
     }
   },

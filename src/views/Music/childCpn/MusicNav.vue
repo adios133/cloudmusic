@@ -17,7 +17,6 @@ export default {
   name:"MusicNav",
   components: {
     NavBar
-    
   },
   data () {
     return {
@@ -25,7 +24,6 @@ export default {
       currentIndex:0
     };
   },
-  
   methods: {
     itemClick(index) {
       this.currentIndex = index
