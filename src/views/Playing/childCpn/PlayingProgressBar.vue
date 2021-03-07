@@ -33,9 +33,9 @@ export default {
   },
   methods: {
     seekTo(e) {
-      console.log(e);
-      console.log(this.$refs.bar.offsetLeft);
-      console.log(window);
+      const x = e.pageX - this.$refs.bar.offsetLeft;
+      const percent = x / this.$refs.bar.offsetWidth
+      this.$bus.$emit('seekTo',percent)
     }
   },
   mounted() {
