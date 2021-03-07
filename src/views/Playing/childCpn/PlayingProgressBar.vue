@@ -1,7 +1,7 @@
 <template>
   <div class='progress-bar'>
     <div class="current-time">{{data.currentTime | times}}</div>
-    <div class="bar">
+    <div class="bar" @click="seekTo" ref="bar">
       <div class="now" :style="{'width':data.currentTime / data.duration *100 + '%'}"></div>
       <div class="dot" :style="{'left':data.currentTime / data.duration *100 + '%'}"></div>
     </div>
@@ -32,7 +32,11 @@ export default {
     }
   },
   methods: {
-    
+    seekTo(e) {
+      console.log(e);
+      console.log(this.$refs.bar.offsetLeft);
+      console.log(window);
+    }
   },
   mounted() {
     this.$bus.$on('playingsong',data=> {

@@ -50,6 +50,7 @@ export default {
     font-size: 16px;  
     .name {
       width: 70vw;
+      margin: 0 auto;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
