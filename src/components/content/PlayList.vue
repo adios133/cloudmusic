@@ -6,11 +6,10 @@
     duration=".2" 
     @click-overlay="closeList" 
     class="play-list" closeable 
-    @click-close-icon="closeList"
-    @opened="pageShow">
+    @click-close-icon="closeList">
       <div class="title">播放列表</div>
-      <div class="container" ref="container">
-        <div class="item" v-for="(item,index) in list" :key="'m'+index" :class="{'playing':playingSong === index}" @click="goPlay(item,index)">
+      <div class="container">
+        <div class="item" v-for="(item,index) in list" :key="'m'+index" :class="{'playing':playingSong === index}">
           <span>{{index + 1}}</span>
           <span>{{item.name}} - </span>
           <span v-for="(artist, indey) in item.ar" :key="artist.id">{{ artist.name }}<span v-if="indey < item.ar.length - 1">/</span>
@@ -63,14 +62,6 @@ export default {
   methods: {
    closeList() {
      this.$emit('closeList')
-   },
-  //  每次打开，滚动到当前播放位置
-   pageShow() {
-     this.$refs.container.scroll(0,this.$refs.container.children[this.playingSong].offsetTop-50)
-   },
-   goPlay(item,index) {
-    this.$bus.$emit('playsong',item.id)
-    this.$bus.$emit('nextSong',index)
    }
   },
   
