@@ -29,7 +29,7 @@
       <span class="iconfont icon-24gl-playlist" @click="showList"></span>
       <audio 
       :src="musicUrl" 
-      autoplay 
+      @canplay="songCanPlay"
       @timeupdate="songPlaying"
       @play="songPlay"
       @pause="songPause" 
@@ -92,6 +92,9 @@ export default {
     }
   },
   methods: {
+    songCanPlay() {
+      this.$refs.audio.play()
+    },
     // 控制右边播放按键
     playSong() {
       this.$store.commit("setState",!this.isPlaying)
