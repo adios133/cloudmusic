@@ -104,6 +104,7 @@ export default {
 <style lang="scss" scoped>
   .page {
     background-color: #F7F7F7;
+    font-size: 16px;
     .user {
     display: flex;
     padding: 10px 15px;

@@ -43,20 +43,20 @@ export default {
     background-color: rgba(237, 238, 220,.2);
     font-size: 16px;
     .search-box {
-      width: 95%;
+      overflow: hidden;
+      width: 60vw;
       height: 35px;
       line-height: 35px;
       margin: 4.5px auto;
+      padding: 0 5px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       text-align: center;
       color: #ccc;
       border: 1px solid #ccc;
       background-color: #fff;
       border-radius: 18px;
       .keyword {
-        // width: 70%;
-        // overflow: hidden;
-        // text-overflow: ellipsis;
-        // white-space: nowrap;
         font-size: 14px;
       }
   }

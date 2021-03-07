@@ -83,14 +83,12 @@ export default {
     // 监听上来加载更多
     if(this.pullUpLoad) {
       this.scroll.on('pullingUp',()=> {
-        console.log('pullingup');
         this.$emit("pullingUpLoad")
       })
     }
     // 监听下拉刷新
     if(this.pullDownRefresh) {
       this.scroll.on('pullingDown',()=> {
-        console.log('pullingdown');
         this.$emit('pullingDownLoad')
       })
     }

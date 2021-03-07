@@ -49,7 +49,7 @@ export default {
     color: #333; 
     font-size: 16px;  
     .name {
-      width: 100%;
+      width: 70vw;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
