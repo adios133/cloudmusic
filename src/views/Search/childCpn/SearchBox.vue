@@ -1,7 +1,7 @@
 <template>
   <div class="search-box">
     <span class="iconfont icon-iconfontzhizuobiaozhun22 icon"></span>
-    <input type="text" @input="getKeyWord" @keyup="setHistory" />
+    <input type="text" @input="getKeyWord" :value="word" @focus="getKeyWord" @keyup="setHistory" />
     <span @click="goBack" class="cancel">取消</span>
   </div>
 </template>
@@ -12,7 +12,9 @@ export default {
   name: "SearchBox",
   components: {},
   data() {
-    return {};
+    return {
+      word:''
+    };
   },
   computed: {},
   methods: {
@@ -23,10 +25,11 @@ export default {
       this.$router.push('/home')
     },
     setHistory(e) {
+      // 去重，可以使用set数据结构
       if (e.keyCode === 13) {
         let arr = []
         const item = JSON.parse(localStorage.getItem('history'))
-        const noSame =item && !item.some(el => el == this.searchList[index].name)
+        const noSame =item && !item.some(el => el == e.target.value)
         if (item && noSame) {
         arr = [...item,e.target.value]
         }else {
@@ -36,6 +39,11 @@ export default {
       }  
     }
   },
+  mounted() {
+    this.$bus.$on('fillWord',text=> {
+      this.word = text
+    })
+  }
 };
 </script>
 

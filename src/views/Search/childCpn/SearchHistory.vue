@@ -1,7 +1,7 @@
 <template>
   <div class='search-history'>
     <span class="title">历史</span>
-    <span class="history">
+    <span class="history" @click="itemClick">
       <span v-for="(item,index) in searchHistory" :key="index">{{item}}</span>
     </span>
     <span
@@ -24,6 +24,10 @@ export default {
     clearHistory() {
       this.searchHistory = null
       localStorage.removeItem('history')
+    },
+    // 点击历史，自动填入input
+    itemClick(e) {
+      this.$bus.$emit('fillWord',e.target.innerText)
     }
   },
   mounted() {
