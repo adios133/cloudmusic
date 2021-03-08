@@ -57,7 +57,6 @@ export default {
     _getRank() {
       getRank().then(res => {
         Toast.clear()
-        console.log(res);
         this.rankList = res.list
       })
     },

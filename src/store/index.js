@@ -10,7 +10,7 @@ const state = {
   playlist:null,
   playing:null,
   isplay:false,
-  playorder:'list'
+  playorder:'list',
 }
 
 export default new Vuex.Store({

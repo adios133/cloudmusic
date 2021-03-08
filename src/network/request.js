@@ -20,9 +20,6 @@ export default (config)=> {
     return response.data
   },err=> {
     throw err
-    // if (instance.response.code === 301) {
-    //   return response.msg
-    // }
   })
 
   // 返回实例

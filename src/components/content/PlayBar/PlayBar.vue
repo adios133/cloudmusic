@@ -25,6 +25,7 @@
       <span class="iconfont icon-24gl-playlist" @click="showList"></span>
       <audio 
       :src="musicUrl" 
+      autoplay
       @canplay="songCanPlay"
       @timeupdate="songPlaying"
       @play="songPlay"

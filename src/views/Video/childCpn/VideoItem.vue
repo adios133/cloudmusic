@@ -1,7 +1,14 @@
 <template>
   <div class='video-item'>
     <div class="video-box" @click="coverClick(videoInfo.vid)">
-      <video :src="url" :poster="videoInfo.coverUrl" controls autoplay v-if="showVideo" ref="video"></video>
+      <video 
+      :src="url" 
+      :poster="videoInfo.coverUrl" 
+      controls 
+      autoplay 
+      v-if="showVideo"
+      ref="video"
+      ></video>
       <img :src="videoInfo.coverUrl" alt="" class="cover" v-else>
     </div>
     <div class="title">{{videoInfo.title}}</div>
@@ -33,12 +40,12 @@ export default {
     isVideo: {
       type:Boolean,
       default:false
-    }
+    },
   },
   data () {
     return {
       url:'',
-      showVideo:false
+      showVideo:false,
     };
   },
   watch: {
@@ -49,7 +56,10 @@ export default {
   methods: {
     coverClick(id) {
       this.$emit('coverClick',{id,'index':this.videoInfo.index})
-    }
+    },
+    canPlayed() {
+      this.$refs.video.play()
+    },
   },
   }
 </script>
