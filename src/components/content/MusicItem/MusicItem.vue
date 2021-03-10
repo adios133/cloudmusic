@@ -5,7 +5,7 @@
       <span v-else>{{rank + 1}}</span>
     </div>
     <div class="song-info">
-      <div class="song-name">
+      <div class="song-name" :class="{'no-copyright':songInfo.noCopyrightRcmd}">
         <span>{{songInfo.name}}</span>
           <span v-if="songInfo.alia[0]" class="alia">({{songInfo.alia[0]}})</span> 
       </div>
@@ -29,7 +29,9 @@
 </template>
 
 <script>
-
+import Vue from 'vue'
+import{Toast} from 'vant'
+Vue.use(Toast)
 export default {
   name:"MusicItem",
   props:{
@@ -54,6 +56,13 @@ export default {
   },
   methods: {
     toPlay() {
+      if (this.songInfo.noCopyrightRcmd) {
+        Toast.fail({
+          message:'暂无版权',
+          duration:1500
+        })
+        return
+      }
       // 向父组件发送事件,将列表保存在vuex中
       this.$emit("saveList")
       // 跳转到playing页面
@@ -91,13 +100,16 @@ export default {
     .song-info {
       width: calc(100vw - 120px);
       font-size: 14px;
-      color: #333333;
+      color: #333;
       .song-name,.artists {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         height: 50%;
         line-height: 40px;
+      }
+      .no-copyright {
+        color: #aaa;
       }
       .alia {
         color: #999;

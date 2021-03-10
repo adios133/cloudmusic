@@ -182,7 +182,6 @@ export default {
     // 监听，并跳转到指定位置
     this.$bus.$on('seekTo',position => {
       this.$refs.audio.currentTime = position * this.$refs.audio.duration
-
     })
   },
   }
