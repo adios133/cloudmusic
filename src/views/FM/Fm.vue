@@ -3,7 +3,16 @@
     <fm-bg :picUrl="musicInfo.album.picUrl" />
     <div class="container">
       <fm-nav :musicInfo="musicInfo" />
-      <fm-cover :picUrl="musicInfo.album.picUrl" />
+      <van-swipe indicator-color="#fff" :loop="false">
+        <van-swipe-item>
+          <fm-cover :picUrl="musicInfo.album.picUrl" />
+        </van-swipe-item>
+        <van-swipe-item>
+          <lyric :lyric="lyric" />
+        </van-swipe-item>
+      </van-swipe>
+
+      
       <fm-progress-bar :like="like" />
       <fm-controller @nextFm="nextFm" @likeSong="likeSong" @trashSong="trashSong" />
     </div>
@@ -19,12 +28,14 @@ import FmProgressBar from './childCpn/FmProgressBar'
 import FmController from './childCpn/FmController'
 
 import {getFm,getMusicInfo,likeSong,trashSong} from 'network/fm'
+import {LyricModule} from 'common/mixin'
 
 import Vue from 'vue'
 import {Toast} from 'vant'
 Vue.use(Toast)
 export default {
   name:"Fm",
+  mixins:[LyricModule],
   components: {
     FmNav,
     FmBg,
@@ -44,6 +55,7 @@ export default {
       getFm().then(res => {
         this.musicInfo = res.data[0]
         this._getMusicInfo(res.data[0].id) 
+        this._getLyric(res.data[0].id)
       })
     },
     // 获取音乐信息，私人fm获取的音乐，信息和普通的格式不同，不好处理，故使用通用音乐信息
