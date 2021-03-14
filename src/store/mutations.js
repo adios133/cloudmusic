@@ -19,6 +19,10 @@ export default {
   setOrder(state,payload) {
     state.playorder = payload
   },
+  // 改变当前歌词行
+  setLine(state,payload) {
+    state.currentLine = payload
+  }
 }
 
 

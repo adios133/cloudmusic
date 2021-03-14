@@ -10,7 +10,8 @@ const state = {
   playlist:null,
   playing:null,
   isplay:false,
-  playorder:'list',
+  playorder:'list',   // 播放方式
+  currentLine:0   //记录歌词
 }
 
 export default new Vuex.Store({

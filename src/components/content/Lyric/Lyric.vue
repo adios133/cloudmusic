@@ -2,7 +2,7 @@
   <div class='lyric'>
     <scroll class="lyric-box" ref="scroll">
         <div class="content" ref="content">
-          <div v-for="(item,index) in data" :key="index" class="line" :class="{'now-time':index === currentLine-1}" ref="item">{{item.msg}}</div>
+          <div v-for="(item,index) in data" :key="index" class="line" :class="{'now-time':index === $store.state.currentLine-1}" ref="item">{{item.msg}}</div>
         </div>
     </scroll>
   </div>
@@ -26,43 +26,42 @@ export default {
   data () {
     return {
       data:[],
-      currentLine:0,
+      // 解决再次进入页面歌词跳转到指定位置，保存到vuex
+      // currentLine:0,
       height:(window.innerHeight-180) / 2 ,
-      duration:0
+      duration:0,
+      index:0
     };
   },
   watch: {
     lyric() {
       this.data = this.lyric
-    }
-  },
-  methods: {
-    
-  },
-  
+    },
+  },  
   mounted() {
     this.$bus.$on('playingsong',data => {
-      if (this.lyric.length > 0 && this.currentLine <this.lyric.length && data.currentTime >= this.lyric[this.currentLine].time) {
-        if (this.currentLine <= this.data.length - 1) {
-          // this.$refs.scroll.scrollTo(0,-this.currentLine * 40,0)
-          this.$refs.scroll.scrollTo(0,-this.$refs.item[this.currentLine].offsetTop + this.height,0)
-          this.currentLine++
+      if (this.lyric.length > 0 && this.$store.state.currentLine <this.lyric.length && data.currentTime >= this.lyric[this.$store.state.currentLine].time) {
+        if (this.$store.state.currentLine <= this.data.length - 1) {
+          this.$refs.scroll.scrollTo(0,-this.$refs.item[this.$store.state.currentLine].offsetTop + this.height,0)
+          this.$store.commit("setLine",this.$store.state.currentLine+=1)
           this.duration = data.duration
         }else {
-          this.currentLine = this.data.length-1
+          this.$store.commit("setLine",this.data.length-1)
         }
       }
     })
     this.$bus.$on('nextSong',() => {
-      this.currentLine = 0
+      this.$store.commit("setLine",0)
       this.$refs.scroll.scrollTo(0,0,0)
     })
     this.$bus.$on('oneSong',()=> {
-      this.currentLine = 0
+      this.$store.commit("setLine",0)
+
       this.$refs.scroll.scrollTo(0,0,0)
     })
     this.$bus.$on('seekTo',percent => {
-      console.log((percent*this.duration).toFixed(2));
+      this.$store.commit("setLine",this.lyric.findIndex(item => item.time >= percent*this.duration))
+      this.$refs.scroll.scrollTo(0,-this.$refs.item[this.$store.state.currentLine].offsetTop + this.height,100)
     })
   },
   beforeDestroy() {
@@ -70,9 +69,6 @@ export default {
     this.$bus.$off('nextSong')
     this.$bus.$off('oneSong')
 
-  },
-  destroyed() {
-    console.log('destroyed');
   },
   }
 </script>
