@@ -11,6 +11,8 @@
         <li class="cloud" @click="goCloud"><span>我的云盘</span><span class="iconfont icon-more"></span></li>
         <li class="signin" @click="signIn"><span>{{msg}}</span><span class="iconfont icon-more"></span></li>
         <li class="about" @click="aboutMe"><span>项目源码</span><span class="iconfont icon-more"></span></li>
+        <li class="about" @click="logOut" v-if="userInfo.nickname"><span>退出登录</span><span class="iconfont icon-more"></span></li>
+
       </ul>
     </van-popup>
 </template>
@@ -21,7 +23,7 @@ import {Popup} from 'vant'
 Vue.use(Popup)
 
 import {getUserInfo} from 'network/profile'
-import {getSignIn} from 'network/home'
+import {getSignIn,logOut} from 'network/home'
 import {getUserID} from 'common/mixin'
 
 export default {
@@ -75,7 +77,13 @@ export default {
      this.$emit('closeSlide')
    },
    logIn() {
+     if(this.userInfo.nickname) return
      this.$router.push('/login')
+   },
+   logOut() {
+     logOut().then(()=> {
+      location.reload()
+     })
    },
    _getUserInfo(id) {
       getUserInfo(id).then(res=>{

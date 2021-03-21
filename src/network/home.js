@@ -64,3 +64,9 @@ export function getSignIn(type=1) {
     }
   })
 }
+export function logOut() {
+  const timestamp = +new Date()
+  return request({
+    url:'/logout?timestamp=' + timestamp
+  })
+}

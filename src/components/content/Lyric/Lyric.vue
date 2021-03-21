@@ -67,7 +67,9 @@ export default {
     this.$bus.$on('seekTo',percent => {
       if (this.data.length> 0) {
         this.$store.commit("setLine",this.data.findIndex(item => item.time >= percent*this.duration))
-        this.$refs.scroll.scrollTo(0,-this.$refs.item[this.$store.state.currentLine].offsetTop + this.height,100)
+        this.$nextTick(()=> {
+          this.$refs.scroll.scrollTo(0,-this.$refs.item[this.$store.state.currentLine].offsetTop + this.height,100)
+        })
       }
     })
   },
@@ -96,7 +98,12 @@ export default {
         // height: 40px;
         line-height: 40px;
         font-size: 14px;
-        
+        // .lrc {
+        //   line-height: 30px;
+        // }
+        // .tlrc {
+        //   line-height: 10px;
+        // }
       }
       .now-time {
         font-size: 16px;

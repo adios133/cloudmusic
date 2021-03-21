@@ -81,6 +81,7 @@ export default {
               duration:1200,
               onClose:()=>{
                 this.$router.push(`${this.topath}`)
+                location.reload()
               }
             })
           }

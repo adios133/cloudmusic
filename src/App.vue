@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <keep-alive exclude="Search,Playing,Rrecommend">
+    <keep-alive exclude="Search,Playing,Rrecommend,Home ">
       <router-view/>
     </keep-alive>
   <play-bar v-if="this.$route.meta.showPlaybar" :atBottom="!this.$route.meta.showTab" />
@@ -39,5 +39,5 @@ export default {
 
 <style lang="scss">
 @import url(~assets/css/base.css);
-@import url(//at.alicdn.com/t/font_2360697_e5pqh7u3cti.css);
+@import url(//at.alicdn.com/t/font_2360697_7czo69694ab.css);
 </style>

@@ -29,6 +29,7 @@ export default {
   },
   methods: {
     logIn() {
+      if (this.userInfo.nickname) return
       this.$router.push('/login')
     }
   },

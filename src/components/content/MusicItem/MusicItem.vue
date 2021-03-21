@@ -10,6 +10,7 @@
           <span v-if="songInfo.alia[0]" class="alia">({{songInfo.alia[0]}})</span> 
       </div>
       <div class="artists">
+        <span class="iconfont icon-vip1 vip" v-if="songInfo.copyright===1"></span>
         <span v-for="(item, index) in songInfo.ar" :key="index">
             {{ item.name }}<span v-if="index < songInfo.ar.length - 1">/</span>
         </span>
@@ -69,6 +70,8 @@ export default {
       this.$router.push('/playing/' + this.songInfo.id)
       // 向playbar发送事件(事件总线),获取播放url
       this.$bus.$emit('playsong',this.songInfo.id)  
+      this.$store.commit("setLine",0)
+
     }
   },
   }
@@ -118,6 +121,11 @@ export default {
         line-height: 20px;
         font-size: 13px;
         color: #808080;
+        .vip {
+          position: relative;
+          top: 3px;
+          color: #d43c33;
+        }
       }
     }
     .more {
