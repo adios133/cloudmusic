@@ -95,7 +95,8 @@ export const LyricModule = {
   data() {
     return {
       musicInfo:null,
-      lyric:[]
+      lyric:[],
+      tlyric:[]
     }
   },
   methods: {
@@ -105,13 +106,17 @@ export const LyricModule = {
           this.lyric = [{time:0,msg:'纯音乐'}]
         }else if (res.uncollected) {
           this.lyric = [{time:0,msg:'暂无歌词'}]
+        }else if (res.tlyric.lyric){
+          this.lyric = this.lyricsFormat(res.lrc.lyric)
+          this.tlyric = this.lyricsFormat(res.tlyric.lyric)
+          this.mergeLrcTranslate(this.lyric,this.tlyric)
         }else {
-          this.lyricsFormat(res.lrc.lyric)
+          this.lyric = this.lyricsFormat(res.lrc.lyric)
         }
       })
     },
     lyricsFormat(lrc) {
-      this.lyric = []
+      const lyric = []
       if (lrc.length == 0) return;
       const lrcs = lrc.split('\n')
       for (let i in lrcs) { 
@@ -128,14 +133,24 @@ export const LyricModule = {
           for (let k in arr) {
             const t = arr[k].substring(1, arr[k].length - 1)
             const s = t.split(":")
-            this.lyric.push({
+            lyric.push({
               time: Number((parseFloat(s[0]) * 60 + parseFloat(s[1])).toFixed(3)),
               msg: content
             })
           }
         }
       }	
-      this.lyric.sort((a,b)=>  a.time - b.time)
+      lyric.sort((a,b)=>  a.time - b.time)
+      return lyric
+    },
+    mergeLrcTranslate(lrc,tlrc) {
+     lrc.forEach((item,index) => {
+      tlrc.forEach(el => {
+        if(item.time === el.time) {
+          lrc[index].tmsg = el.msg
+        }
+      })
+     })
     }
   },
 }

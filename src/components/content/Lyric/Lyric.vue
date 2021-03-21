@@ -2,7 +2,10 @@
   <div class='lyric'>
     <scroll class="lyric-box" ref="scroll">
         <div class="content" ref="content">
-          <div v-for="(item,index) in data" :key="index" class="line" :class="{'now-time':index === $store.state.currentLine-1}" ref="item">{{item.msg}}</div>
+          <div v-for="(item,index) in data" :key="index" class="line" :class="{'now-time':index === $store.state.currentLine-1}" ref="item">
+            <p class="lrc">{{item.msg}}</p>
+            <p class="tlrc" v-if="item.tmsg">{{item.tmsg}}</p>
+          </div>
         </div>
     </scroll>
   </div>
@@ -21,7 +24,8 @@ export default {
       default() {
         return []
       }
-    }
+    },
+    
   },
   data () {
     return {
@@ -61,8 +65,10 @@ export default {
       this.$refs.scroll.scrollTo(0,0,0)
     })
     this.$bus.$on('seekTo',percent => {
-      this.data.length> 0 && this.$store.commit("setLine",this.data.findIndex(item => item.time >= percent*this.duration))
-      this.$refs.scroll.scrollTo(0,-this.$refs.item[this.$store.state.currentLine].offsetTop + this.height,100)
+      if (this.data.length> 0) {
+        this.$store.commit("setLine",this.data.findIndex(item => item.time >= percent*this.duration))
+        this.$refs.scroll.scrollTo(0,-this.$refs.item[this.$store.state.currentLine].offsetTop + this.height,100)
+      }
     })
   },
   beforeDestroy() {
@@ -89,10 +95,11 @@ export default {
       .line {
         // height: 40px;
         line-height: 40px;
-        font-size: 15px;
+        font-size: 14px;
+        
       }
       .now-time {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 600;
         color: #fff;
       }
