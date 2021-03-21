@@ -40,7 +40,7 @@ export default {
   },  
   mounted() {
     this.$bus.$on('playingsong',data => {
-      if (this.lyric.length > 0 && this.$store.state.currentLine <this.lyric.length && data.currentTime >= this.lyric[this.$store.state.currentLine].time) {
+      if (this.data.length > 0 && this.$store.state.currentLine <this.data.length && data.currentTime >= this.data[this.$store.state.currentLine].time) {
         if (this.$store.state.currentLine <= this.data.length - 1) {
           this.$refs.scroll.scrollTo(0,-this.$refs.item[this.$store.state.currentLine].offsetTop + this.height,0)
           this.$store.commit("setLine",this.$store.state.currentLine+=1)
@@ -51,16 +51,17 @@ export default {
       }
     })
     this.$bus.$on('nextSong',() => {
+      this.data = []
       this.$store.commit("setLine",0)
       this.$refs.scroll.scrollTo(0,0,0)
     })
     this.$bus.$on('oneSong',()=> {
+      this.data = []
       this.$store.commit("setLine",0)
-
       this.$refs.scroll.scrollTo(0,0,0)
     })
     this.$bus.$on('seekTo',percent => {
-      this.$store.commit("setLine",this.lyric.findIndex(item => item.time >= percent*this.duration))
+      this.data.length> 0 && this.$store.commit("setLine",this.data.findIndex(item => item.time >= percent*this.duration))
       this.$refs.scroll.scrollTo(0,-this.$refs.item[this.$store.state.currentLine].offsetTop + this.height,100)
     })
   },
