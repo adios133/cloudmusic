@@ -68,7 +68,7 @@ export default {
       if (this.data.length> 0) {
         this.$store.commit("setLine",this.data.findIndex(item => item.time >= percent*this.duration))
         this.$nextTick(()=> {
-          this.$refs.scroll.scrollTo(0,-this.$refs.item[this.$store.state.currentLine].offsetTop + this.height,100)
+          this.$refs.scroll && this.$refs.scroll.scrollTo(0,-this.$refs.item[this.$store.state.currentLine].offsetTop + this.height,100)
         })
       }
     })
@@ -96,14 +96,17 @@ export default {
       padding-bottom: calc(50vh - 70px);
       .line {
         // height: 40px;
-        line-height: 40px;
+        margin: 15px;
+        // line-height: 40px;
         font-size: 14px;
-        // .lrc {
-        //   line-height: 30px;
-        // }
-        // .tlrc {
-        //   line-height: 10px;
-        // }
+        .lrc {
+          // height:20px;
+          line-height: 20px;
+        }
+        .tlrc {
+          // height:20px;
+          line-height: 20px;
+        }
       }
       .now-time {
         font-size: 16px;
