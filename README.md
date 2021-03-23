@@ -1,5 +1,6 @@
 # cloudmusic
-
+## require
+后端`API`地址：https://github.com/Binaryify/NeteaseCloudMusicApi
 ## Project setup
 ```
 npm install
