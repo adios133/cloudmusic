@@ -12,6 +12,9 @@ import CloudNav from './childCpn/CloudNav'
 import Scroll from 'components/common/Scroll/Scroll'
 import {getCloudMusic} from 'network/cloud'
 import CloudItem from './childCpn/CloudItem'
+import Vue from 'vue'
+import {Toast} from 'vant'
+Vue.use(Toast)
 
 export default {
   name:"Cloud",
@@ -34,6 +37,7 @@ export default {
     // 获取音乐信息
     _getCloudMusic(limit,offset) {
       getCloudMusic(limit,offset).then(res => {
+        Toast.clear()
         this.songList.push(...res.data)
       })
     },
@@ -53,6 +57,9 @@ export default {
     }
   },
   created() {
+    Toast.loading({
+      message:"加载中"
+    })
     this._getCloudMusic()
   }
   }
