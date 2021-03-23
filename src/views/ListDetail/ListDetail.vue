@@ -1,14 +1,16 @@
 <template>
-  <div class='list-detail'>
-    <scroll class="list-scroll">
+  <div class='list-detail'>  
+    <list-detail-nav :opicity="opicity" :name="listInfo.name" />
+    <list-detail-pLay-all :num="songList.length" class="fake-title" v-show="isShow" ref="playall1" />
+    <scroll class="list-scroll" :probeType="3" @scrolling="scrolling">
       <list-detail-header :listInfo="listInfo" :creatorInfo="creatorInfo" />
       <list-detail-count 
       :subscribedCount="listInfo.subscribedCount"
       :shareCount="listInfo.shareCount"
       :commentCount="listInfo.commentCount" />
-      <div class="content">
+      <div class="content" ref="content">
         <img src="~assets/img/default/arc1.png" alt="" class="arc">
-        <list-detail-pLay-all :num="songList.length" />
+        <list-detail-pLay-all :num="songList.length" ref="playall2" />
         <div class="list" v-for="(item,index) in songList" :key="index">
           <music-item :songInfo="item" :rank="index" @saveList="saveList"/>
         </div>
@@ -25,6 +27,8 @@ import ListDetailCount from './childCpn/ListDetailCount'
 import Scroll from 'components/common/Scroll/Scroll'
 import ListDetailPLayAll from './childCpn/ListDetailPLayAll'
 import MusicItem from 'components/content/MusicItem/MusicItem'
+import ListDetailNav from './childCpn/ListDetailNav'
+
 
 import Vue from 'vue'
 import {Toast} from 'vant'
@@ -36,13 +40,16 @@ export default {
     ListDetailCount,
     Scroll,
     ListDetailPLayAll,
-    MusicItem
+    MusicItem,
+    ListDetailNav
   },
   data () {
     return {
       listInfo:{},
       creatorInfo:{},
-      songList:[]
+      songList:[],
+      opicity:0,
+      isShow:false,
     };
   },
   methods: {
@@ -56,6 +63,10 @@ export default {
     },
     saveList() {
       this.$store.commit("setPlaylist",this.songList)
+    },
+    scrolling(position) {
+      this.opicity = -position.y / 190
+      this.isShow = -position.y >= this.$refs.playall2.$el.offsetTop + this.$refs.content.offsetTop -44
     }
   },
   activated() {
@@ -66,6 +77,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .list-detail {
+    position: relative;
+    .fake-title {
+    position: absolute;
+    top: 44px;
+    z-index: 5;
+  }
   .list-scroll {
     height: calc(100vh - 49px);
     .content {
@@ -75,5 +93,6 @@ export default {
         width: 100%;
       }
     }
+  }
   }
 </style>

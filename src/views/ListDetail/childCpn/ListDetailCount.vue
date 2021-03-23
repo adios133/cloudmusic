@@ -32,12 +32,12 @@ export default {
 <style lang="scss" scoped>
   .list-detail-count {
     position:absolute;
-    top: 220px;
+    top: 218px;
     left: 13vw;
     display: flex;
     justify-content: space-evenly;
     width: 74vw;
-    height: 40px;
+    height: 35px;
     line-height: 40px;
     font-size: 16px;
     background-color: #fff;

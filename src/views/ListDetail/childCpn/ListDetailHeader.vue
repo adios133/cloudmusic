@@ -3,11 +3,7 @@
     <div class="bg">
       <img :src="listInfo.coverUrl" alt="">
     </div>
-    <nav-bar>
-      <template v-slot:left>
-        <span class="iconfont icon-back1 back" @click="goBack"></span>
-      </template>
-    </nav-bar>
+    
     <div class="info">
       <div class="cover">
           <img :src="listInfo.coverUrl" alt="">
@@ -24,12 +20,8 @@
 </template>
 
 <script>
-import NavBar from 'components/common/NavBar/NavBar'
 export default {
   name:"ListDetailHeader",
-  components: {
-    NavBar
-  },
   props: {
     listInfo:{
       type:Object,
@@ -44,11 +36,6 @@ export default {
       }
     }
   },
-  methods: {
-    goBack() {
-      this.$router.go(-1)
-    }
-  },
   }
 </script>
 
@@ -61,7 +48,7 @@ export default {
       position: absolute;
       z-index: -1;
       height: 100%;
-      filter: blur(20px);
+      filter: blur(30px) brightness(80%);
       img {
         width: 100%;
       }
@@ -89,7 +76,7 @@ export default {
           font-size: 16px;
         }
         .creator {
-          color: #ccc;
+          color: #eee;
           font-size: 14px;
           img {
             width: 30px;

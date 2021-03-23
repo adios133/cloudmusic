@@ -22,9 +22,11 @@ export default {
 <style lang="scss" scoped>
   .list-playall {
     height: 40px;
+    width: 100%;
     line-height: 40px;
     font-weight: 700;
     font-size: 16px;
+    background-color: #fff;
     border-bottom: 1px solid #eee;
     span {
       color: #d43c33;

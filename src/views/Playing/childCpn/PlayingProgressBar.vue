@@ -115,6 +115,7 @@ export default {
         padding: 1px;
         background-color: rgba(255,255,255,.5);
         border-radius: 7px;
+        z-index: 3;
       }
     }
   }

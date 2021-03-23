@@ -23,7 +23,8 @@ export default {
       width: 60px;
     }
     .center {
-      flex: 1;
+      // flex: 1;
+      width: calc(100vw - 120px);
     }
   }
 </style>
