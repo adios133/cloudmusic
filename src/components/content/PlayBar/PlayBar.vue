@@ -145,6 +145,8 @@ export default {
     },
     songEnd() {
       // 顺序播放
+      this.$store.commit("setState", false);
+
       if (this.$store.state.playorder === "list") {
         const id = this.$store.state.playing.id;
         let idx;

@@ -69,6 +69,7 @@ export default {
 
     // 上一首,下一首
     nextSong() {
+      this.$store.commit("setState", false);
       // 顺序播放
       if (this.$store.state.playorder === 'list') {
         const id = this.$store.state.playing.id
@@ -89,6 +90,7 @@ export default {
       }
     },
     preSong() {
+      this.$store.commit("setState", false);
       // 顺序播放
       if (this.$store.state.playorder === 'list') {
         const id = this.$store.state.playing.id

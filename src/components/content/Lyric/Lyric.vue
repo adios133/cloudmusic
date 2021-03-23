@@ -44,6 +44,7 @@ export default {
   },  
   mounted() {
     this.$bus.$on('playingsong',data => {
+      this.duration = data.duration
       if (this.data.length > 0 && this.$store.state.currentLine <this.data.length && data.currentTime >= this.data[this.$store.state.currentLine].time) {
         if (this.$store.state.currentLine <= this.data.length - 1) {
           this.$refs.scroll.scrollTo(0,-this.$refs.item[this.$store.state.currentLine].offsetTop + this.height,0)
@@ -65,9 +66,12 @@ export default {
       this.$refs.scroll.scrollTo(0,0,0)
     })
     this.$bus.$on('seekTo',percent => {
-      if (this.data.length> 0) {
+      // 默认会有一句的，纯音乐，或者暂无歌词，所以要大于1
+      if (this.data.length> 1) {
         this.$store.commit("setLine",this.data.findIndex(item => item.time >= percent*this.duration))
-        this.$refs.scroll.scrollTo(0,-this.$refs.item[this.$store.state.currentLine].offsetTop + this.height,100)
+        this.$nextTick(()=> {
+          this.$refs.scroll && this.$refs.scroll.scrollTo(0,-this.$refs.item[this.$store.state.currentLine].offsetTop + this.height,100)
+        })
       }
     })
   },
@@ -93,10 +97,14 @@ export default {
       padding-top: calc(50vh - 90px);
       padding-bottom: calc(50vh - 70px);
       .line {
-        // height: 40px;
-        line-height: 40px;
+        margin: 15px;
         font-size: 14px;
-        
+        .lrc {
+          line-height: 20px;
+        }
+        .tlrc {
+          line-height: 20px;
+        }
       }
       .now-time {
         font-size: 16px;
