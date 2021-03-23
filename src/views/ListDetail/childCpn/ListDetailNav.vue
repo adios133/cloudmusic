@@ -41,8 +41,8 @@ export default {
     width: 100%;
     z-index: 5;
     .center {
+      width: calc(100vw - 120px);
       overflow: hidden;
-      width: 100%;
       white-space: nowrap;
       text-overflow: ellipsis;
     }

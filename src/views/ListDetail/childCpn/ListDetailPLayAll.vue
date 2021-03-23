@@ -23,6 +23,7 @@ export default {
   .list-playall {
     height: 40px;
     width: 100%;
+    padding-left: 15px;
     line-height: 40px;
     font-weight: 700;
     font-size: 16px;

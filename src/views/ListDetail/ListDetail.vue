@@ -72,7 +72,11 @@ export default {
   activated() {
     Toast.loading('加载中...')
     this._getListDetail(this.$route.params.id)
-  }
+  },
+  deactivated() {
+    this.isShow = false
+    this.opicity = 0
+    }
   }
 </script>
 

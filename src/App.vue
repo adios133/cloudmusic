@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <keep-alive exclude="Search,Rrecommend,Home ">
+    <keep-alive exclude="Search,Rrecommend,Home">
       <router-view/>
     </keep-alive>
   <play-bar v-if="this.$route.meta.showPlaybar" :atBottom="!this.$route.meta.showTab" />

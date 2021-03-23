@@ -5,7 +5,9 @@
         <span class="back iconfont icon-back1" @click="goBack"></span>
       </template>
       <template v-slot:center>
-        <div class="name"><span>{{musicInfo.name}}</span></div>
+        <div class="name">
+          <span>{{musicInfo.name}}</span>
+        </div>
           <div class="artists">
             <span v-for="(artist, index) in musicInfo.ar" :key="artist.id">
               {{ artist.name }}<span v-if="index < musicInfo.ar.length - 1">/</span>
