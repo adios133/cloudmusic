@@ -108,7 +108,7 @@ export default {
     }
     */
   },
-  created() {
+  activated() {
     if (!this.$store.state.playlist) {
       this.$router.push('/home')
       return

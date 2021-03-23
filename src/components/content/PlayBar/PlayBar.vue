@@ -126,11 +126,19 @@ export default {
     },
     // 当音乐播放时持续触发传递播放进度
     songPlaying() {
+      const bufferedTime = this.$refs.audio.buffered
+      let bufferedtime
+      if(bufferedTime.length > 0) {
+        bufferedtime = bufferedTime.end(bufferedTime.length - 1)
+        
+
+      }
       if (this.$refs.audio.currentTime != 0) {
         this.$bus.$emit("playingsong", {
           id: this.id,
           duration: this.$refs.audio.duration,
           currentTime: this.$refs.audio.currentTime,
+          bufferedtime
         });
         this.rate = (this.$refs.audio.currentTime / this.$refs.audio.duration) * 100;
       }
