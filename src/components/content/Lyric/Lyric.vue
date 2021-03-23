@@ -67,12 +67,15 @@ export default {
     })
     this.$bus.$on('seekTo',percent => {
       // 默认会有一句的，纯音乐，或者暂无歌词，所以要大于1
-      if (this.data.length> 1) {
-        this.$store.commit("setLine",this.data.findIndex(item => item.time >= percent*this.duration))
+      // if (this.data.length> 1) {
+        //由于可能有最后一句空白行，但是他的时间是刚好为最后一句歌词的结束，就会找不到大于的行，返回-1，在监听播放时滚动和读取对应数组[-1]就会报错
+        let lines = this.data.findIndex(item => item.time >= percent*this.duration)
+        lines = lines === -1 ? this.data.length - 1 : lines
+        this.$store.commit("setLine",lines)
         this.$nextTick(()=> {
           this.$refs.scroll && this.$refs.scroll.scrollTo(0,-this.$refs.item[this.$store.state.currentLine].offsetTop + this.height,100)
         })
-      }
+      // }
     })
   },
   beforeDestroy() {

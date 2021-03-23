@@ -46,6 +46,8 @@ export default {
       }
       localStorage.setItem('history',JSON.stringify(arr))
       // 播放页
+      this.$store.commit('setState',false)
+      this.$store.commit("setLine",0)
       this.$bus.$emit('playsong',id)
       this.$router.push('/playing/' + id)
       // 数据不一样,不搞列表了只有选中的一个单曲循环
@@ -59,7 +61,7 @@ export default {
 $border:1px solid #eee;
 .search-list {
   font-size: 15px;
-  border: $border;
+  // border: $border;
   .item {
     overflow: hidden;
     text-overflow: ellipsis;

@@ -3,7 +3,7 @@
     <playing-bg :picUrl="musicInfo.al.picUrl" />
     <div class="container">
       <playing-nav :musicInfo="musicInfo" />
-      <van-swipe indicator-color="#fff" :loop="false">
+      <van-swipe :loop="false" indicator-color="#fff">
         <van-swipe-item>
           <playing-cover :picUrl="musicInfo.al.picUrl" />
         </van-swipe-item>
@@ -56,7 +56,6 @@ export default {
     next(vm => {
       if (from.path === '/search') {
         vm._getMusicInfo(vm.$route.params.id)
-        this._getLyric(vm.$route.params.id)
       }
     })
   },
@@ -67,46 +66,6 @@ export default {
         this.$store.commit('setPlaylist',[this.musicInfo])
       })
     },
-    /*
-    _getLyric(id) {
-      getLyric(id).then(res => {
-        if (res.nolyric) {
-          this.lyric = [{time:0,msg:'纯音乐'}]
-        }else if (res.uncollected) {
-          this.lyric = [{time:0,msg:'暂无歌词'}]
-        }else {
-          this.lyricsFormat(res.lrc.lyric)
-        }
-      })
-    },
-    lyricsFormat(lrc) {
-      this.lyric = []
-      if (lrc.length == 0) return;
-      const lrcs = lrc.split('\n')
-      for (let i in lrcs) { 
-        lrcs[i] = lrcs[i].replace(/(^\s*)|(\s*$)/g, "")
-        const t = lrcs[i].substring(lrcs[i].indexOf("[") + 1, lrcs[i].indexOf("]"))
-        const s = t.split(":")
-        if (!isNaN(parseInt(s[0]))) {
-          const arr = lrcs[i].match(/\[(\d+:.+?)\]/g)
-          let start = 0
-          for (let k in arr) {
-            start += arr[k].length
-          }
-          const content = lrcs[i].substring(start)
-          for (let k in arr) {
-            const t = arr[k].substring(1, arr[k].length - 1)
-            const s = t.split(":")
-            this.lyric.push({
-              time: Number((parseFloat(s[0]) * 60 + parseFloat(s[1])).toFixed(3)),
-              msg: content
-            })
-          }
-        }
-      }	
-      this.lyric.sort((a,b)=>  a.time - b.time)
-    }
-    */
   },
   activated() {
     if (!this.$store.state.playlist) {
