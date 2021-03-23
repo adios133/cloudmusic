@@ -41,7 +41,9 @@ export default {
       // 跳转到playing页面
       this.$router.push('/playing/' + this.songInfo.songId)
       // 向playbar发送事件(事件总线),获取播放url
-      this.$bus.$emit('playsong',this.songInfo.songId)  
+      this.$bus.$emit('playsong',this.songInfo.songId) 
+      this.$store.commit('setState',false)
+      this.$store.commit("setLine",0) 
     }
   },
   }

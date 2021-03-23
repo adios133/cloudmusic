@@ -130,8 +130,6 @@ export default {
       let bufferedtime
       if(bufferedTime.length > 0) {
         bufferedtime = bufferedTime.end(bufferedTime.length - 1)
-        
-
       }
       if (this.$refs.audio.currentTime != 0) {
         this.$bus.$emit("playingsong", {

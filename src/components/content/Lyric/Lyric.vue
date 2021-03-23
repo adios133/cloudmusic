@@ -49,7 +49,6 @@ export default {
         if (this.$store.state.currentLine <= this.data.length - 1) {
           this.$refs.scroll.scrollTo(0,-this.$refs.item[this.$store.state.currentLine].offsetTop + this.height,0)
           this.$store.commit("setLine",this.$store.state.currentLine+=1)
-          this.duration = data.duration
         }else {
           this.$store.commit("setLine",this.data.length-1)
         }
@@ -78,11 +77,13 @@ export default {
       // }
     })
   },
+  created() {
+    this.$refs.scroll && this.$refs.scroll.scrollTo(0,-this.$refs.item[this.$store.state.currentLine].offsetTop + this.height,0)
+  },
   beforeDestroy() {
     this.$bus.$off('playingsong')
     this.$bus.$off('nextSong')
     this.$bus.$off('oneSong')
-
   },
   }
 </script>
