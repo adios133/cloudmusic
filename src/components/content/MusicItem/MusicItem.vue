@@ -72,6 +72,8 @@ export default {
       this.$store.commit('setState',false)
       this.$store.commit("setLine",0)
       this.$bus.$emit('playsong',this.songInfo.id)  
+      this.$store.commit("setLine",0)
+
     }
   },
   }
