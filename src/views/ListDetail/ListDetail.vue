@@ -69,14 +69,10 @@ export default {
       this.isShow = -position.y >= this.$refs.playall2.$el.offsetTop + this.$refs.content.offsetTop -44
     }
   },
-  activated() {
+  created() {
     Toast.loading('加载中...')
     this._getListDetail(this.$route.params.id)
   },
-  deactivated() {
-    this.isShow = false
-    this.opicity = 0
-    }
   }
 </script>
 
