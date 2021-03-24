@@ -2,10 +2,12 @@
   <div class="play-bar" :class="{ 'at-bottom': atBottom }" v-show="!PlayPage">
     <div class="music-info left" @click="toPlaying" v-if="this.$store.state.playing">
       <div class="song-cover">
+        <img src="~assets/img/default/disc.png" alt="" class="disc">
         <img
           :src="this.$store.state.playing.al.picUrl"
           alt=""
           :class="{ playing: isPlaying }"
+          class="cover"
         />
       </div>
       <div class="info">
@@ -15,10 +17,12 @@
     </div>
     <div class="music-info left" @click="toPlaying" v-else>
       <div class="song-cover">
+        <img src="~assets/img/default/disc.png" alt="" class="disc">
         <img
           src="~assets/img/default/default.jpg"
           alt=""
           :class="{ playing: isPlaying }"
+          class="cover"
         />
       </div>
       <div class="info">
@@ -231,15 +235,22 @@ div.at-bottom {
   .music-info {
     line-height: 49px;
     .song-cover {
-      overflow: hidden;
-      top: 7px;
+      position: relative;
       width: 35px;
       height: 35px;
-      border: 7px solid #161616;
-      border-radius: 18px;
-      img {
+      .disc {
+        position: absolute;
         width: 100%;
+        z-index: 5;
+      }
+      .cover {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        width: 75%;
+        height: 75%;
         border-radius: 18px;
+        z-index: 4;
       }
     }
   }
@@ -266,18 +277,26 @@ div.at-bottom {
       height: 30px;
       overflow: hidden;
       font-size: 0;
-      border: 6px solid #161616;
       border-radius: 15px;
-      .playing {
-        // animation: rotateCover 8s linear infinite;
-        animation-play-state: running;
-      }
-      img {
+      .disc {
+        position: absolute;
         width: 100%;
-        vertical-align: top;
+        z-index: 5;
+      }
+      .cover {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 75%;
+        height: 75%;
+        // vertical-align: top;
         border-radius: 15px;
         animation: rotateCover 8s linear infinite;
         animation-play-state: paused;
+        z-index: 4;
+      }
+      img.playing {
+        animation-play-state: running;
       }
     }
     .info {

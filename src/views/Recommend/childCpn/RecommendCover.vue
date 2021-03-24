@@ -1,11 +1,6 @@
 <template>
   <div class='recommend-cover' v-if="imgUrl.al">
     <img :src="imgUrl.al.picUrl" alt="">
-    <nav-bar @click.native="backClick">
-      <template v-slot:left>
-        <span class="iconfont icon-back1 back" @click="backClick"></span>
-      </template>
-    </nav-bar>
     <div class="date">
       <span class="day">{{day}}/</span>
       <span class="month">{{month}}</span>
@@ -14,14 +9,10 @@
 </template>
 
 <script>
-import NavBar from 'components/common/NavBar/NavBar'
 
 import {padLeftZero} from 'common/utils'
 export default {
   name:"RecommendCover",
-  components: {
-    NavBar
-  },
   data () {
     return {
       month:'',
@@ -45,10 +36,6 @@ export default {
       this.month = padLeftZero(month.toString())
       this.day = padLeftZero(day.toString())
     },
-    // back
-    backClick() {
-      this.$router.push('/home')
-    }
   },
   created() {
     this.getToday()
@@ -70,16 +57,7 @@ export default {
       z-index: 0;
       width: 100%;
     }
-    .back {
-      position: absolute;
-      left: 20px;
-      font-weight: 600;
-      &::before {
-      @include trans-bg;
-      color: #333;
-      border-radius: 10px
-      }
-    }
+    
     .date {
       @include trans-bg;
       position: absolute;

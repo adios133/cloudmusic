@@ -28,6 +28,7 @@ import Scroll from 'components/common/Scroll/Scroll'
 import ListDetailPLayAll from './childCpn/ListDetailPLayAll'
 import MusicItem from 'components/content/MusicItem/MusicItem'
 import ListDetailNav from './childCpn/ListDetailNav'
+import {barCeiling} from 'common/mixin'
 
 
 import Vue from 'vue'
@@ -35,6 +36,7 @@ import {Toast} from 'vant'
 Vue.use(Toast)
 export default {
   name:"ListDetail",
+  mixins:[barCeiling],
   components: {
     ListDetailHeader,
     ListDetailCount,
@@ -48,8 +50,6 @@ export default {
       listInfo:{},
       creatorInfo:{},
       songList:[],
-      opicity:0,
-      isShow:false,
     };
   },
   methods: {
@@ -64,10 +64,6 @@ export default {
     saveList() {
       this.$store.commit("setPlaylist",this.songList)
     },
-    scrolling(position) {
-      this.opicity = -position.y / 190
-      this.isShow = -position.y >= this.$refs.playall2.$el.offsetTop + this.$refs.content.offsetTop -44
-    }
   },
   created() {
     Toast.loading('加载中...')

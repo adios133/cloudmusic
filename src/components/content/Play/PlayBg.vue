@@ -1,5 +1,5 @@
 <template>
-  <div class='fm-bg'>
+  <div class='play-bg'>
     <img :src="picUrl" alt="">
   </div>
 </template>
@@ -7,7 +7,7 @@
 <script>
 
 export default {
-  name:"FmBg",
+  name:"PlayBg",
   props:{
     picUrl:String
   }
@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .fm-bg {
+  .play-bg {
     position:absolute;
     left: 0;
     top: 0;

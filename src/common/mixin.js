@@ -155,4 +155,38 @@ export const LyricModule = {
   },
 }
 
+// 歌单播放全部吸顶和nav背景渐变
+import {GRADIENT_DISTANCE} from './const'
+
+export const barCeiling = {
+  data() {
+    return {
+      opicity:0,
+      isShow:false,
+    }
+  },
+  methods: {
+    scrolling(position) {
+      this.opicity = -position.y / GRADIENT_DISTANCE
+      this.isShow = -position.y >= this.$refs.playall2.$el.offsetTop + this.$refs.content.offsetTop - 44
+    }
+  },
+}
+
+// 抽离fm页面和playing页面公共部分
+
+import PlayBg from 'components/content/Play/PlayBg'
+import PlayNav from 'components/content/Play/PlayNav'
+import PlayCover from 'components/content/Play/PlayCover'
+import PlayProgressBar from 'components/content/Play/PlayProgressBar'
+
+export const PlayAndFm = {
+  components: {
+    PlayNav,
+    PlayBg,
+    PlayCover,
+    PlayProgressBar,
+  }
+}
+
 

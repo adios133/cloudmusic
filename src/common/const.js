@@ -1,0 +1,1 @@
+export const GRADIENT_DISTANCE = 190

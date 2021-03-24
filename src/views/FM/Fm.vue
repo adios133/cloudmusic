@@ -1,19 +1,17 @@
 <template>
   <div class='fm' v-if="musicInfo">
-    <fm-bg :picUrl="musicInfo.album.picUrl" />
+    <play-bg :picUrl="musicInfo.album.picUrl" />
     <div class="container">
-      <fm-nav :musicInfo="musicInfo" />
+      <play-nav :musicInfo="musicInfo" />
       <van-swipe indicator-color="#fff" :loop="false">
         <van-swipe-item>
-          <fm-cover :picUrl="musicInfo.album.picUrl" />
+          <play-cover :picUrl="musicInfo.album.picUrl" />
         </van-swipe-item>
         <van-swipe-item>
           <lyric :lyric="lyric" />
         </van-swipe-item>
       </van-swipe>
-
-      
-      <fm-progress-bar :like="like" />
+      <play-progress-bar />
       <fm-controller @nextFm="nextFm" @likeSong="likeSong" @trashSong="trashSong" />
     </div>
   </div>
@@ -21,26 +19,18 @@
 
 <script>
 
-import FmBg from './childCpn/FmBg'
-import FmNav from './childCpn/FmNav'
-import FmCover from './childCpn/FmCover'
-import FmProgressBar from './childCpn/FmProgressBar'
 import FmController from './childCpn/FmController'
 
 import {getFm,getMusicInfo,likeSong,trashSong} from 'network/fm'
-import {LyricModule} from 'common/mixin'
+import {LyricModule,PlayAndFm} from 'common/mixin'
 
 import Vue from 'vue'
 import {Toast} from 'vant'
 Vue.use(Toast)
 export default {
   name:"Fm",
-  mixins:[LyricModule],
+  mixins:[LyricModule,PlayAndFm],
   components: {
-    FmNav,
-    FmBg,
-    FmCover,
-    FmProgressBar,
     FmController
   },
   data () {

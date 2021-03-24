@@ -1,10 +1,12 @@
 <template>
   <div class='recommend'>
-    <scroll class="rec-scroll">
+    <recommend-nav :opicity="opicity" />
+    <recommend-play-all class="fakeall" v-show="isShow" ref="playall1" />
+    <scroll class="rec-scroll" :probeType="3" @scrolling="scrolling">
       <recommend-cover :imgUrl="recList[0]" />
-      <div class="content">
+      <div class="content" ref="content">
         <img src="~assets/img/default/arc1.png" alt="" class="arc">
-        <recommend-play-all />
+        <recommend-play-all ref="playall2" />
         <div class="list" v-for="(item,index) in recList" :key="index">
           <music-item :isRecommend="true" :songInfo="item" :rank="index" @saveList="saveList" />
         </div>
@@ -23,17 +25,25 @@ import Scroll from 'components/common/Scroll/Scroll'
 import MusicItem from 'components/content/MusicItem/MusicItem'
 import RecommendCover from './childCpn/RecommendCover'
 import RecommendPlayAll from './childCpn/RecommendPlayAll'
+import RecommendNav from './childCpn/RecommendNav'
+
+import {barCeiling} from 'common/mixin'
+
 export default {
   name:"Rrecommend",
+  mixins:[barCeiling],
   components: {
     Scroll,
     RecommendCover,
     MusicItem,
-    RecommendPlayAll    
+    RecommendPlayAll,
+    RecommendNav   
   },
   data () {
     return {
-      recList:[]
+      recList:[],
+      // opicity:0,
+      // isShow:false,
     };
   },
   methods: {
@@ -53,7 +63,11 @@ export default {
     },
     saveList() {
       this.$store.commit('setPlaylist',this.recList)
-    }
+    },
+    // scrolling(position) {
+    //   this.opicity = -position.y / 190
+    //   this.isShow = -position.y >= this.$refs.playall2.$el.offsetTop + this.$refs.content.offsetTop -44
+    // }
   },
   created() {
     Toast.loading('加载中...')
@@ -65,6 +79,12 @@ export default {
 <style lang="scss" scoped>
   .recommend {
     background-color: #fff;
+    .fakeall {
+      position: absolute;
+      top: 44px;
+      width: 100%;
+      z-index: 5;
+    }
     .rec-scroll {
       height: calc(100vh - 49px);
       .content {

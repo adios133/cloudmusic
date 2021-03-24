@@ -1,5 +1,5 @@
 <template>
-  <div class='playing-nav'>
+  <div class='play-nav'>
     <nav-bar>
       <template v-slot:left>
         <span class="back iconfont icon-back1" @click="goBack"></span>
@@ -8,11 +8,17 @@
         <div class="name">
           <span>{{musicInfo.name}}</span>
         </div>
-          <div class="artists">
+        <!-- fm页面和播放页面的歌手名字不一样,判断一下 -->
+          <div class="artists" v-if="musicInfo.ar">
             <span v-for="(artist, index) in musicInfo.ar" :key="artist.id">
               {{ artist.name }}<span v-if="index < musicInfo.ar.length - 1">/</span>
             </span>
-          </div>        
+          </div>
+          <div class="artists" v-else>
+            <span v-for="(artist, index) in musicInfo.artists" :key="artist.id">
+              {{ artist.name }}<span v-if="index < musicInfo.artists.length - 1">/</span>
+            </span>
+          </div>         
       </template>
     </nav-bar>
   </div>
@@ -21,7 +27,7 @@
 <script>
 import NavBar from 'components/common/NavBar/NavBar'
 export default {
-  name:"PlayingNav",
+  name:"PlayNav",
   components: {
     NavBar
   },
@@ -46,21 +52,25 @@ export default {
   background-color: rgba(255,255,255,.05);
   box-shadow: 0 0 20px 15px rgba(255,255,255,.05);
 }
-  .playing-nav {
+@mixin text-nowrap {
+  width: 70vw;
+  margin: 0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+  .play-nav {
     @include trans-bg;
     color: #333; 
     font-size: 16px;  
     .name {
-      width: 70vw;
-      margin: 0 auto;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      @include text-nowrap;
       height: 60%;
       font-size: 15px;
       line-height: 28px;
     }
     .artists {
+      @include text-nowrap;
       font-size: 12px;
       height: 40%;
       line-height: 16px;

@@ -1,5 +1,5 @@
 <template>
-    <div class='playing-cover'>
+    <div class='play-cover'>
     <div class="needle">
       <img src="~assets/img/default/styli2.png" alt="" :class="{'playing':isplay}">
     </div>
@@ -13,7 +13,7 @@
 <script>
 
 export default {
-  name:"PlayingCover",
+  name:"PlayCover",
   props: {
     picUrl:String
   },
@@ -44,7 +44,7 @@ export default {
   }
 }
   
-    .playing-cover {
+    .play-cover {
       position: relative;
     .needle {
       position: relative;

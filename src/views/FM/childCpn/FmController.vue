@@ -53,11 +53,7 @@ export default {
     likeSong() {
       this.$emit('likeSong')
     }
-    
   },
-  created() {
-    
-  }
   }
 </script>
 

@@ -1,17 +1,17 @@
 <template>
   <div class='playing' v-if="musicInfo">
-    <playing-bg :picUrl="musicInfo.al.picUrl" />
+    <play-bg :picUrl="musicInfo.al.picUrl" />
     <div class="container">
-      <playing-nav :musicInfo="musicInfo" />
+      <play-nav :musicInfo="musicInfo" />
       <van-swipe :loop="false" indicator-color="#fff">
         <van-swipe-item>
-          <playing-cover :picUrl="musicInfo.al.picUrl" />
+          <play-cover :picUrl="musicInfo.al.picUrl" />
         </van-swipe-item>
         <van-swipe-item>
           <lyric :lyric="lyric" />
         </van-swipe-item>
       </van-swipe>
-      <playing-progress-bar />
+      <play-progress-bar />
       <playing-controller />
     </div>
   </div>
@@ -19,36 +19,21 @@
 
 <script>
 
-import PlayingBg from './childCpn/PlayingBg'
-import PlayingNav from './childCpn/PlayingNav'
-import PlayingCover from './childCpn/PlayingCover'
-import PlayingProgressBar from './childCpn/PlayingProgressBar'
 import PlayingController from './childCpn/PlayingController'
-// import Lyric from 'components/content/Lyric/Lyric'
+
 
 import {getMusicInfo} from 'network/playing'
-// import {getLyric} from 'network/lyric'
-import {LyricModule} from 'common/mixin'
 
-// import Vue from 'vue'
-// import {Swipe, SwipeItem} from 'vant'
-// Vue.use(Swipe)
-// Vue.use(SwipeItem)
+import {LyricModule,PlayAndFm} from 'common/mixin'
+
 export default {
   name:"Playing",
-  mixins:[LyricModule],
+  mixins:[LyricModule,PlayAndFm],
   components: {
-    PlayingNav,
-    PlayingBg,
-    PlayingCover,
-    PlayingProgressBar,
     PlayingController,
-    // Lyric
   },
   data () {
     return {
-      // musicInfo:null,
-      // lyric:[]
     };
   },
   // 由于search的页面的数据没有picUrl,重新获取
