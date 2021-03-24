@@ -1,5 +1,15 @@
 # cloudmusic
 
+基于`vuejs`开发的移动端仿网易云客户端的应用.
+
+## require
+
+后端api
+
+https://github.com/Binaryify/NeteaseCloudMusicApi
+
+
+
 ## Project setup
 ```
 npm install
@@ -15,4 +25,3 @@ npm run serve
 npm run build
 ```
 
-### 

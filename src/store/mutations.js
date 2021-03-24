@@ -22,6 +22,10 @@ export default {
   // 改变当前歌词行
   setLine(state,payload) {
     state.currentLine = payload
+  },
+  // 设置是否是fm界面，不然从fm返回从下面的点击进入会返回到playing界面
+  setFm(state,payload) {
+    state.isFm = payload
   }
 }
 

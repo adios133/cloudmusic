@@ -71,6 +71,7 @@ export default {
       // 向playbar发送事件(事件总线),获取播放url
       this.$store.commit('setState',false)
       this.$store.commit("setLine",0)
+      this.$store.commit('setFm',true)
       this.$bus.$emit('playsong',this.songInfo.id)  
     }
   },

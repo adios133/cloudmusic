@@ -41,6 +41,8 @@ export default {
     },
     // 上一首,下一首
     nextSong() {
+      this.$store.commit('setState',false)
+      this.$store.commit("setLine",0)
       this.$emit('nextFm')
     },
     // 垃圾桶

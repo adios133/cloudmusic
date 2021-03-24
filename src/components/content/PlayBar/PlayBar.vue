@@ -114,10 +114,12 @@ export default {
     },
     // 跳转到播放页面,但没有音乐播放时阻止跳转
     toPlaying() {
-      if (this.id) {
+      if (this.id && !this.$store.state.isFm) {
         this.$router.push("/playing/" + this.id);
-      } else {
-        return;
+      }else if(this.$store.state.isFm) {
+        this.$router.push('/fm')
+      }else {
+        return
       }
     },
     // 弹出播放列表
@@ -152,6 +154,11 @@ export default {
     songEnd() {
       // 顺序播放
       this.$store.commit("setState", false);
+      // 先判断是否为fm界面
+      if (this.$store.state.isFm) {
+          this.$bus.$emit('fmSongEnd')
+        return
+      }
 
       if (this.$store.state.playorder === "list") {
         const id = this.$store.state.playing.id;

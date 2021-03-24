@@ -75,6 +75,8 @@ export default {
    goPlay(item,index) {
     this.$bus.$emit('playsong',item.id)
     this.$bus.$emit('nextSong',index)
+    this.$store.commit('setState',false)
+    this.$store.commit("setLine",0)
    }
   },
   

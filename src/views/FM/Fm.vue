@@ -64,6 +64,8 @@ export default {
         this.$store.commit('setPlaylist',[res.songs[0]])
         this.$store.commit('setPlaying',res.songs[0])
         this.$bus.$emit('playsong',res.songs[0].id) 
+        this.$store.commit('setState',false)
+        this.$store.commit("setLine",0)
       })
     },
     // 点击喜欢音乐，接口有问题，失败
@@ -112,10 +114,11 @@ export default {
   
   created() {
     this._getFm()
+    this.$store.commit('setFm',true)
+    this.$bus.$on('fmSongEnd',()=> {
+      this._getFm()
+    })
   },
-  mounted() {
-    
-  }
 }
 </script>
 
