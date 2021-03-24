@@ -57,7 +57,7 @@ export default {
       this.$bus.$emit('playsong',id)
       this.$store.commit('setState',false)
       this.$store.commit("setLine",0)
-      this.$store.commit('setFm',true)
+      this.$store.commit('setFm',false)
     },
   },
 };

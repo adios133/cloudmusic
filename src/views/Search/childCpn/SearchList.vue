@@ -50,7 +50,7 @@ export default {
       this.$store.commit("setLine",0)
       this.$bus.$emit('playsong',id)
       this.$router.push('/playing/' + id)
-      this.$store.commit('setFm',true)
+      this.$store.commit('setFm',false)
       // 数据不一样,不搞列表了只有选中的一个单曲循环
       this.$store.commit('setPlaylist',[this.searchListFixed[index]])
     }
