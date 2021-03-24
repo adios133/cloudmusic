@@ -93,7 +93,6 @@ export default {
         height: 100%;
         top: 0;
         width: 50%;
-        background-color: rgb(255,255,255);
         z-index: 1;
       }
       .dot {
@@ -113,7 +112,7 @@ export default {
         top: -6px;
         left: -6px;
         padding: 1px;
-        background-color: rgba(255,255,255,.5);
+        background-color: rgb(255,255,255);
         border-radius: 7px;
         z-index: 3;
       }
