@@ -89,10 +89,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.lyric {
+  width: 100vw;
+  height: calc(100vh - 180px);
   .lyric-box {
     overflow: hidden;
-    width: 100vw;
-    height: calc(100vh - 180px);
+    width: 100%;
+    height: calc(100% - 22px);
     text-align: center;
     color: rgba(255, 255, 255,.7);
     .content {
@@ -116,7 +119,7 @@ export default {
         color: #fff;
       }
     }
-    
-    
   }
+}
+  
 </style>
