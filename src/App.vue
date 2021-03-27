@@ -39,5 +39,5 @@ export default {
 
 <style lang="scss">
 @import url(~assets/css/base.css);
-@import url(//at.alicdn.com/t/font_2360697_7czo69694ab.css);
+@import url(//at.alicdn.com/t/font_2360697_u9r0tdqa3l.css);
 </style>

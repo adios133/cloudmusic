@@ -46,9 +46,7 @@ export default {
   },
   mounted() {
     this.$bus.$on('playingsong',data=> {
-      
         this.data = data
-      
     })
   }
   }

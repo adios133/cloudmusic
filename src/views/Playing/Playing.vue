@@ -8,6 +8,7 @@
           <play-cover :picUrl="musicInfo.al.picUrl" />
         </van-swipe-item>
         <van-swipe-item>
+          <play-volume />
           <lyric :lyric="lyric" />
         </van-swipe-item>
       </van-swipe>

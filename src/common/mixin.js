@@ -179,6 +179,7 @@ import PlayBg from 'components/content/Play/PlayBg'
 import PlayNav from 'components/content/Play/PlayNav'
 import PlayCover from 'components/content/Play/PlayCover'
 import PlayProgressBar from 'components/content/Play/PlayProgressBar'
+import PlayVolume from 'components/content/Play/PlayVolume'
 
 export const PlayAndFm = {
   components: {
@@ -186,6 +187,7 @@ export const PlayAndFm = {
     PlayBg,
     PlayCover,
     PlayProgressBar,
+    PlayVolume
   }
 }
 

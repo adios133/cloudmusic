@@ -41,7 +41,7 @@ export default {
     font-size: 16px;
     .search-box {
       overflow: hidden;
-      width: 60vw;
+      width: 65vw;
       height: 35px;
       line-height: 35px;
       margin: 4.5px auto;
@@ -50,7 +50,7 @@ export default {
       white-space: nowrap;
       text-align: center;
       color: #ccc;
-      border: 1px solid #ccc;
+      border: 1px solid #eee;
       background-color: #fff;
       border-radius: 18px;
       .keyword {

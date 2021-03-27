@@ -54,11 +54,11 @@ export default {
   font-size: 16px;
   input {
     height: 32px;
-    width: 70vw;
-    margin: 6px 10px;
+    width: 75vw;
+    margin: 6px;
     text-indent: 28px;
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
+    background-color: #fafafa;
+    border: 1px solid #eee;
     border-radius: 18px;
   }
   .icon {
@@ -67,7 +67,7 @@ export default {
   }
   .cancel {
     display: inline-block;
-    width: calc(30vw - 42px);
+    width: calc(25vw - 42px);
     text-align: center;
   }
 }

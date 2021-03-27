@@ -64,10 +64,6 @@ export default {
     saveList() {
       this.$store.commit('setPlaylist',this.recList)
     },
-    // scrolling(position) {
-    //   this.opicity = -position.y / 190
-    //   this.isShow = -position.y >= this.$refs.playall2.$el.offsetTop + this.$refs.content.offsetTop -44
-    // }
   },
   created() {
     Toast.loading('加载中...')

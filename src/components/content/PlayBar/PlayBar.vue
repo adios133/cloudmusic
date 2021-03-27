@@ -184,7 +184,7 @@ export default {
 
     // 获取音乐播放地址
     _getMusicUrl(id) {
-      getMusicUrl(id).then((res) => {
+      getMusicUrl(id).then(res => {
         this.id = res.data[0].id;
         this.musicUrl = res.data[0].url;
       });
@@ -192,11 +192,11 @@ export default {
   },
   mounted() {
     // 监听从播放列表点击，获取音乐url
-    this.$bus.$on("playsong", (id) => {
+    this.$bus.$on("playsong", id => {
       this._getMusicUrl(id);
     });
     // 监听播放暂停
-    this.$bus.$on("stateChange", (data) => {
+    this.$bus.$on("stateChange", data => {
       if (data) {
         this.$refs.audio.play();
       } else {
@@ -204,7 +204,7 @@ export default {
       }
     });
     // 监听点击下一首，从播放列表播放第‘index’首
-    this.$bus.$on("nextSong", (index) => {
+    this.$bus.$on("nextSong", index => {
       const id = this.$store.state.playlist[index].id;
       this._getMusicUrl(id);
     });
@@ -213,9 +213,13 @@ export default {
       this.$refs.audio.currentTime = 0;
     });
     // 监听，并跳转到指定位置
-    this.$bus.$on("seekTo", (position) => {
+    this.$bus.$on("seekTo", position => {
       this.$refs.audio.currentTime = position * this.$refs.audio.duration;
     });
+    this.$bus.$on("volumeChange",percent => {
+      console.log(percent);
+      this.$refs.audio.volume = percent
+    })
   },
 };
 </script>

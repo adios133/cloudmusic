@@ -1,5 +1,6 @@
 <template>
-  <div id='home'>
+  <transition name="silde">
+    <div id='home'>
     <home-nav @showSlide="showSlide" :keyword="keyword" />
     <home-slide :isShow="show" @closeSlide="closeSlide" />
     <scroll class="home-scroller">
@@ -11,6 +12,7 @@
       <home-rank :rankIdList="rankIdList" />
     </scroll>
   </div>
+  </transition>
 </template>
 
 <script>
@@ -103,6 +105,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.silde-enter-active {
+  transform: translateX(0);
+}
+.silde-leave-active {
+  transform: translateX(100vw);
+}
 .home-scroller {
   height: calc(100vh - 133px);
   .rec-title {
