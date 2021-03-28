@@ -217,9 +217,10 @@ export default {
       this.$refs.audio.currentTime = position * this.$refs.audio.duration;
     });
     this.$bus.$on("volumeChange",percent => {
-      console.log(percent);
       this.$refs.audio.volume = percent
     })
+    // 挂载读取音量
+    this.$refs.audio.volume= this.$store.state.volume
   },
 };
 </script>

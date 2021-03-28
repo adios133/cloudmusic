@@ -26,7 +26,13 @@ export default {
   // 设置是否是fm界面，不然从fm返回从下面的点击进入会返回到playing界面
   setFm(state,payload) {
     state.isFm = payload
-  }
+  },
+  setVolume(state,payload) {
+    state.volume = payload
+  },
+  setLastestVol(state,payload) {
+    state.lastestVol = payload
+  },
 }
 
 

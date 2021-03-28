@@ -12,7 +12,9 @@ const state = {
   isplay:false,
   playorder:'list',   // 播放方式
   currentLine:0,   //记录歌词
-  isFm:false
+  isFm:false,
+  volume:0.5, //音量
+  lastestVol:0//控制静音，记录上次音量
 }
 
 export default new Vuex.Store({
