@@ -3,8 +3,7 @@ import axios from 'axios'
 export default (config)=> {
   const instance = axios.create({
     // 线上地址
-    //  baseURL:"http://121.4.98.241:3000",
-    baseURL:"http://localhost:3000",
+    baseURL:process.env.VUE_APP_BASE_URL,
     timeout:20000,
     withCredentials:true
   })

@@ -4,9 +4,6 @@
     <div 
     class="volume-bar" 
     @click="volumeChange"
-    @touchstart="touchstart"
-    @touchmove="touchmove"
-    @touchend="touchend"
      ref="bar">
       <div class="volume" :style="{'width':$store.state.volume *100 + '%'}"></div>
       <div class="dot" :style="{'left':$store.state.volume *100 + '%'}"></div>
@@ -20,8 +17,8 @@ export default {
   name:"PlayVolume",
   data() {
     return {
-      startX:0,
-      moveX:0
+      // startX:0,
+      // moveX:0
     }
   },
   computed: {
@@ -51,26 +48,28 @@ export default {
       }
       this.$bus.$emit('volumeChange',this.$store.state.volume)
     },
-    touchstart(e) {
-      this.startX = e.touches[0].pageX
-    },
-    touchmove(e) {
-      this.moveX = e.touches[0].pageX - this.startX
-      // update position
-      this.startX = e.touches[0].pageX
-      let changePercent = this.moveX / this.$refs.bar.offsetWidth
-      let data = this.$store.state.volume + changePercent
-      if (data <= 0) {
-        data = 0
-      }else if(data >=1){
-        data = 1
-      }
-      this.$store.commit('setVolume',data)
-      this.$bus.$emit('volumeChange',data)
-    },
-    touchend(e) {
-      e.preventDefault();
-    }
+    /*
+    // touchstart(e) {
+    //   this.startX = e.touches[0].pageX
+    // },
+    // touchmove(e) {
+    //   this.moveX = e.touches[0].pageX - this.startX
+    //   // update position
+    //   this.startX = e.touches[0].pageX
+    //   let changePercent = this.moveX / this.$refs.bar.offsetWidth
+    //   let data = this.$store.state.volume + changePercent
+    //   if (data <= 0) {
+    //     data = 0
+    //   }else if(data >=1){
+    //     data = 1
+    //   }
+    //   this.$store.commit('setVolume',data)
+    //   this.$bus.$emit('volumeChange',data)
+    // },
+    // touchend(e) {
+    //   e.preventDefault();
+    // }
+    */
   },
   }
 </script>

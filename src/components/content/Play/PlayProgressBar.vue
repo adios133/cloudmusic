@@ -63,12 +63,12 @@ export default {
     color: #fff;
     .current-time {
       width: 65px;
-      margin-right: 5px;
+      margin-right: 10px;
       text-align: right;
     }
     .duration {
       width: 65px;
-      margin-left: 5px;
+      margin-left: 10px;
       text-align: left;
     }
     .bar {
