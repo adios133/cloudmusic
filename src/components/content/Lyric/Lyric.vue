@@ -13,6 +13,7 @@
 
 <script>
 import Scroll from 'components/common/Scroll/Scroll'
+import { CellGroup } from 'vant';
 export default {
   name:"Lyric",
   components:{
@@ -77,14 +78,9 @@ export default {
       // }
     })
   },
-  created() {
+  activated() {
     this.$refs.scroll && this.$refs.scroll.scrollTo(0,-this.$refs.item[this.$store.state.currentLine].offsetTop + this.height,0)
-  },
-  beforeDestroy() {
-    this.$bus.$off('playingsong')
-    this.$bus.$off('nextSong')
-    this.$bus.$off('oneSong')
-  },
+  }
   }
 </script>
 

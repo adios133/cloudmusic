@@ -92,7 +92,7 @@ export default {
       .dot {
         position: absolute;
         top: -3px;
-        left: -4px;
+        margin-left: -4px;
         width: 8px;
         height: 8px;
         background-color: #fff;
