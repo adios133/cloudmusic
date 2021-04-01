@@ -193,7 +193,9 @@ export default {
   mounted() {
     // 监听从播放列表点击，获取音乐url
     this.$bus.$on("playsong", id => {
-      this._getMusicUrl(id);
+      // 将现行音乐停掉，在网络环境不好时，可能下一首歌还没加载，当前还在播放,url没替换掉
+      this.musicUrl = ''
+      this._getMusicUrl(id)
     });
     // 监听播放暂停
     this.$bus.$on("stateChange", data => {

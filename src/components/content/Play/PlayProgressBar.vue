@@ -24,7 +24,7 @@ export default {
       data:{
         bufferedtime:0,
         currentTime:0,
-        duration:0,
+        duration:0.01,
         id:''
       }
     }
@@ -45,9 +45,19 @@ export default {
     }
   },
   mounted() {
+    // 监听音乐播放进度条改变
     this.$bus.$on('playingsong',data=> {
         this.data = data
-    })
+    }),
+    // 将进度条归零，duration为零 0/0 不会变，给个0.1归零，显示duration是处理过的四舍五入，还会是0
+    this.$bus.$on("playsong", () => {
+      this.data = {
+        bufferedtime:0,
+        currentTime:0,
+        duration:0.01,   
+        id:''
+      }
+    });
   }
   }
 </script>
