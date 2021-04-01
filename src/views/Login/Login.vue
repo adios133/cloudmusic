@@ -115,6 +115,7 @@ export default {
     width: 80%;
     margin: 0 auto;
     color: #333;
+    font-size: 16px;
     .name {
       margin: 10px 3px;
       font-size: 18px;

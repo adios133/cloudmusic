@@ -5,11 +5,20 @@
     </div>
     <div class="song-info">
       <div class="song-name">
-        <span>{{songInfo.songName}}</span>
+        <span>{{songInfo.simpleSong.name}}</span>
+        <span class="alia" v-if="songInfo.simpleSong.alia && songInfo.simpleSong.alia.length > 0">({{songInfo.simpleSong.alia[0]}})</span>
       </div>
       <div class="artists">
-        <span>{{songInfo.artist}}</span>
-        <span v-if="songInfo.al"> - {{songInfo.al.name}}</span>
+        <template v-if="songInfo.simpleSong.ar && songInfo.simpleSong.ar[0].name">
+          <span v-for="(item, index) in songInfo.simpleSong.ar" :key="index">
+            {{ item.name }}<span v-if="index < songInfo.simpleSong.ar.length - 1">/</span>
+          </span>
+        </template>
+        <template v-else>
+          <span>{{songInfo.artist}}</span>
+        </template>
+        <!-- <span>{{songInfo.artist.split(",").join("/")}}</span> -->
+        <span v-if="songInfo.simpleSong.al && songInfo.simpleSong.al.name"> - {{songInfo.simpleSong.al.name}}</span>
       </div>
     </div>
     <div class="more">

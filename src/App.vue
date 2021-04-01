@@ -1,8 +1,12 @@
 <template>
   <div id="app">
+      <!-- <transition name="slide"> -->
+
     <keep-alive exclude="Search,Rrecommend,Home,ListDetail">
-      <router-view/>
+        <router-view/>
     </keep-alive>
+      <!-- </transition> -->
+
   <play-bar v-if="this.$route.meta.showPlaybar" :atBottom="!this.$route.meta.showTab" />
   <main-bar v-if="this.$route.meta.showTab" />
   <play-list :isShow="show" @closeList="closeList" />
@@ -40,4 +44,13 @@ export default {
 <style lang="scss">
 @import url(~assets/css/base.css);
 @import url(//at.alicdn.com/t/font_2360697_u9r0tdqa3l.css);
+// .slide-enter-active,.slide-leave-active {
+//   transition: transform 0.3s;
+// }
+// .slide-enter,.slide-leave-to {
+//   transform: translateY(100vh);
+// }
+// .slide-enter-to,.slide-leave {
+//   transform: translateX(100vw);
+// }
 </style>
