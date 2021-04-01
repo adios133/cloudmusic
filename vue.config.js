@@ -12,5 +12,11 @@ module.exports = {
             .set('views', resolve('./src/views'))
             .set('network', resolve('./src/network'))
             .set('common', resolve('./src/common'))
+    },
+    pages: {
+        index: {
+            entry:'src/main.js',
+            title:'CloudMusic'
+        }
     }
 }

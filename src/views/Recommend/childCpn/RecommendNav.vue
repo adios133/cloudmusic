@@ -42,6 +42,7 @@ export default {
   .rec-nav {
     position: absolute;
     width: 100%;
+    font-size: 16px;
     z-index: 5;
     .back {
       position: absolute;

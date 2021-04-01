@@ -1,12 +1,12 @@
 <template>
   <div class='recommend'>
     <recommend-nav :opicity="opicity" />
-    <recommend-play-all class="fakeall" v-show="isShow" ref="playall1" />
+    <recommend-play-all class="fakeall" v-show="isShow" ref="playall1" v-cloak />
     <scroll class="rec-scroll" :probeType="3" @scrolling="scrolling">
       <recommend-cover :imgUrl="recList[0]" />
-      <div class="content" ref="content">
+      <div class="content" ref="content" >
         <img src="~assets/img/default/arc1.png" alt="" class="arc">
-        <recommend-play-all ref="playall2" />
+        <recommend-play-all ref="playall2" v-show="show" />
         <div class="list" v-for="(item,index) in recList" :key="index">
           <music-item :isRecommend="true" :songInfo="item" :rank="index" @saveList="saveList" />
         </div>
@@ -44,6 +44,7 @@ export default {
       recList:[],
       // opicity:0,
       // isShow:false,
+      show:false
     };
   },
   methods: {
@@ -68,6 +69,9 @@ export default {
   created() {
     Toast.loading('加载中...')
     this._getRecommend()
+  },
+  beforeUpdate() {
+      this.show = true
   }
   }
 </script>
@@ -89,6 +93,9 @@ export default {
         font-size: 0;
         .arc {
           width: 100%;
+        }
+        [v-clock] {
+          display: none;
         }
       }
     }

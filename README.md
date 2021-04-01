@@ -2,6 +2,7 @@
 基于`vuejs`开发的移动端仿网易云客户端的应用.
 ## require
 后端`API`地址：https://github.com/Binaryify/NeteaseCloudMusicApi
+
 项目线上地址:http://121.4.98.241:3002
 ## Project setup
 ```

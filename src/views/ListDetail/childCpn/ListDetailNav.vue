@@ -45,6 +45,7 @@ export default {
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      font-size: 16px;
     }
   }
 </style>
