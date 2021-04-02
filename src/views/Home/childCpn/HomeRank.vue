@@ -54,10 +54,10 @@ export default {
     toPlaying(id,index) {
       this.$store.commit('setPlaylist',this.rankIdList[index].songList)
       this.$router.push("/playing/" + id);
-      this.$bus.$emit('playsong',id)
       this.$store.commit('setState',false)
       this.$store.commit("setLine",0)
       this.$store.commit('setFm',false)
+      this.$bus.$emit('playsong',id)
     },
   },
 };

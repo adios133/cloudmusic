@@ -13,7 +13,6 @@
 
 <script>
 import Scroll from 'components/common/Scroll/Scroll'
-import { CellGroup } from 'vant';
 export default {
   name:"Lyric",
   components:{
@@ -33,8 +32,8 @@ export default {
       data:[],
       // 解决再次进入页面歌词跳转到指定位置，保存到vuex
       // currentLine:0,
-      height:(window.innerHeight-180) / 2 ,
-      duration:0,
+      height: 0 ,
+      duration: 0,
       index:0
     };
   },
@@ -44,11 +43,18 @@ export default {
     },
   },  
   mounted() {
+    /*
+    const h = window.innerHeight
+    console.log("1:",h);  // 从homerank 进来播放 iphone6 1334
+    console.log(window);  // window对象中的又是 667 
+    不知道为什么从home排行榜进播放界面 获取的 window.innerHeight 不正确 ，其他界面进入获取的又是正确的
+    */
     this.$bus.$on('playingsong',data => {
+      this.height = (window.innerHeight - 180) / 2
       this.duration = data.duration
       if (this.data.length > 0 && this.$store.state.currentLine <this.data.length && data.currentTime >= this.data[this.$store.state.currentLine].time) {
         if (this.$store.state.currentLine <= this.data.length - 1) {
-          this.$refs.scroll.scrollTo(0,-this.$refs.item[this.$store.state.currentLine].offsetTop + this.height,0)
+          this.$refs.scroll && this.$refs.scroll.scrollTo(0,-this.$refs.item[this.$store.state.currentLine].offsetTop + this.height,0)
           this.$store.commit("setLine",this.$store.state.currentLine+=1)
         }else {
           this.$store.commit("setLine",this.data.length-1)
@@ -95,10 +101,11 @@ export default {
     text-align: center;
     color: rgba(255, 255, 255,.7);
     .content {
+      position: relative;
       width: 90%;
       margin: 0 auto;
-      padding-top: calc(50vh - 90px);
-      padding-bottom: calc(50vh - 70px);
+      padding-top: calc(50vh - 111px);
+      padding-bottom: calc(50vh - 81px);
       .line {
         margin: 15px;
         font-size: 14px;

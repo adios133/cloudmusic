@@ -95,7 +95,8 @@ export default {
       return (
         this.$route.path.startsWith("/playing") ||
         this.$route.path.startsWith("/search") ||
-        this.$route.path.startsWith("/fm")
+        this.$route.path.startsWith("/fm") || 
+        this.$route.path.startsWith("/video")
       );
     },
     isPlaying() {
@@ -200,9 +201,9 @@ export default {
     // 监听播放暂停
     this.$bus.$on("stateChange", data => {
       if (data) {
-        this.$refs.audio.play();
+        this.$refs.audio.play()
       } else {
-        this.$refs.audio.pause();
+        this.$refs.audio.pause()
       }
     });
     // 监听点击下一首，从播放列表播放第‘index’首
@@ -212,7 +213,7 @@ export default {
     });
     // 监听如果是单曲循环，每点击下一首，设置当前播放时间为0
     this.$bus.$on("oneSong", () => {
-      this.$refs.audio.currentTime = 0;
+      this.$refs.audio.currentTime = 0
     });
     // 监听，并跳转到指定位置
     this.$bus.$on("seekTo", position => {

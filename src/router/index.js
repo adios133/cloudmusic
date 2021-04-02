@@ -49,7 +49,7 @@ const routes = [
     component:Video,
     meta: {
       showTab:true,
-      showPlaybar:false
+      showPlaybar:true
     }
   },
   {

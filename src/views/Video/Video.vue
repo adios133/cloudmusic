@@ -93,6 +93,12 @@ export default {
           duration:1500
         })
     })
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm=> {
+       vm.$store.commit('setState',false)
+      vm.$bus.$emit('stateChange',false)
+    })
   }
   }
 </script>
