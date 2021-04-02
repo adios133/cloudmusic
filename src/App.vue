@@ -44,13 +44,4 @@ export default {
 <style lang="scss">
 @import url(~assets/css/base.css);
 @import url(//at.alicdn.com/t/font_2360697_u9r0tdqa3l.css);
-// .slide-enter-active,.slide-leave-active {
-//   transition: transform 0.3s;
-// }
-// .slide-enter,.slide-leave-to {
-//   transform: translateY(100vh);
-// }
-// .slide-enter-to,.slide-leave {
-//   transform: translateX(100vw);
-// }
 </style>

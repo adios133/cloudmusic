@@ -5,7 +5,7 @@
         <div class="rank-item">
           <h4 class="title" @click="toListDetail(item.id)">{{ item.title }}</h4>
         <div class="list" v-for="(song, indey) in item.songList" :key="indey" @click="toPlaying(song.id,index)">
-          <img :src="song.al.picUrl" alt="" />
+          <img v-lazy="song.al.picUrl" alt="" />
           <div class="rank">{{ indey + 1 }}</div>
           <div class="song-info">
             <span class="song-name">{{ song.name }} -</span>

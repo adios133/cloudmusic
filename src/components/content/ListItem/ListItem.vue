@@ -1,7 +1,7 @@
 <template>
   <div class='list-item'>
     <img src="~assets/img/default/default.jpg" alt="" v-if="imgSrc === ''">
-    <img :src="imgSrc" alt="" v-else>
+    <img v-lazy="imgSrc" alt="" v-else>
     <div class="desc">{{desc}}</div>
     <div class="count"><span class="iconfont icon-24gl-play-copy"></span>{{playCount | count}}</div>
   </div>
@@ -54,7 +54,7 @@ export default {
     }
     .count {
       position: absolute;
-      top:0;
+      top:3px;
       right: 7px;
       font-size: 12px;
       color: #fff;

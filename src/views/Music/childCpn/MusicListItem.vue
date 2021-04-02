@@ -1,7 +1,7 @@
 <template>
   <div class='music-list-item' v-if="listInfo.id" @click="itemClick(listInfo.id)">
     <div class="cover">
-      <img :src="listInfo.coverImgUrl" alt="">
+      <img v-lazy="listInfo.coverImgUrl" alt="">
     </div>
     <div class="list-info">
       <div class="name">{{listInfo.name}}</div>

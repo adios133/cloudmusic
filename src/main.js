@@ -3,6 +3,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import FastClick from 'fastclick'
+import VueLazyload from 'vue-lazyload'
+
+Vue.use(VueLazyload,{
+  loading:require('./assets/img/default/loading.gif')
+})
 
 Vue.config.productionTip = false
 

@@ -1,7 +1,7 @@
 <template>
   <div class='music-item' v-if="songInfo.name" @click="toPlay">
     <div class="cover">
-      <img :src="songInfo.al.picUrl" alt="" v-if="isRecommend">
+      <img v-lazy="songInfo.al.picUrl" alt="" v-if="isRecommend">
       <span v-else>{{rank + 1}}</span>
     </div>
     <div class="song-info">
