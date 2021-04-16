@@ -4,7 +4,7 @@ export default (config)=> {
   const instance = axios.create({
     // 线上地址
     baseURL:process.env.VUE_APP_BASE_URL,
-    timeout:20000,
+    timeout:30000,
     withCredentials:true
   })
   // 请求拦截

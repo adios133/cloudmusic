@@ -39,7 +39,8 @@ export default {
       width: 80px;
       text-align: center;
       img {
-        width: 80%;
+        width: 64px;
+        height: 64px;
         margin-top: 8px;
         vertical-align: middle;
         border-radius: 10px;

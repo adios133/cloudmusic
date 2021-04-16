@@ -108,6 +108,7 @@ export const LyricModule = {
           this.lyric = [{time:0,msg:'暂无歌词'}]
         }else if (res.tlyric.lyric){
           this.lyric = this.lyricsFormat(res.lrc.lyric)
+          // translate lyric 
           this.tlyric = this.lyricsFormat(res.tlyric.lyric)
           this.mergeLrcTranslate(this.lyric,this.tlyric)
         }else {
