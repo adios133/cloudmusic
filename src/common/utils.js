@@ -1,5 +1,5 @@
 export function padLeftZero (str) {
-  return ('00' + str).substr(str.length);
+  return ('00' + str).substring(str.length);
 };
 
 // 防抖函数
