@@ -3,7 +3,7 @@
 ## require
 后端`API`地址：https://github.com/Binaryify/NeteaseCloudMusicApi
 ## online project
-项目线上地址:http://121.4.98.241:3002
+项目线上地址:todo
 ## Project setup
 ```
 npm install
