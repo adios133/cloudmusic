@@ -1,1 +1,3 @@
 export const GRADIENT_DISTANCE = 190
+
+export const TEST_URL = 'http://m8.music.126.net/20240308145013/080042c823179f0167604dc5b8ada9d4/ymusic/QH1oYjnbeFHgw9fCRJ0BAA==/509951163189375279'

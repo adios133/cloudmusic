@@ -1,13 +1,15 @@
 <script setup>
 defineOptions({
-  name:"App"
+  name: "App",
 })
 </script>
 
 <template>
-  <div>App</div>
+  <RouterView v-slot="{ Component }">
+    <Transition>
+      <Component :is="Component" />
+    </Transition>
+  </RouterView>
 </template>
 
-<style lang="less" scoped>
-  
-</style>
+<style lang="less"></style>
