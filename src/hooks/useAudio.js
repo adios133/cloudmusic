@@ -45,7 +45,7 @@ export const useAudio = () => {
     audio.volume = volume
   }
   // 跳转至指定时间
-  const onAudioSeekTo = time => {
+  const onSeekTo = time => {
     audio.currentTime = time
   }
   // 音频播放回调
@@ -78,7 +78,7 @@ export const useAudio = () => {
     onPlayed,
     onPlaying,
     onPaused,
-    onAudioSeekTo,
+    onSeekTo,
     onPlayEnd,
   }
 }
