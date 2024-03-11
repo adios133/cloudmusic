@@ -1,11 +1,6 @@
 export const useAudio = () => {
+  if (!Audio) throw '不支持Audio!'
   const audio = new Audio()
-  // const data ={
-  //   currentTime: '',
-  //   duration: '16.34',
-  //   volume: '0.5',
-  //   src: ''
-  // }
   // 事件回调
   const audioCalbacks = {}
   // 自动播放
@@ -13,7 +8,14 @@ export const useAudio = () => {
     audio.play()
   }
   const onAudioTimeUpdate = e => {
-    audioCalbacks.onPlaying && audioCalbacks.onPlaying(e)
+    audioCalbacks.onPlaying &&
+      audioCalbacks.onPlaying(e, {
+        currentTime: audio.currentTime,
+        duration: audio.duration,
+        volume: audio.volume,
+        src: audio.src,
+        playRate: audio.currentTime / audio.duration || 0
+      })
   }
   // 开始播放
   const onAudioPlay = e => {

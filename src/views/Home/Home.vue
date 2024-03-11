@@ -20,8 +20,8 @@ const {
 const onUrl = () => {
   onSetAudioUrl(TEST_URL)
 }
-onPlaying(e => {
-  console.log("playing", e)
+onPlaying((e,info) => {
+  console.log("playing", e,info)
 })
 onPlayed(e => {
   console.log("play", e)

@@ -37,7 +37,7 @@ export default {
     RecommendCover,
     MusicItem,
     RecommendPlayAll,
-    RecommendNav   
+    RecommendNav    
   },
   data () {
     return {
@@ -52,6 +52,7 @@ export default {
       getRecommend().then(res=> {
         Toast.clear()
         this.recList = res.data.dailySongs
+        if (res.code === 200) {}
       }).catch(err=> {
         Toast.fail({
           message:err.response.data.msg,

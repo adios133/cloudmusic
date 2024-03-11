@@ -1,25 +1,19 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import mutations from './mutations'
-import actions from './mutations'
-import getters from './getters'
-
-Vue.use(Vuex)
-const state = {
-  userId:'',
-  playlist:null,
-  playing:null,
-  isplay:false,
-  playorder:'list',   // 播放方式
-  currentLine:0,   //记录歌词
-  isFm:false,
-  volume:0.6, //音量
-  lastestVol:0//控制静音，记录上次音量
-}
-
-export default new Vuex.Store({
-  state,
-  mutations,
-  actions,
-  getters
+import { defineStore } from "pinia"
+import { ref } from "vue"
+import { PLAY_STYLE, DEFAULT_VOLUME, DEFAULT_PLAY_STYLE } from "@/config/play"
+export const usePlayInfo = defineStore("play", () => {
+  const playList = ref([]) // 播放列表
+  const currentPlay = ref("") // 当前播放
+  const volume = ref(DEFAULT_VOLUME) // 当前音量
+  const lastestVolume = ref(DEFAULT_VOLUME) // 上次音量(静音切换)
+  const playState = ref(false) // 是否正在播放
+  const playStyle = ref(DEFAULT_PLAY_STYLE)
+  return {
+    playList,
+    currentPlay,
+    volume,
+    lastestVolume,
+    playState,
+    playStyle
+  }
 })
