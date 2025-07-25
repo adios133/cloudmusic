@@ -1,5 +1,5 @@
 <template>
-  <div class='search'>
+  <div class="search">
     <search-box @getContent="getContent" />
     <scroll class="search-scroll">
       <div class="content" v-if="words === ''">
@@ -12,16 +12,15 @@
 </template>
 
 <script>
-import {getHotSearch,searchSong} from 'network/search'
+import { getHotSearch, searchSong } from "@/network/search";
 
-
-import SearchBox from './childCpn/SearchBox'
-import SearchHistory from './childCpn/SearchHistory'
-import SearchHot from './childCpn/SearchHot'
-import SearchList from './childCpn/SearchList'
-import Scroll from 'components/common/Scroll/Scroll'
+import SearchBox from "./childCpn/SearchBox.vue";
+import SearchHistory from "./childCpn/SearchHistory.vue";
+import SearchHot from "./childCpn/SearchHot.vue";
+import SearchList from "./childCpn/SearchList.vue";
+import Scroll from "@/components/common/Scroll/Scroll.vue";
 export default {
-  name:"Search",
+  name: "Search",
   components: {
     SearchBox,
     SearchHistory,
@@ -29,54 +28,52 @@ export default {
     SearchList,
     Scroll
   },
-  data () {
+  data() {
     return {
-      hotSearch:[],
-      searchWord:'',
-      timer:null,
-      searchList:[]
+      hotSearch: [],
+      searchWord: "",
+      timer: null,
+      searchList: []
     };
   },
   computed: {
     words() {
-      return this.searchWord.trim()
+      return this.searchWord.trim();
     }
   },
   methods: {
     // 热搜列表
     _getHotSearch() {
-      getHotSearch().then(res => {
-        this.hotSearch = res.data
-      })
+      getHotSearch().then((res) => {
+        this.hotSearch = res.data;
+      });
     },
     // 搜索封装
     _searchSong(keyword) {
-      searchSong(keyword).then(res => {
-        res.result ? this.searchList = res.result.songs : ''
-      })
+      searchSong(keyword).then((res) => {
+        res.result ? (this.searchList = res.result.songs) : "";
+      });
     },
     // 发送搜索请求，防抖
     getContent(content) {
-      this.searchWord = content
-      if (this.timer) clearTimeout(this.timer)
+      this.searchWord = content;
+      if (this.timer) clearTimeout(this.timer);
       this.timer = setTimeout(() => {
-        this._searchSong(this.words)
-      },500)
+        this._searchSong(this.words);
+      }, 500);
     }
-    
   },
   created() {
-    this._getHotSearch()
-  },
-  
+    this._getHotSearch();
   }
+};
 </script>
 
-<style lang="scss" scoped>
-  .search {
-    padding: 10px;
-    .search-scroll {
-      height: calc(100vh - 44px);
-    }
+<style lang="less" scoped>
+.search {
+  padding: 10px;
+  .search-scroll {
+    height: calc(100vh - 44px);
   }
+}
 </style>

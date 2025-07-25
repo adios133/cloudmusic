@@ -1,5 +1,5 @@
 <template>
-  <div class='nav-bar'>
+  <div class="nav-bar">
     <div class="left"><slot name="left"></slot></div>
     <div class="center"><slot name="center"></slot></div>
     <div class="right"><slot name="right"></slot></div>
@@ -7,24 +7,24 @@
 </template>
 
 <script>
-
 export default {
-  name:"Navbar",
-  }
+  name: "Navbar"
+};
 </script>
 
-<style lang="scss" scoped>
-  .nav-bar {
-    display: flex;
-    height: 44px;
-    text-align: center;
-    line-height: 44px;
-    .left,.right {
-      width: 60px;
-    }
-    .center {
-      flex: 1;
-      text-align: center;
-    }
+<style lang="less" scoped>
+.nav-bar {
+  display: flex;
+  height: 44px;
+  text-align: center;
+  line-height: 44px;
+  .left,
+  .right {
+    width: 60px;
   }
+  .center {
+    flex: 1;
+    text-align: center;
+  }
+}
 </style>

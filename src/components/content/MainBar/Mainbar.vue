@@ -1,53 +1,53 @@
 <template>
-    <tab-bar class="main-bar">
-      <tab-bar-item path='/home'>
-        <template v-slot:icon>
-          <div class="iconfont icon-home"></div>
-        </template>
-        <template v-slot:text>
-          <i>主页</i>
-        </template>
-      </tab-bar-item>
-      <tab-bar-item path="/music">
-        <template v-slot:icon>
-          <div class="iconfont icon-musicnote"></div>
-        </template>
-        <template v-slot:text>
-          <i>音乐</i>
-        </template>
-      </tab-bar-item>
-      <tab-bar-item path="/video">
-        <template v-slot:icon>
-          <div class="iconfont icon-video1"></div>
-        </template>
-        <template v-slot:text>
-          <i>视频</i>
-        </template>
-      </tab-bar-item>
-      <tab-bar-item path="/profile">
-        <template v-slot:icon>
-          <div class="iconfont icon-wode"></div>
-        </template>
-        <template v-slot:text>
-          <i>我的</i>
-        </template>
-      </tab-bar-item>
-    </tab-bar>
+  <tab-bar class="main-bar">
+    <tab-bar-item path="/home">
+      <template v-slot:icon>
+        <div class="iconfont icon-home"></div>
+      </template>
+      <template v-slot:text>
+        <i>主页</i>
+      </template>
+    </tab-bar-item>
+    <tab-bar-item path="/music">
+      <template v-slot:icon>
+        <div class="iconfont icon-musicnote"></div>
+      </template>
+      <template v-slot:text>
+        <i>音乐</i>
+      </template>
+    </tab-bar-item>
+    <tab-bar-item path="/video">
+      <template v-slot:icon>
+        <div class="iconfont icon-video1"></div>
+      </template>
+      <template v-slot:text>
+        <i>视频</i>
+      </template>
+    </tab-bar-item>
+    <tab-bar-item path="/profile">
+      <template v-slot:icon>
+        <div class="iconfont icon-wode"></div>
+      </template>
+      <template v-slot:text>
+        <i>我的</i>
+      </template>
+    </tab-bar-item>
+  </tab-bar>
 </template>
 
 <script>
-import TabBar from "components/common/TabBar/TabBar";
-import TabBarItem from "components/common/TabBar/TabBarItem";
+import TabBar from "@/components/common/TabBar/TabBar.vue";
+import TabBarItem from "@/components/common/TabBar/TabBarItem.vue";
 export default {
   name: "Mainbar",
   components: {
     TabBar,
-    TabBarItem,
-  },
+    TabBarItem
+  }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .main-bar {
   display: flex;
   justify-content: space-evenly;

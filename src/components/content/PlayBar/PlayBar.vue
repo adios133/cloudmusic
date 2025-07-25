@@ -1,8 +1,12 @@
 <template>
   <div class="play-bar" :class="{ 'at-bottom': atBottom }" v-show="!PlayPage">
-    <div class="music-info left" @click="toPlaying" v-if="this.$store.state.playing">
+    <div
+      class="music-info left"
+      @click="toPlaying"
+      v-if="this.$store.state.playing"
+    >
       <div class="song-cover">
-        <img src="~assets/img/default/disc.png" alt="" class="disc">
+        <img src="@/assets/img/default/disc.png" alt="" class="disc" />
         <img
           :src="this.$store.state.playing.al.picUrl"
           alt=""
@@ -12,14 +16,16 @@
       </div>
       <div class="info">
         <span class="song-name">{{ this.$store.state.playing.name }}</span>
-        <span class="singer"> - {{ this.$store.state.playing.ar[0].name }}</span>
+        <span class="singer">
+          - {{ this.$store.state.playing.ar[0].name }}</span
+        >
       </div>
     </div>
     <div class="music-info left" @click="toPlaying" v-else>
       <div class="song-cover">
-        <img src="~assets/img/default/disc.png" alt="" class="disc">
+        <img src="@/assets/img/default/disc.png" alt="" class="disc" />
         <img
-          src="~assets/img/default/default.jpg"
+          src="@/assets/img/default/default.jpg"
           alt=""
           :class="{ playing: isPlaying }"
           class="cover"
@@ -70,19 +76,19 @@ export default {
   props: {
     playState: {
       type: Boolean,
-      default: false,
+      default: false
     },
     atBottom: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
       currentRate: 90,
       musicUrl: "",
       id: "",
-      rate: 0,
+      rate: 0
     };
   },
   computed: {
@@ -95,13 +101,13 @@ export default {
       return (
         this.$route.path.startsWith("/playing") ||
         this.$route.path.startsWith("/search") ||
-        this.$route.path.startsWith("/fm") || 
+        this.$route.path.startsWith("/fm") ||
         this.$route.path.startsWith("/video")
       );
     },
     isPlaying() {
       return this.$store.state.isplay;
-    },
+    }
   },
   methods: {
     // 由于移动端autoplay失效，监听当音乐可以播放时，播放
@@ -121,10 +127,10 @@ export default {
     toPlaying() {
       if (this.id && !this.$store.state.isFm) {
         this.$router.push("/playing/" + this.id);
-      }else if(this.$store.state.isFm) {
-        this.$router.push('/fm')
-      }else {
-        return
+      } else if (this.$store.state.isFm) {
+        this.$router.push("/fm");
+      } else {
+        return;
       }
     },
     // 弹出播放列表
@@ -133,10 +139,10 @@ export default {
     },
     // 当音乐播放时持续触发传递播放进度
     songPlaying() {
-      const bufferedTime = this.$refs.audio.buffered
-      let bufferedtime
-      if(bufferedTime.length > 0) {
-        bufferedtime = bufferedTime.end(bufferedTime.length - 1)
+      const bufferedTime = this.$refs.audio.buffered;
+      let bufferedtime;
+      if (bufferedTime.length > 0) {
+        bufferedtime = bufferedTime.end(bufferedTime.length - 1);
       }
       if (this.$refs.audio.currentTime != 0) {
         this.$bus.$emit("playingsong", {
@@ -145,7 +151,8 @@ export default {
           currentTime: this.$refs.audio.currentTime,
           bufferedtime
         });
-        this.rate = (this.$refs.audio.currentTime / this.$refs.audio.duration) * 100;
+        this.rate =
+          (this.$refs.audio.currentTime / this.$refs.audio.duration) * 100;
       }
     },
     // 控制播放状态,自动播放,播放时设置为true
@@ -161,8 +168,8 @@ export default {
       this.$store.commit("setState", false);
       // 先判断是否为fm界面
       if (this.$store.state.isFm) {
-          this.$bus.$emit('fmSongEnd')
-        return
+        this.$bus.$emit("fmSongEnd");
+        return;
       }
 
       if (this.$store.state.playorder === "list") {
@@ -185,50 +192,50 @@ export default {
 
     // 获取音乐播放地址
     _getMusicUrl(id) {
-      getMusicUrl(id).then(res => {
+      getMusicUrl(id).then((res) => {
         this.id = res.data[0].id;
         this.musicUrl = res.data[0].url;
       });
-    },
+    }
   },
   mounted() {
     // 监听从播放列表点击，获取音乐url
-    this.$bus.$on("playsong", id => {
+    this.$bus.$on("playsong", (id) => {
       // 将现行音乐停掉，在网络环境不好时，可能下一首歌还没加载，当前还在播放,url没替换掉
-      this.musicUrl = ''
-      this._getMusicUrl(id)
+      this.musicUrl = "";
+      this._getMusicUrl(id);
     });
     // 监听播放暂停
-    this.$bus.$on("stateChange", data => {
+    this.$bus.$on("stateChange", (data) => {
       if (data) {
-        this.$refs.audio.play()
+        this.$refs.audio.play();
       } else {
-        this.$refs.audio.pause()
+        this.$refs.audio.pause();
       }
     });
     // 监听点击下一首，从播放列表播放第‘index’首
-    this.$bus.$on("nextSong", index => {
+    this.$bus.$on("nextSong", (index) => {
       const id = this.$store.state.playlist[index].id;
       this._getMusicUrl(id);
     });
     // 监听如果是单曲循环，每点击下一首，设置当前播放时间为0
     this.$bus.$on("oneSong", () => {
-      this.$refs.audio.currentTime = 0
+      this.$refs.audio.currentTime = 0;
     });
     // 监听，并跳转到指定位置
-    this.$bus.$on("seekTo", position => {
+    this.$bus.$on("seekTo", (position) => {
       this.$refs.audio.currentTime = position * this.$refs.audio.duration;
     });
-    this.$bus.$on("volumeChange",percent => {
-      this.$refs.audio.volume = percent
-    })
+    this.$bus.$on("volumeChange", (percent) => {
+      this.$refs.audio.volume = percent;
+    });
     // 挂载读取音量
-    this.$refs.audio.volume= this.$store.state.volume
-  },
+    this.$refs.audio.volume = this.$store.state.volume;
+  }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 @keyframes rotateCover {
   from {
     transform: rotate(0deg);

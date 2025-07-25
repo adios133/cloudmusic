@@ -1,21 +1,35 @@
 <template>
   <div class="home-rank">
-    <van-swipe class="rank-scroll" :show-indicators="false" :stop-propagation="false">
-      <van-swipe-item v-for="(item,index) in rankIdList" :key="item.id" class="van-item">
+    <van-swipe
+      class="rank-scroll"
+      :show-indicators="false"
+      :stop-propagation="false"
+    >
+      <van-swipe-item
+        v-for="(item, index) in rankIdList"
+        :key="item.id"
+        class="van-item"
+      >
         <div class="rank-item">
           <h4 class="title" @click="toListDetail(item.id)">{{ item.title }}</h4>
-        <div class="list" v-for="(song, indey) in item.songList" :key="indey" @click="toPlaying(song.id,index)">
-          <img v-lazy="song.al.picUrl" alt="" />
-          <div class="rank">{{ indey + 1 }}</div>
-          <div class="song-info">
-            <span class="song-name">{{ song.name }} -</span>
-            <span class="artists">
-              <span v-for="(artist, indez) in song.ar" :key="artist.id">
-                {{ artist.name }}<span v-if="indez < song.ar.length - 1">/</span>
+          <div
+            class="list"
+            v-for="(song, indey) in item.songList"
+            :key="indey"
+            @click="toPlaying(song.id, index)"
+          >
+            <img :src="song.al.picUrl" alt="" />
+            <div class="rank">{{ indey + 1 }}</div>
+            <div class="song-info">
+              <span class="song-name">{{ song.name }} -</span>
+              <span class="artists">
+                <span v-for="(artist, indez) in song.ar" :key="artist.id">
+                  {{ artist.name
+                  }}<span v-if="indez < song.ar.length - 1">/</span>
+                </span>
               </span>
-            </span>
+            </div>
           </div>
-        </div>
         </div>
       </van-swipe-item>
     </van-swipe>
@@ -23,10 +37,10 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import {Swipe, SwipeItem } from 'vant'
-Vue.use(Swipe)
-Vue.use(SwipeItem)
+import Vue from "vue";
+import { Swipe, SwipeItem } from "vant";
+Vue.use(Swipe);
+Vue.use(SwipeItem);
 export default {
   name: "HomeRank",
   props: {
@@ -39,10 +53,10 @@ export default {
   },
   data() {
     return {
-      startX:0,
-      moveX:0,
-      x:0
-    }
+      startX: 0,
+      moveX: 0,
+      x: 0
+    };
   },
   methods: {
     // 跳转到歌单详情页面，携带id
@@ -51,19 +65,19 @@ export default {
       this.$router.push("/listdetail/" + id);
     },
     // 跳转到播放页面，传递id
-    toPlaying(id,index) {
-      this.$store.commit('setPlaylist',this.rankIdList[index].songList)
+    toPlaying(id, index) {
+      this.$store.commit("setPlaylist", this.rankIdList[index].songList);
       this.$router.push("/playing/" + id);
-      this.$store.commit('setState',false)
-      this.$store.commit("setLine",0)
-      this.$store.commit('setFm',false)
-      this.$bus.$emit('playsong',id)
-    },
-  },
+      this.$store.commit("setState", false);
+      this.$store.commit("setLine", 0);
+      this.$store.commit("setFm", false);
+      this.$bus.$emit("playsong", id);
+    }
+  }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .home-rank {
   width: 100vw;
   height: 255px;
@@ -118,7 +132,6 @@ export default {
             font-size: 14px;
           }
         }
-        
       }
     }
   }

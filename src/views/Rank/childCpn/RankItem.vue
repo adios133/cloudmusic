@@ -1,12 +1,12 @@
-%
 <template>
   <div
     class="rank-item"
     v-if="Object.keys(rankInfo).length > 0"
     @click="goDetail(rankInfo.id)"
-  > <div class="bg">
-    <img :src="rankInfo.coverImgUrl" alt="">
-  </div>
+  >
+    <div class="bg">
+      <img :src="rankInfo.coverImgUrl" alt="" />
+    </div>
     <div class="info">{{ rankInfo.updateFrequency }}</div>
     <div class="content">
       <div class="cover">
@@ -33,20 +33,18 @@ export default {
       type: Object,
       default() {
         return {};
-      },
-    },
+      }
+    }
   },
   methods: {
     goDetail(id) {
       this.$router.push("/listdetail/" + id);
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style lang="scss" scoped>
-$color1:#fff;
-$color2:#eee;
+<style lang="less" scoped>
 .rank-item {
   position: relative;
   overflow: hidden;
@@ -54,11 +52,11 @@ $color2:#eee;
   margin: 10px auto;
   padding: 10px 0;
   font-size: 16px;
-  color: $color1;
+  color: #fff;
   border-radius: 12px;
   .bg {
-    position:absolute;
-    transform: translate(0,-10px);
+    position: absolute;
+    transform: translate(0, -10px);
     filter: blur(20px);
     z-index: -1;
     img {
@@ -68,7 +66,7 @@ $color2:#eee;
   .info {
     margin-right: 10px;
     text-align: right;
-    color: $color2;
+    color: #eee;
     font-size: 14px;
   }
   .content {
@@ -79,7 +77,7 @@ $color2:#eee;
         font-weight: 700;
         text-align: center;
         line-height: 1.5;
-        color: $color1;
+        color: #fff;
       }
       img {
         width: 80px;
@@ -92,7 +90,7 @@ $color2:#eee;
       width: calc(100% - 90px);
       margin-top: 20px;
       margin-left: 10px;
-      color: $color1;
+      color: #fff;
       .song {
         font-size: 14px;
         overflow: hidden;

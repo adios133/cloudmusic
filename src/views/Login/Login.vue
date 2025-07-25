@@ -23,7 +23,9 @@
         />
       </div>
       <div class="loginBtn" @click="goLogin">登录</div>
-      <div class="reset-pwd">忘记密码?<span class="iconfont icon-more"></span></div>
+      <div class="reset-pwd">
+        忘记密码?<span class="iconfont icon-more"></span>
+      </div>
     </form>
     <div class="create-account">
       <span>还没有账号？</span>
@@ -34,7 +36,7 @@
 </template>
 
 <script>
-import { logIn } from "network/login";
+import { logIn } from "@/network/login";
 import Vue from "vue";
 import { Toast } from "vant";
 Vue.use(Toast);
@@ -44,14 +46,14 @@ export default {
     return {
       phone: "",
       password: "",
-      topath:''
+      topath: ""
     };
   },
   // 记录来时路由
-  beforeRouteEnter (to, from, next) {
-    next(vm=> {
-      vm.topath = from.path
-    })
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      vm.topath = from.path;
+    });
   },
   methods: {
     getFormData(e) {
@@ -60,51 +62,52 @@ export default {
     },
     goLogin() {
       // 前端验证
-      const phoneReg = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+      const phoneReg =
+        /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
       const passwordReg = /^[a-zA-Z]\w{5,17}$/;
-      if(!phoneReg.test(this.phone)) {
+      if (!phoneReg.test(this.phone)) {
         Toast.fail({
-          message: '手机号格式不正确',
-          duration:1500
-          })
-      }else if(!passwordReg.test(this.password)) {
+          message: "手机号格式不正确",
+          duration: 1500
+        });
+      } else if (!passwordReg.test(this.password)) {
         Toast.fail({
-          message: '密码格式不正确',
-          duration:1500
-        })
-      }else {
+          message: "密码格式不正确",
+          duration: 1500
+        });
+      } else {
         logIn(this.phone, this.password).then((res) => {
-          if(res.code === 200) {
-            this.$store.commit("setUid",res.profile.userId)
+          if (res.code === 200) {
+            this.$store.commit("setUid", res.profile.userId);
             Toast.success({
-              message: '登陆成功',
-              duration:1200,
-              onClose:()=>{
-                this.$router.push(`${this.topath}`)
-                location.reload()
+              message: "登陆成功",
+              duration: 1200,
+              onClose: () => {
+                this.$router.push(`${this.topath}`);
+                location.reload();
               }
-            })
+            });
           }
-          if(res.code === 502) {
+          if (res.code === 502) {
             Toast.fail({
               message: res.message,
-              duration:1500
-            })
+              duration: 1500
+            });
           }
-          if(res.code === 400) {
+          if (res.code === 400) {
             Toast.fail({
-              message: '手机号错误',
-              duration:1500
-            })
+              message: "手机号错误",
+              duration: 1500
+            });
           }
-      });
+        });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 #login {
   .welcome {
     margin: 70px 30px;
@@ -155,7 +158,7 @@ export default {
     text-align: center;
     font-size: 13px;
     span:nth-child(2) {
-    color: #5870da;
+      color: #5870da;
     }
   }
 }

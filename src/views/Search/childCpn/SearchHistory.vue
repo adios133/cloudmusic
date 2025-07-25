@@ -1,42 +1,44 @@
 <template>
-  <div class='search-history'>
+  <div class="search-history">
     <span class="title">历史</span>
     <span class="history" @click="itemClick">
-      <span v-for="(item,index) in searchHistory" :key="index">{{item}}</span>
+      <span v-for="(item, index) in searchHistory" :key="index">{{
+        item
+      }}</span>
     </span>
     <span
-    v-if="searchHistory"
-    class="clear-history iconfont icon-cancel" 
-    @click="clearHistory"></span>
+      v-if="searchHistory"
+      class="clear-history iconfont icon-cancel"
+      @click="clearHistory"
+    ></span>
   </div>
 </template>
 
 <script>
-
 export default {
-  name:"SearchHistory",
-  data () {
+  name: "SearchHistory",
+  data() {
     return {
-      searchHistory:[]
+      searchHistory: []
     };
   },
   methods: {
     clearHistory() {
-      this.searchHistory = null
-      localStorage.removeItem('history')
+      this.searchHistory = null;
+      localStorage.removeItem("history");
     },
     // 点击历史，自动填入input
     itemClick(e) {
-      this.$bus.$emit('fillWord',e.target.innerText)
+      this.$bus.$emit("fillWord", e.target.innerText);
     }
   },
   mounted() {
-    this.searchHistory = JSON.parse(localStorage.getItem('history'))
+    this.searchHistory = JSON.parse(localStorage.getItem("history"));
   }
-  }
+};
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .search-history {
   padding: 10px;
   .title {
@@ -50,8 +52,8 @@ export default {
     font-size: 12px;
     color: #fff;
     border-radius: 8px;
-    background-color: rgba(155,155,155,.4);
-    box-shadow: 0 0 3px 3px rgba(155,155,155,.4);
+    background-color: rgba(155, 155, 155, 0.4);
+    box-shadow: 0 0 3px 3px rgba(155, 155, 155, 0.4);
   }
   .history {
     span {
@@ -60,10 +62,9 @@ export default {
       margin: 6px;
       color: #444;
       font-size: 13px;
-      background-color: #F8F8F8;
+      background-color: #f8f8f8;
       border-radius: 10px;
     }
   }
 }
-  
 </style>

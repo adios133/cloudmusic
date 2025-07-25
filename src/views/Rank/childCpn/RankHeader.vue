@@ -1,5 +1,5 @@
 <template>
-  <div class='rank-head'>
+  <div class="rank-head">
     <nav-bar>
       <template v-slot:left>
         <span class="iconfont icon-back1" @click="goBack"></span>
@@ -12,22 +12,22 @@
 </template>
 
 <script>
-import NavBar from 'components/common/NavBar/NavBar'
+import NavBar from "@/components/common/NavBar/NavBar.vue";
 export default {
-  name:"RankHeader",
+  name: "RankHeader",
   components: {
     NavBar
   },
   methods: {
     goBack() {
-      this.$router.go(-1)
+      this.$router.go(-1);
     }
-  },
   }
+};
 </script>
 
-<style lang="scss" scoped>
-  .rank-head {
-    border-bottom: 1px solid #eee;
-  }
+<style lang="less" scoped>
+.rank-head {
+  border-bottom: 1px solid #eee;
+}
 </style>

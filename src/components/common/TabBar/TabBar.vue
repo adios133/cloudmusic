@@ -1,14 +1,13 @@
 <template>
-  <div class='tab-bar'>
+  <div class="tab-bar">
     <slot></slot>
   </div>
 </template>
 
 <script>
 export default {
-  name:"TabBar",
-  }
+  name: "TabBar"
+};
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="less" scoped></style>
