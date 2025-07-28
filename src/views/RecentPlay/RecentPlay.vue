@@ -17,8 +17,8 @@
 <script>
 import RecentNav from "./childCpn/RecentNav.vue";
 import MusicItem from "@/components/content/MusicItem/MusicItem.vue";
-import Scroll from "@/components/common/Scroll/Scroll.vue";
-import { getRecent } from "@/network/recent";
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
+import { getRecent } from "@/api/recent";
 
 import { getUserID } from "@/common/mixin";
 

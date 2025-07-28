@@ -1,4 +1,4 @@
-import request from "@/network/request";
+import request from "@/api/request";
 
 function getUserId() {
   // 加上时间戳，使得每次请求不同
@@ -25,7 +25,7 @@ export const getUserID = {
 };
 
 // 歌单广场，和video页面导航
-import Scroll from "@/components/common/Scroll/Scroll.vue";
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
 
 export const navFun = {
   components: {
@@ -60,17 +60,7 @@ export const navFun = {
 };
 
 export const fixedNum = {
-  filters: {
-    count(num) {
-      if (num > 100000000) {
-        return (num / 100000000).toFixed(1) + "亿";
-      } else if (num > 10000) {
-        return (num / 10000).toFixed(1) + "万";
-      } else {
-        return num;
-      }
-    }
-  }
+  filters: {}
 };
 
 export const randomFn = {
@@ -85,7 +75,7 @@ export const randomFn = {
 
 // 歌词功能
 import Lyric from "@/components/content/Lyric/Lyric.vue";
-import { getLyric } from "network/lyric";
+import { getLyric } from "@/api/lyric";
 import Vue from "vue";
 import { Swipe, SwipeItem } from "vant";
 Vue.use(Swipe);

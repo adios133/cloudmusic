@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { logIn } from "@/network/login";
+import { logIn } from "@/api/login";
 import Vue from "vue";
 import { Toast } from "vant";
 Vue.use(Toast);

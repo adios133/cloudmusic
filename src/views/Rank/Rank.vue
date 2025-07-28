@@ -29,12 +29,12 @@
 </template>
 
 <script>
-import Scroll from "@/components/common/Scroll/Scroll.vue";
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
 import RankHeader from "./childCpn/RankHeader.vue";
 import RankItem from "./childCpn/RankItem.vue";
 import RankItemSimple from "./childCpn/RankItemSimple.vue";
 
-import { getRank } from "@/network/rank";
+import { getRank } from "@/api/rank";
 
 import Vue from "vue";
 import { Toast } from "vant";

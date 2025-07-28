@@ -21,8 +21,8 @@
 
 <script>
 import CloudNav from "./childCpn/CloudNav.vue";
-import Scroll from "@/components/common/Scroll/Scroll.vue";
-import { getCloudMusic } from "@/network/cloud";
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
+import { getCloudMusic } from "@/api/cloud";
 import CloudItem from "./childCpn/CloudItem.vue";
 import Vue from "vue";
 import { Toast } from "vant";

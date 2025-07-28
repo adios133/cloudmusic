@@ -12,12 +12,12 @@
 </template>
 
 <script>
-import Scroll from "@/components/common/Scroll/Scroll.vue";
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
 import ProfileBackground from "./childCpn/ProfileBackground.vue";
 import ProfileUserCart from "./childCpn/ProfileUserCart.vue";
 import ProfileFavor from "./childCpn/ProfileFavor.vue";
 
-import { getUserInfo, getLikeId } from "@/network/profile";
+import { getUserInfo, getLikeId } from "@/api/profile";
 
 import { getUserID } from "@/common/mixin";
 

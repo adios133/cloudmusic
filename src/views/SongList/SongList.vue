@@ -30,10 +30,10 @@
 <script>
 import SongListNav from "./childCpn/SongListNav.vue";
 import SongListCategory from "./childCpn/SongListCategory.vue";
-import Scroll from "@/components/common/Scroll/Scroll.vue";
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
 import ListItem from "@/components/content/ListItem/ListItem.vue";
 
-import { getListCategory, getSongList } from "@/network/songlist";
+import { getListCategory, getSongList } from "@/api/songlist";
 
 import Vue from "vue";
 import { Toast } from "vant";

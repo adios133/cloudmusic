@@ -1,35 +1,28 @@
+<script setup lang="ts">
+import { fixNumber } from "@/common/utils";
+
+const {
+  imgSrc = "",
+  desc = "歌单",
+  playCount = 0
+} = defineProps<{
+  imgSrc: string;
+  desc: string;
+  playCount: number;
+}>();
+</script>
+
 <template>
   <div class="list-item">
     <img src="@/assets/img/default/default.jpg" alt="" v-if="imgSrc === ''" />
     <img :src="imgSrc" alt="" v-else />
     <div class="desc">{{ desc }}</div>
     <div class="count">
-      <span class="iconfont icon-24gl-play-copy"></span>{{ playCount | count }}
+      <span class="iconfont icon-24gl-play-copy"></span
+      >{{ fixNumber(playCount) }}
     </div>
   </div>
 </template>
-
-<script>
-import { fixedNum } from "@/common/mixin";
-export default {
-  name: "ListItem",
-  mixins: [fixedNum],
-  props: {
-    imgSrc: {
-      type: String,
-      default: ""
-    },
-    desc: {
-      type: String,
-      default: "歌单"
-    },
-    playCount: {
-      type: Number,
-      default: 0
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .list-item {
@@ -61,7 +54,7 @@ export default {
     right: 7px;
     font-size: 12px;
     color: #fff;
-    background-color: rgba($color: #000000, $alpha: 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
     border-radius: 6px;
   }
 }

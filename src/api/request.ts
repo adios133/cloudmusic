@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 const instance = axios.create({
   // 线上地址
-  baseURL: import.meta.env.VUE_APP_BASE_URL,
+  baseURL: import.meta.env.VITE_APP_BASE_URL,
   timeout: 30000,
   withCredentials: true
 });

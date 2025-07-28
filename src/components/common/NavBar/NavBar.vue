@@ -1,3 +1,9 @@
+<script setup lang="ts">
+defineOptions({
+  name: "NavBar"
+});
+</script>
+
 <template>
   <div class="nav-bar">
     <div class="left"><slot name="left"></slot></div>
@@ -5,12 +11,6 @@
     <div class="right"><slot name="right"></slot></div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "Navbar"
-};
-</script>
 
 <style lang="less" scoped>
 .nav-bar {

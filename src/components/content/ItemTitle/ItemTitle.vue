@@ -5,28 +5,23 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "ItemTitle",
-  props: {
-    title: {
-      type: String,
-      default: ""
-    },
-    more: {
-      type: String,
-      default: "更多"
-    },
-    path: {
-      type: String,
-      default: ""
-    }
-  },
-  methods: {
-    seeMore() {
-      this.$router.push(this.path);
-    }
-  }
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+defineOptions({
+  name: "ItemTitle"
+});
+const {
+  title = "",
+  more = "更多",
+  path = ""
+} = defineProps<{
+  title: string;
+  more: string;
+  path: string;
+}>();
+const router = useRouter();
+const seeMore = () => {
+  router.push(path);
 };
 </script>
 

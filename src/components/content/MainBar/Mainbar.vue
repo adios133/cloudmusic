@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import TabBar from "@/components/common/TabBar/TabBar.vue";
+import TabBarItem from "@/components/common/TabBar/TabBarItem.vue";
+defineOptions({
+  name: "MainBar"
+});
+</script>
+
 <template>
   <tab-bar class="main-bar">
     <tab-bar-item path="/home">
@@ -34,18 +42,6 @@
     </tab-bar-item>
   </tab-bar>
 </template>
-
-<script>
-import TabBar from "@/components/common/TabBar/TabBar.vue";
-import TabBarItem from "@/components/common/TabBar/TabBarItem.vue";
-export default {
-  name: "Mainbar",
-  components: {
-    TabBar,
-    TabBarItem
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .main-bar {

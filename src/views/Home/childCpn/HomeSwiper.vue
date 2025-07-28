@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import { Swipe as VanSwipe, SwipeItem as VanSwipeItem } from "vant";
+
+const { bannerList = [] } = defineProps<{
+  bannerList: any[];
+}>();
+</script>
+
 <template>
   <div class="home-swiper">
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="#EC4141">
@@ -7,24 +15,6 @@
     </van-swipe>
   </div>
 </template>
-
-<script>
-import Vue from "vue";
-import { Swipe, SwipeItem } from "vant";
-Vue.use(Swipe);
-Vue.use(SwipeItem);
-export default {
-  name: "HomeSwiper",
-  props: {
-    bannerList: {
-      type: Array,
-      default() {
-        return [];
-      }
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .home-swiper {

@@ -21,7 +21,7 @@
 <script>
 import PlayingController from "./childCpn/PlayingController.vue";
 
-import { getMusicInfo } from "@/network/playing";
+import { getMusicInfo } from "@/api/playing";
 
 import { LyricModule, PlayAndFm } from "@/common/mixin";
 

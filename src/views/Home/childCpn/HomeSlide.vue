@@ -1,3 +1,115 @@
+<script setup lang="ts">
+import { Popup as VanPopup } from "vant";
+import { getUserInfo } from "@/api/profile";
+import { getSignIn, logOut } from "@/api/home";
+import { getUserID } from "@/common/mixin";
+import { ref, watch } from "vue";
+import { useRoute } from "vue-router";
+defineOptions({
+  name: "HomeSlide"
+});
+const { isShow = false } = defineProps<{
+  isShow: boolean;
+}>();
+
+const show = ref(false);
+const userInfo = ref({});
+const msg = ref("签到");
+watch(
+  () => isShow,
+  (val) => {
+    show.value = val;
+  }
+);
+const closeSlide = () => {};
+const logIn = () => {};
+const goCloud = () => {};
+const signIn = () => {};
+const aboutMe = () => {};
+const onLogOut = () => {};
+// export default {
+//   name: "HomeSlide",
+//   mixins: [getUserID],
+//   props: {
+//     isShow: {
+//       type: Boolean,
+//       default: false
+//     }
+//   },
+//   data() {
+//     return {
+//       show: false,
+//       userInfo: {},
+//       msg: ""
+//     };
+//   },
+//   watch: {
+//     isShow() {
+//       this.show = this.isShow;
+//     }
+//   },
+//   beforeRouteEnter(to, from, next) {
+//     /* 使用组件内导航守卫，记录来时路由，
+//       由于beforeRouteEnter 不能访问this，使用next回调将来时path存在data中
+//     */
+//     next((vm) => {
+//       vm.path = from.path;
+//     });
+//   },
+//   created() {
+//     // keepalive 只会调用一次
+//     if (this.$store.state.userId === "") {
+//       // this._getUserId() mixin ,返回 id
+//       this._getUserId().then((res) => {
+//         this._getUserInfo(res);
+//       });
+//     } else {
+//       this._getUserInfo(this.$store.state.userId);
+//     }
+//   },
+//   activated() {
+//     // 但是当是通过login进来时，需要刷新页面
+//     if (this.path === "/login") {
+//       this._getUserInfo(this.$store.state.userId);
+//     }
+//   },
+//   methods: {
+//     closeSlide() {
+//       this.$emit("closeSlide");
+//     },
+//     logIn() {
+//       if (this.userInfo.nickname) return;
+//       this.$router.push("/login");
+//     },
+//     logOut() {
+//       logOut().then(() => {
+//         location.reload();
+//       });
+//     },
+//     _getUserInfo(id) {
+//       getUserInfo(id).then((res) => {
+//         this.userInfo = res.profile;
+//         // 等级不在对象之内，
+//         this.userInfo.level = res.level;
+//       });
+//     },
+//     goCloud() {
+//       this.$router.push("/cloud");
+//     },
+//     signIn() {
+//       getSignIn().then((res) => {
+//         if (res.code === 200) {
+//           this.msg = "已签到";
+//         }
+//       });
+//     },
+//     aboutMe() {
+//       location.href = "https://github.com/adios133/cloudmusic";
+//     }
+//   }
+// };
+</script>
+
 <template>
   <van-popup
     v-model="show"
@@ -27,104 +139,12 @@
       <li class="about" @click="aboutMe">
         <span>项目源码</span><span class="iconfont icon-more"></span>
       </li>
-      <li class="about" @click="logOut" v-if="userInfo.nickname">
+      <li class="about" @click="onLogOut" v-if="userInfo.nickname">
         <span>退出登录</span><span class="iconfont icon-more"></span>
       </li>
     </ul>
   </van-popup>
 </template>
-
-<script>
-import Vue from "vue";
-import { Popup } from "vant";
-Vue.use(Popup);
-
-import { getUserInfo } from "@/network/profile";
-import { getSignIn, logOut } from "@/network/home";
-import { getUserID } from "@/common/mixin";
-
-export default {
-  name: "HomeSlide",
-  mixins: [getUserID],
-  props: {
-    isShow: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data() {
-    return {
-      show: false,
-      userInfo: {},
-      msg: "签到"
-    };
-  },
-  watch: {
-    isShow() {
-      this.show = this.isShow;
-    }
-  },
-  beforeRouteEnter(to, from, next) {
-    /* 使用组件内导航守卫，记录来时路由，
-      由于beforeRouteEnter 不能访问this，使用next回调将来时path存在data中
-    */
-    next((vm) => {
-      vm.path = from.path;
-    });
-  },
-  created() {
-    // keepalive 只会调用一次
-    if (this.$store.state.userId === "") {
-      // this._getUserId() mixin ,返回 id
-      this._getUserId().then((res) => {
-        this._getUserInfo(res);
-      });
-    } else {
-      this._getUserInfo(this.$store.state.userId);
-    }
-  },
-  activated() {
-    // 但是当是通过login进来时，需要刷新页面
-    if (this.path === "/login") {
-      this._getUserInfo(this.$store.state.userId);
-    }
-  },
-  methods: {
-    closeSlide() {
-      this.$emit("closeSlide");
-    },
-    logIn() {
-      if (this.userInfo.nickname) return;
-      this.$router.push("/login");
-    },
-    logOut() {
-      logOut().then(() => {
-        location.reload();
-      });
-    },
-    _getUserInfo(id) {
-      getUserInfo(id).then((res) => {
-        this.userInfo = res.profile;
-        // 等级不在对象之内，
-        this.userInfo.level = res.level;
-      });
-    },
-    goCloud() {
-      this.$router.push("/cloud");
-    },
-    signIn() {
-      getSignIn().then((res) => {
-        if (res.code === 200) {
-          this.msg = "已签到";
-        }
-      });
-    },
-    aboutMe() {
-      location.href = "https://github.com/lanslorin/cloudmusic";
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .page {

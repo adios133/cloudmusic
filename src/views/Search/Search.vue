@@ -12,13 +12,13 @@
 </template>
 
 <script>
-import { getHotSearch, searchSong } from "@/network/search";
+import { getHotSearch, searchSong } from "@/api/search";
 
 import SearchBox from "./childCpn/SearchBox.vue";
 import SearchHistory from "./childCpn/SearchHistory.vue";
 import SearchHot from "./childCpn/SearchHot.vue";
 import SearchList from "./childCpn/SearchList.vue";
-import Scroll from "@/components/common/Scroll/Scroll.vue";
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
 export default {
   name: "Search",
   components: {

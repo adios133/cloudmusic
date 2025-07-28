@@ -19,7 +19,7 @@
 
 <script>
 import ListItem from "@/components/content/ListItem/ListItem.vue";
-import Scroll from "@/components/common/Scroll/Scroll.vue";
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
 
 export default {
   name: "HomeSongRec",

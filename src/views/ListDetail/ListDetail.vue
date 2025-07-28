@@ -26,11 +26,11 @@
 </template>
 
 <script>
-import { getListDetail, ListInfo, CreatorInfo } from "@/network/listdetail";
+import { getListDetail, ListInfo, CreatorInfo } from "@/api/listdetail";
 
 import ListDetailHeader from "./childCpn/ListDetailHeader.vue";
 import ListDetailCount from "./childCpn/ListDetailCount.vue";
-import Scroll from "@/components/common/Scroll/Scroll.vue";
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
 import ListDetailPLayAll from "./childCpn/ListDetailPLayAll.vue";
 import MusicItem from "@/components/content/MusicItem/MusicItem.vue";
 import ListDetailNav from "./childCpn/ListDetailNav.vue";

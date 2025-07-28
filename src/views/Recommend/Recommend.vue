@@ -21,12 +21,12 @@
 </template>
 
 <script>
-import { getRecommend } from "@/network/recommend";
+import { getRecommend } from "@/api/recommend";
 import Vue from "vue";
 import { Toast } from "vant";
 Vue.use(Toast);
 
-import Scroll from "@/components/common/Scroll/Scroll.vue";
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
 import MusicItem from "@/components/content/MusicItem/MusicItem.vue";
 import RecommendCover from "./childCpn/RecommendCover.vue";
 import RecommendPlayAll from "./childCpn/RecommendPlayAll.vue";

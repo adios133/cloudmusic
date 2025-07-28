@@ -2,8 +2,16 @@ import { defineConfig } from "vite";
 import Vue from "@vitejs/plugin-vue";
 import VueJsx from "@vitejs/plugin-vue-jsx";
 import { fileURLToPath, URL } from "node:url";
+import Components from "unplugin-vue-components/vite";
+import { VantResolver } from "unplugin-vue-components/resolvers";
 export default defineConfig({
-  plugins: [Vue(), VueJsx()],
+  plugins: [
+    Vue(),
+    VueJsx(),
+    Components({
+      resolvers: [VantResolver()]
+    })
+  ],
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("src", import.meta.url))
@@ -15,9 +23,7 @@ export default defineConfig({
       "/api": {
         changeOrigin: true,
         target: "http://localhost:3000",
-        rewrite(path) {
-          return path.replace("/api", "");
-        }
+        rewrite: (path) => path.replace(/^\/api/, "")
       }
     }
   }

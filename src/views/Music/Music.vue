@@ -28,12 +28,12 @@
 </template>
 
 <script>
-import Scroll from "@/components/common/Scroll/Scroll.vue";
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
 import MusicNav from "./childCpn/MusicNav.vue";
 import MusicItem from "./childCpn/MusicListItem.vue";
 
 import { getUserID } from "@/common/mixin";
-import { getUserList } from "@/network/music";
+import { getUserList } from "@/api/music";
 
 import Vue from "vue";
 import { Toast } from "vant";

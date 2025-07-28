@@ -25,7 +25,7 @@
 <script>
 import FmController from "./childCpn/FmController.vue";
 
-import { getFm, getMusicInfo, likeSong, trashSong } from "@/network/fm";
+import { getFm, getMusicInfo, likeSong, trashSong } from "@/api/fm";
 import { LyricModule, PlayAndFm } from "@/common/mixin";
 
 import Vue from "vue";

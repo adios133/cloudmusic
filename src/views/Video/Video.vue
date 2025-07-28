@@ -25,9 +25,9 @@ import Vue from "vue";
 import { Toast } from "vant";
 Vue.use(Toast);
 
-import { getVideoCate, getViedoList, getVideoUrl } from "@/network/video";
+import { getVideoCate, getViedoList, getVideoUrl } from "@/api/video";
 
-import Scroll from "@/components/common/Scroll/Scroll.vue";
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
 import VideoNav from "./childCpn/VideoNav.vue";
 import VideoItem from "./childCpn/VideoItem.vue";
 export default {

@@ -5,7 +5,7 @@ import HomeSwiper from "./childCpn/HomeSwiper.vue";
 import HomeRecommend from "./childCpn/HomeRecommend.vue";
 import ItemTitle from "@/components/content/ItemTitle/ItemTitle.vue";
 import HomeSongRec from "./childCpn/HomeSongRec.vue";
-import Scroll from "@/components/common/Scroll/Scroll.vue";
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
 import HomeRank from "./childCpn/HomeRank.vue";
 import {
   getSwiper,
@@ -14,7 +14,7 @@ import {
   getListDetail,
   HomeRankItem,
   getDefault
-} from "@/network/home";
+} from "@/api/home";
 import { ref, onMounted } from "vue";
 defineOptions({
   name: "Home"
@@ -40,7 +40,7 @@ const _getRecommend = async (limit?: number) => {
 };
 const _getRankListId = async () => {
   const res = await getRankList();
-  res.list.slice(0, 5).forEach((item) => {
+  res.list.slice(0, 5).forEach((item: any) => {
     _getListDetail(item.id);
   });
 };

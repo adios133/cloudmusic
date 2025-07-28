@@ -1,13 +1,13 @@
+<script setup lang="ts">
+defineOptions({
+  name: "TabBar"
+});
+</script>
+
 <template>
   <div class="tab-bar">
     <slot></slot>
   </div>
 </template>
-
-<script>
-export default {
-  name: "TabBar"
-};
-</script>
 
 <style lang="less" scoped></style>

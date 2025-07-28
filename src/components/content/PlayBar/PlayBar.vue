@@ -1,67 +1,3 @@
-<template>
-  <div class="play-bar" :class="{ 'at-bottom': atBottom }" v-show="!PlayPage">
-    <div
-      class="music-info left"
-      @click="toPlaying"
-      v-if="this.$store.state.playing"
-    >
-      <div class="song-cover">
-        <img src="@/assets/img/default/disc.png" alt="" class="disc" />
-        <img
-          :src="this.$store.state.playing.al.picUrl"
-          alt=""
-          :class="{ playing: isPlaying }"
-          class="cover"
-        />
-      </div>
-      <div class="info">
-        <span class="song-name">{{ this.$store.state.playing.name }}</span>
-        <span class="singer">
-          - {{ this.$store.state.playing.ar[0].name }}</span
-        >
-      </div>
-    </div>
-    <div class="music-info left" @click="toPlaying" v-else>
-      <div class="song-cover">
-        <img src="@/assets/img/default/disc.png" alt="" class="disc" />
-        <img
-          src="@/assets/img/default/default.jpg"
-          alt=""
-          :class="{ playing: isPlaying }"
-          class="cover"
-        />
-      </div>
-      <div class="info">
-        <span class="song-name">暂无播放</span>
-        <span class="singer"></span>
-      </div>
-    </div>
-    <div class="music-controll right">
-      <van-circle
-        layer-color="#E4E4E4"
-        color="#D43C33"
-        :stroke-width="30"
-        size="24px"
-        v-model="currentRate"
-        :rate="rate"
-        class="song-rate"
-      />
-      <span class="iconfont play" :class="iconDisplay" @click="playSong"></span>
-      <span class="iconfont icon-24gl-playlist" @click="showList"></span>
-      <audio
-        :src="musicUrl"
-        autoplay
-        @canplay="songCanPlay"
-        @timeupdate="songPlaying"
-        @play="songPlay"
-        @pause="songPause"
-        @ended="songEnd"
-        ref="audio"
-      ></audio>
-    </div>
-  </div>
-</template>
-
 <script>
 import Vue from "vue";
 import { Circle } from "vant";
@@ -235,8 +171,72 @@ export default {
 };
 </script>
 
+<template>
+  <div class="play-bar" :class="{ 'at-bottom': atBottom }" v-show="!PlayPage">
+    <div
+      class="music-info left"
+      @click="toPlaying"
+      v-if="this.$store.state.playing"
+    >
+      <div class="song-cover">
+        <img src="@/assets/img/default/disc.png" alt="" class="disc" />
+        <img
+          :src="this.$store.state.playing.al.picUrl"
+          alt=""
+          :class="{ playing: isPlaying }"
+          class="cover"
+        />
+      </div>
+      <div class="info">
+        <span class="song-name">{{ this.$store.state.playing.name }}</span>
+        <span class="singer">
+          - {{ this.$store.state.playing.ar[0].name }}</span
+        >
+      </div>
+    </div>
+    <div class="music-info left" @click="toPlaying" v-else>
+      <div class="song-cover">
+        <img src="@/assets/img/default/disc.png" alt="" class="disc" />
+        <img
+          src="@/assets/img/default/default.jpg"
+          alt=""
+          :class="{ playing: isPlaying }"
+          class="cover"
+        />
+      </div>
+      <div class="info">
+        <span class="song-name">暂无播放</span>
+        <span class="singer"></span>
+      </div>
+    </div>
+    <div class="music-controll right">
+      <van-circle
+        layer-color="#E4E4E4"
+        color="#D43C33"
+        :stroke-width="30"
+        size="24px"
+        v-model="currentRate"
+        :rate="rate"
+        class="song-rate"
+      />
+      <span class="iconfont play" :class="iconDisplay" @click="playSong"></span>
+      <span class="iconfont icon-24gl-playlist" @click="showList"></span>
+      <audio
+        :src="musicUrl"
+        autoplay
+        @canplay="songCanPlay"
+        @timeupdate="songPlaying"
+        @play="songPlay"
+        @pause="songPause"
+        @ended="songEnd"
+        ref="audio"
+      ></audio>
+    </div>
+  </div>
+</template>
+
 <style lang="less" scoped>
-@keyframes rotateCover {
+@keyframes rotate-cover {
   from {
     transform: rotate(0deg);
   }
@@ -306,7 +306,7 @@ div.at-bottom {
         height: 75%;
         // vertical-align: top;
         border-radius: 15px;
-        animation: rotateCover 8s linear infinite;
+        animation: rotate-cover 8s linear infinite;
         animation-play-state: paused;
         z-index: 4;
       }

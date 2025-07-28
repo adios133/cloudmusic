@@ -1,3 +1,41 @@
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+import { Swipe as VanSwipe, SwipeItem as VanSwipeItem } from "vant";
+import useShareContext from "@/store/index";
+import emitter from "@/mitt";
+defineOptions({
+  name: "HomeRank"
+});
+const router = useRouter();
+// 3.4
+const props = withDefaults(
+  defineProps<{
+    rankIdList: any[];
+  }>(),
+  {
+    rankIdList: () => []
+  }
+);
+const emits = defineEmits<{
+  click: [e: any];
+}>();
+// 3.5+ 指定默认值
+// const { rankIdList = [] } = defineProps<{ rankIdList: any[] }>();
+const store = useShareContext();
+const toListDetail = (id: string) => {
+  // 会打印两次
+  router.push("/listdetail/" + id);
+};
+const toPlaying = (id: string, index: number) => {
+  store.setPlaylist(props.rankIdList[index].songList);
+  store.setState(false);
+  store.setLine(0);
+  store.setFm(false);
+  emitter.emit("playsong", id);
+  router.push("/playing/" + id);
+};
+</script>
+
 <template>
   <div class="home-rank">
     <van-swipe
@@ -35,47 +73,6 @@
     </van-swipe>
   </div>
 </template>
-
-<script>
-import Vue from "vue";
-import { Swipe, SwipeItem } from "vant";
-Vue.use(Swipe);
-Vue.use(SwipeItem);
-export default {
-  name: "HomeRank",
-  props: {
-    rankIdList: {
-      type: Array,
-      default() {
-        return [];
-      }
-    }
-  },
-  data() {
-    return {
-      startX: 0,
-      moveX: 0,
-      x: 0
-    };
-  },
-  methods: {
-    // 跳转到歌单详情页面，携带id
-    toListDetail(id) {
-      // 会打印两次
-      this.$router.push("/listdetail/" + id);
-    },
-    // 跳转到播放页面，传递id
-    toPlaying(id, index) {
-      this.$store.commit("setPlaylist", this.rankIdList[index].songList);
-      this.$router.push("/playing/" + id);
-      this.$store.commit("setState", false);
-      this.$store.commit("setLine", 0);
-      this.$store.commit("setFm", false);
-      this.$bus.$emit("playsong", id);
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .home-rank {

@@ -5,29 +5,25 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "TabBarItem",
-  props: {
-    path: String,
-    tabFontColor: {
-      type: String,
-      default: "#D43C33"
-    }
-  },
-  computed: {
-    isActived() {
-      return this.$route.path.indexOf(this.path) !== -1;
-    },
-    activeStyle() {
-      return this.isActived ? { color: "#D43C33" } : {};
-    }
-  },
-  methods: {
-    itemClick() {
-      this.$router.push(this.path).catch((e) => e);
-    }
-  }
+<script setup lang="ts">
+import { computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+defineOptions({
+  name: "TabBarItem"
+});
+const { path } = defineProps<{
+  path: string;
+}>();
+const route = useRoute();
+const router = useRouter();
+const isActived = computed(() => {
+  return route.path.indexOf(path) !== -1;
+});
+const activeStyle = computed(() => {
+  return isActived.value ? { color: "#D43C33" } : {};
+});
+const itemClick = () => {
+  router.push(path).catch((e) => e);
 };
 </script>
 

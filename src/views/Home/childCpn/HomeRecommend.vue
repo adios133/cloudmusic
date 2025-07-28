@@ -1,3 +1,20 @@
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+defineOptions({
+  name: "HomeRecommend"
+});
+const router = useRouter();
+const recommend = [
+  { class: "icon-rili", name: "每日推荐", path: "/recommend" },
+  { class: "icon-diantai", name: "私人FM", path: "/fm" },
+  { class: "icon-gedan", name: "歌单", path: "/songlist" },
+  { class: "icon-paixing", name: "排行榜", path: "/rank" }
+];
+const recClick = (index: number) => {
+  router.push(recommend[index].path);
+};
+</script>
+
 <template>
   <div class="home-recommend">
     <div
@@ -11,27 +28,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "HomeRecommend",
-  data() {
-    return {
-      recommend: [
-        { class: "icon-rili", name: "每日推荐", path: "/recommend" },
-        { class: "icon-diantai", name: "私人FM", path: "/fm" },
-        { class: "icon-gedan", name: "歌单", path: "/songlist" },
-        { class: "icon-paixing", name: "排行榜", path: "/rank" }
-      ]
-    };
-  },
-  methods: {
-    recClick(index) {
-      this.$router.push(this.recommend[index].path);
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .home-recommend {

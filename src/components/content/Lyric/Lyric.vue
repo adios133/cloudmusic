@@ -1,12 +1,103 @@
+<script setup lang="ts">
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
+import {
+  ref,
+  watch,
+  nextTick,
+  onMounted,
+  onActivated,
+  useTemplateRef
+} from "vue";
+import emitter from "@/mitt/index";
+import useStore from "@/store/index";
+defineOptions({
+  name: "Lyric"
+});
+const { lyric = [] } = defineProps<{ lyric: any[] }>();
+const lyricData = ref<any[]>([]);
+const height = ref(0);
+const duration = ref(0);
+const scrollRef = useTemplateRef("scroll");
+const lyricLineRef = useTemplateRef("item");
+const store = useStore();
+watch(
+  () => lyric,
+  (val) => {
+    lyricData.value = val;
+  }
+);
+onMounted(() => {
+  emitter.on("playingsong", (data: any) => {
+    height.value = (window.innerHeight - 180) / 2;
+    duration.value = data.duration;
+    if (
+      lyricData.value.length > 0 &&
+      store.state.currentLine < lyricData.value.length &&
+      data.currentTime >= lyricData.value[store.state.currentLine].time
+    ) {
+      if (store.state.currentLine <= lyricData.value.length - 1) {
+        scrollRef.value &&
+          scrollRef.value.scrollTo(
+            0,
+            -lyricLineRef.value[store.state.currentLine].offsetTop +
+              height.value,
+            0
+          );
+        store.setLine((store.state.currentLine += 1));
+      } else {
+        store.setLine(lyricData.value.length - 1);
+      }
+    }
+  });
+  emitter.on("nextSong", () => {
+    lyricData.value = [];
+    store.setLine(0);
+    scrollRef.value.scrollTo(0, 0, 0);
+  });
+  emitter.on("oneSong", () => {
+    lyricData.value = [];
+    store.setLine(0);
+    scrollRef.value.scrollTo(0, 0, 0);
+  });
+  emitter.on("seekTo", (percent: number) => {
+    // 默认会有一句的，纯音乐，或者暂无歌词，所以要大于1
+    // if (this.data.length> 1) {
+    //由于可能有最后一句空白行，但是他的时间是刚好为最后一句歌词的结束，就会找不到大于的行，返回-1，在监听播放时滚动和读取对应数组[-1]就会报错
+    let lines = lyricData.value.findIndex(
+      (item) => item.time >= percent * duration.value
+    );
+    lines = lines === -1 ? lyricData.value.length - 1 : lines;
+    store.setLine(lines);
+    nextTick(() => {
+      scrollRef.value &&
+        scrollRef.value.scrollTo(
+          0,
+          -lyricLineRef.value[store.state.currentLine].offsetTop + height.value,
+          100
+        );
+    });
+    // }
+  });
+});
+onActivated(() => {
+  scrollRef.value &&
+    scrollRef.value.scrollTo(
+      0,
+      -lyricLineRef.value[store.state.currentLine].offsetTop + height.value,
+      0
+    );
+});
+</script>
+
 <template>
   <div class="lyric">
     <scroll class="lyric-box" ref="scroll">
       <div class="content" ref="content">
         <div
-          v-for="(item, index) in data"
+          v-for="(item, index) in lyricData"
           :key="index"
           class="line"
-          :class="{ 'now-time': index === $store.state.currentLine - 1 }"
+          :class="{ 'now-time': index === store.state.currentLine - 1 }"
           ref="item"
         >
           <p class="lrc">{{ item.msg }}</p>
@@ -16,107 +107,6 @@
     </scroll>
   </div>
 </template>
-
-<script>
-import Scroll from "@/components/common/Scroll/Scroll.vue";
-export default {
-  name: "Lyric",
-  components: {
-    Scroll
-  },
-  props: {
-    lyric: {
-      type: Array,
-      default() {
-        return [];
-      }
-    }
-  },
-  data() {
-    return {
-      data: [],
-      // 解决再次进入页面歌词跳转到指定位置，保存到vuex
-      // currentLine:0,
-      height: 0,
-      duration: 0,
-      index: 0
-    };
-  },
-  watch: {
-    lyric() {
-      this.data = this.lyric;
-    }
-  },
-  mounted() {
-    /*
-    const h = window.innerHeight
-    console.log("1:",h);  // 从homerank 进来播放 iphone6 1334
-    console.log(window);  // window对象中的又是 667 
-    不知道为什么从home排行榜进播放界面 获取的 window.innerHeight 不正确 ，其他界面进入获取的又是正确的
-    */
-    this.$bus.$on("playingsong", (data) => {
-      this.height = (window.innerHeight - 180) / 2;
-      this.duration = data.duration;
-      if (
-        this.data.length > 0 &&
-        this.$store.state.currentLine < this.data.length &&
-        data.currentTime >= this.data[this.$store.state.currentLine].time
-      ) {
-        if (this.$store.state.currentLine <= this.data.length - 1) {
-          this.$refs.scroll &&
-            this.$refs.scroll.scrollTo(
-              0,
-              -this.$refs.item[this.$store.state.currentLine].offsetTop +
-                this.height,
-              0
-            );
-          this.$store.commit("setLine", (this.$store.state.currentLine += 1));
-        } else {
-          this.$store.commit("setLine", this.data.length - 1);
-        }
-      }
-    });
-    this.$bus.$on("nextSong", () => {
-      this.data = [];
-      this.$store.commit("setLine", 0);
-      this.$refs.scroll.scrollTo(0, 0, 0);
-    });
-    this.$bus.$on("oneSong", () => {
-      this.data = [];
-      this.$store.commit("setLine", 0);
-      this.$refs.scroll.scrollTo(0, 0, 0);
-    });
-    this.$bus.$on("seekTo", (percent) => {
-      // 默认会有一句的，纯音乐，或者暂无歌词，所以要大于1
-      // if (this.data.length> 1) {
-      //由于可能有最后一句空白行，但是他的时间是刚好为最后一句歌词的结束，就会找不到大于的行，返回-1，在监听播放时滚动和读取对应数组[-1]就会报错
-      let lines = this.data.findIndex(
-        (item) => item.time >= percent * this.duration
-      );
-      lines = lines === -1 ? this.data.length - 1 : lines;
-      this.$store.commit("setLine", lines);
-      this.$nextTick(() => {
-        this.$refs.scroll &&
-          this.$refs.scroll.scrollTo(
-            0,
-            -this.$refs.item[this.$store.state.currentLine].offsetTop +
-              this.height,
-            100
-          );
-      });
-      // }
-    });
-  },
-  activated() {
-    this.$refs.scroll &&
-      this.$refs.scroll.scrollTo(
-        0,
-        -this.$refs.item[this.$store.state.currentLine].offsetTop + this.height,
-        0
-      );
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .lyric {

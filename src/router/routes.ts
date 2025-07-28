@@ -11,7 +11,7 @@ export const routes: RouteRecordRaw[] = [
   },
   {
     path: "/home",
-    component: import("@/views/Home/Home.vue"),
+    component: () => import("@/views/Home/Home.vue"),
     meta: {
       showTab: true,
       showPlaybar: true
