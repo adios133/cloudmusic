@@ -15,9 +15,9 @@ const {
   more = "更多",
   path = ""
 } = defineProps<{
-  title: string;
-  more: string;
-  path: string;
+  title?: string;
+  more?: string;
+  path?: string;
 }>();
 const router = useRouter();
 const seeMore = () => {

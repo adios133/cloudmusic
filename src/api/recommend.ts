@@ -1,7 +1,7 @@
-import request from './request'
+import request from "./request";
 
 export function getRecommend() {
   return request({
-    url:'/recommend/songs'
-  })
+    url: "/recommend/songs"
+  });
 }

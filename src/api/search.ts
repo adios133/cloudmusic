@@ -1,18 +1,18 @@
-import request from './request'
+import request from "./request";
 
 // 获取热搜列表
 export function getHotSearch() {
   return request({
-    url:'/search/hot/detail'
-  })
+    url: "/search/hot/detail"
+  });
 }
 
 // 搜索接口
-export function searchSong(keywords) {
+export function searchSong(keywords: string) {
   return request({
-    url:'/search',
+    url: "/search",
     params: {
       keywords
     }
-  })
+  });
 }

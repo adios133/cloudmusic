@@ -1,3 +1,17 @@
+<script setup lang="ts">
+import { computed } from "vue";
+import useStore from "@/store";
+defineOptions({
+  name: "PlayCover"
+});
+
+defineProps<{ picUrl: string }>();
+const store = useStore();
+const isplay = computed(() => {
+  return store.state.isplay;
+});
+</script>
+
 <template>
   <div class="play-cover">
     <div class="needle">
@@ -14,22 +28,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "PlayCover",
-  props: {
-    picUrl: String
-  },
-  computed: {
-    isplay() {
-      return this.$store.state.isplay;
-    }
-  }
-};
-</script>
-
 <style lang="less" scoped>
-@keyframes rotateCover {
+@keyframes rotate-cover {
   from {
     transform: rotate(0);
   }
@@ -64,7 +64,7 @@ export default {
     width: 16.5rem;
     height: 16.5rem;
     margin: 0 auto;
-    animation: rotateCover 10s linear infinite;
+    animation: rotate-cover 10s linear infinite;
     animation-delay: 0.5s;
     animation-play-state: paused;
     border-radius: 8.25rem;

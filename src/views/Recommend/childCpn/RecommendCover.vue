@@ -1,3 +1,25 @@
+<script setup lang="ts">
+import { padLeftZero } from "@/common/utils";
+import { ref } from "vue";
+defineOptions({
+  name: "RecommendCover"
+});
+const { imgUrl = {} } = defineProps<{
+  imgUrl: any;
+}>();
+const month = ref("");
+const day = ref("");
+// 每日日期
+const getToday = () => {
+  const now = new Date();
+  const m = now.getMonth() + 1;
+  const d = now.getDate();
+  month.value = padLeftZero(m.toString());
+  day.value = padLeftZero(d.toString());
+};
+getToday();
+</script>
+
 <template>
   <div class="recommend-cover" v-if="imgUrl.al">
     <img :src="imgUrl.al.picUrl" alt="" />
@@ -7,40 +29,6 @@
     </div>
   </div>
 </template>
-
-<script>
-import { padLeftZero } from "@/common/utils";
-export default {
-  name: "RecommendCover",
-  data() {
-    return {
-      month: "",
-      day: ""
-    };
-  },
-  props: {
-    imgUrl: {
-      type: Object,
-      default() {
-        return {};
-      }
-    }
-  },
-  methods: {
-    // 每日日期
-    getToday() {
-      const now = new Date();
-      const month = now.getMonth() + 1;
-      const day = now.getDate();
-      this.month = padLeftZero(month.toString());
-      this.day = padLeftZero(day.toString());
-    }
-  },
-  created() {
-    this.getToday();
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .recommend-cover {

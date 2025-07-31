@@ -1,3 +1,15 @@
+<script setup lang="ts">
+import NavBar from "@/components/common/NavBar/NavBar.vue";
+import { useRouter } from "vue-router";
+defineOptions({
+  name: "CloudNav"
+});
+const router = useRouter();
+const goBack = () => {
+  router.push("/home");
+};
+</script>
+
 <template>
   <div class="cloud-nav">
     <nav-bar>
@@ -10,22 +22,6 @@
     </nav-bar>
   </div>
 </template>
-
-<script>
-import NavBar from "@/components/common/NavBar/NavBar.vue";
-export default {
-  name: "CloudNav",
-  components: {
-    NavBar
-  },
-  methods: {
-    // 返回
-    goBack() {
-      this.$router.push("/home");
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .cloud-nav {

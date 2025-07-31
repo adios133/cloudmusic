@@ -22,13 +22,13 @@ const {
   scrollY = false,
   momentum = true
 } = defineProps<{
-  probeType: number;
-  pullUpLoad: boolean;
-  pullDownRefresh: boolean;
-  click: boolean;
-  scrollX: boolean;
-  scrollY: boolean;
-  momentum: boolean;
+  probeType?: number;
+  pullUpLoad?: boolean;
+  pullDownRefresh?: boolean;
+  click?: boolean;
+  scrollX?: boolean;
+  scrollY?: boolean;
+  momentum?: boolean;
 }>();
 const emits = defineEmits<{
   scrolling: [position: any];
@@ -94,7 +94,8 @@ const finishPullDown = () => {
 defineExpose({
   scrollTo,
   finishPullUp,
-  finishPullDown
+  finishPullDown,
+  scroll
 });
 </script>
 

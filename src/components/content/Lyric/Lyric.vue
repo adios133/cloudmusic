@@ -13,7 +13,7 @@ import useStore from "@/store/index";
 defineOptions({
   name: "Lyric"
 });
-const { lyric = [] } = defineProps<{ lyric: any[] }>();
+const { lyric = [] } = defineProps<{ lyric?: any[] }>();
 const lyricData = ref<any[]>([]);
 const height = ref(0);
 const duration = ref(0);

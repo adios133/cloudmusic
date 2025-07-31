@@ -1,3 +1,49 @@
+<script setup lang="ts">
+import { computed } from "vue";
+import useStore from "@/store";
+import mitter from "@/mitt";
+defineOptions({
+  name: "FmController"
+});
+const props = defineProps<{
+  like: boolean;
+}>();
+const emits = defineEmits<{
+  nextFm: [];
+  trashSong: [];
+  likeSong: [];
+}>();
+const store = useStore();
+const iconDisplay = computed(() => {
+  return isPlaying.value ? "icon-24gl-pause" : "icon-24gl-play";
+});
+const isPlaying = computed(() => {
+  return store.state.isplay;
+});
+const likeIcon = computed(() => {
+  return props.like ? "icon-like2" : "icon-like";
+});
+
+const contrlClick = () => {
+  store.setState(!isPlaying.value);
+  mitter.emit("stateChange", isPlaying.value);
+};
+// 上一首,下一首
+const nextSong = () => {
+  store.setState(false);
+  store.setLine(0);
+  emits("nextFm");
+};
+// 垃圾桶
+const trashSong = () => {
+  emits("trashSong");
+};
+// 喜欢
+const likeSong = () => {
+  emits("likeSong");
+};
+</script>
+
 <template>
   <div class="controller">
     <div class="play-dislike">
@@ -21,55 +67,6 @@
     </div>
   </div>
 </template>
-
-<script>
-import Vue from "vue";
-import { Toast } from "vant";
-Vue.use(Toast);
-export default {
-  name: "FmController",
-  data() {
-    return {
-      order: "list"
-    };
-  },
-  props: {
-    like: Boolean
-  },
-  computed: {
-    iconDisplay() {
-      return this.isPlaying ? "icon-24gl-pause" : "icon-24gl-play";
-    },
-    isPlaying() {
-      return this.$store.state.isplay;
-    },
-    likeIcon() {
-      return this.like ? "icon-like2" : "icon-like";
-    }
-  },
-  methods: {
-    // 控制播放暂停
-    contrlClick() {
-      this.$store.commit("setState", !this.isPlaying);
-      this.$bus.$emit("stateChange", this.isPlaying);
-    },
-    // 上一首,下一首
-    nextSong() {
-      this.$store.commit("setState", false);
-      this.$store.commit("setLine", 0);
-      this.$emit("nextFm");
-    },
-    // 垃圾桶
-    trashSong() {
-      this.$emit("trashSong");
-    },
-    // 喜欢
-    likeSong() {
-      this.$emit("likeSong");
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .controller {

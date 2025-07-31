@@ -1,3 +1,28 @@
+<script setup lang="ts">
+import useStore from "@/store";
+import { useRouter } from "vue-router";
+import mitter from "@/mitt";
+const store = useStore();
+const router = useRouter();
+const { songInfo = {}, rank = 0 } = defineProps<{
+  songInfo: any;
+  rank: number;
+}>();
+const emits = defineEmits<{
+  saveList: [];
+}>();
+const toPlay = () => {
+  // 向父组件发送事件,将列表保存在vuex中
+  emits("saveList");
+  // 跳转到playing页面
+  router.push("/playing/" + songInfo.songId);
+  // 向playbar发送事件(事件总线),获取播放url
+  mitter.emit("playsong", songInfo.songId);
+  store.setState(false);
+  store.setLine(0);
+};
+</script>
+
 <template>
   <div class="music-item" @click="toPlay">
     <div class="cover">
@@ -35,36 +60,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "MusicItem",
-  props: {
-    songInfo: {
-      type: Object,
-      default() {
-        return {};
-      }
-    },
-    rank: {
-      type: Number,
-      default: 0
-    }
-  },
-  methods: {
-    toPlay() {
-      // 向父组件发送事件,将列表保存在vuex中
-      this.$emit("saveList");
-      // 跳转到playing页面
-      this.$router.push("/playing/" + this.songInfo.songId);
-      // 向playbar发送事件(事件总线),获取播放url
-      this.$bus.$emit("playsong", this.songInfo.songId);
-      this.$store.commit("setState", false);
-      this.$store.commit("setLine", 0);
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .music-item {

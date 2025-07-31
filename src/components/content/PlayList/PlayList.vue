@@ -1,3 +1,58 @@
+<script setup lang="ts">
+import { Popup as VanPopup } from "vant";
+import { ref, watch, computed, useTemplateRef } from "vue";
+import useStore from "@/store";
+import mitter from "@/mitt";
+defineOptions({
+  name: "HomeSlide"
+});
+const { isShow = false } = defineProps<{
+  isShow?: boolean;
+}>();
+const emits = defineEmits<{
+  closeList: [];
+}>();
+const store = useStore();
+const show = ref(false);
+const list = ref<any[]>([]);
+const containerRef = useTemplateRef("container");
+watch(
+  () => isShow,
+  (val) => {
+    show.value = val;
+    list.value = store.state.playlist;
+  }
+);
+const playingSong = computed(() => {
+  const id = store.state.playing.id;
+  let idx: number;
+  store.state.playlist.forEach((item: any, index: number) => {
+    if (item.id === id) return (idx = index);
+  });
+  return idx;
+});
+// 关闭播放列表
+const closeList = () => {
+  emits("closeList");
+};
+//  每次打开，滚动到当前播放位置
+// todo
+const pageShow = () => {
+  containerRef.value.scroll(
+    0,
+    (containerRef.value.children[playingSong.value] as HTMLDivElement)
+      .offsetTop - 50
+  );
+};
+//  播放列表点击项目 播放对应音乐
+const goPlay = (item: any, index: number) => {
+  mitter.emit("playsong", item.id);
+  mitter.emit("nextSong", index);
+  store.setState(false);
+  store.setLine(0);
+};
+</script>
+
 <template>
   <van-popup
     v-model="show"
@@ -28,70 +83,6 @@
     </div>
   </van-popup>
 </template>
-
-<script>
-import Vue from "vue";
-import { Popup, List } from "vant";
-Vue.use(Popup);
-Vue.use(List);
-import Scroll from "components/common/Scroll/Scroll";
-export default {
-  name: "HomeSlide",
-  components: {
-    Scroll
-  },
-  props: {
-    isShow: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data() {
-    return {
-      show: false,
-      list: []
-    };
-  },
-  watch: {
-    // 点击显示popup
-    isShow() {
-      this.show = this.isShow;
-      this.list = this.$store.state.playlist;
-    }
-  },
-  computed: {
-    // 列表当前 播放项 idx
-    playingSong() {
-      const id = this.$store.state.playing.id;
-      let idx;
-      this.$store.state.playlist.forEach((item, index) => {
-        if (item.id === id) return (idx = index);
-      });
-      return idx;
-    }
-  },
-  methods: {
-    // 关闭播放列表
-    closeList() {
-      this.$emit("closeList");
-    },
-    //  每次打开，滚动到当前播放位置
-    pageShow() {
-      this.$refs.container.scroll(
-        0,
-        this.$refs.container.children[this.playingSong].offsetTop - 50
-      );
-    },
-    //  播放列表点击项目 播放对应音乐
-    goPlay(item, index) {
-      this.$bus.$emit("playsong", item.id);
-      this.$bus.$emit("nextSong", index);
-      this.$store.commit("setState", false);
-      this.$store.commit("setLine", 0);
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .play-list {

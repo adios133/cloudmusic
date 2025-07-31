@@ -2,7 +2,7 @@ import request from "./request";
 
 // 封装获取轮播图数据请求
 export function getSwiper(type = 2) {
-  return request({
+  return request<any>({
     url: "/banner",
     params: {
       type
@@ -28,7 +28,7 @@ export function getRankList() {
 }
 
 // 封装获取歌单详情
-export function getListDetail(id) {
+export function getListDetail(id: string) {
   return request({
     url: "/playlist/detail",
     params: {

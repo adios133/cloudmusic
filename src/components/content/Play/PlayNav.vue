@@ -1,3 +1,16 @@
+<script setup lang="ts">
+import NavBar from "@/components/common/NavBar/NavBar.vue";
+import { useRouter } from "vue-router";
+defineOptions({
+  name: "PlayNav"
+});
+const { musicInfo = {} } = defineProps<{ musicInfo?: any }>();
+const router = useRouter();
+const goBack = () => {
+  router.go(-1);
+};
+</script>
+
 <template>
   <div class="play-nav">
     <nav-bar>
@@ -25,29 +38,6 @@
     </nav-bar>
   </div>
 </template>
-
-<script>
-import NavBar from "@/components/common/NavBar/NavBar.vue";
-export default {
-  name: "PlayNav",
-  components: {
-    NavBar
-  },
-  props: {
-    musicInfo: {
-      type: Object,
-      default() {
-        return {};
-      }
-    }
-  },
-  methods: {
-    goBack() {
-      this.$router.go(-1);
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .play-nav {

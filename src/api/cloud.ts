@@ -1,10 +1,11 @@
-import request from './request'
+import request from "./request";
 
-export function getCloudMusic(limit=100,offset=0) {
+export function getCloudMusic(limit = 100, offset = 0) {
   return request({
-    url:'/user/cloud',
-    params:{
-      limit,offset
+    url: "/user/cloud",
+    params: {
+      limit,
+      offset
     }
-  })
+  });
 }

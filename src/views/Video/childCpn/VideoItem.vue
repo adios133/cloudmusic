@@ -1,3 +1,35 @@
+<script setup lang="ts">
+import { ref, watch, useTemplateRef } from "vue";
+defineOptions({
+  name: "VideoItem"
+});
+const { isVideo = false, videoInfo = {} } = defineProps<{
+  videoInfo: any;
+  isVideo: boolean;
+}>();
+const emits = defineEmits<{
+  coverClick: [{ id: string; index: number }];
+}>();
+const url = ref("");
+const showVideo = ref(false);
+const videoRef = useTemplateRef("video");
+watch(
+  () => isVideo,
+  (val) => {
+    showVideo.value = val;
+  }
+);
+const coverClick = (id: string) => {
+  emits("coverClick", { id, index: videoInfo.index });
+};
+// const canPlayed = () => {
+//   videoRef.value.play();
+// };
+defineExpose({
+  url
+});
+</script>
+
 <template>
   <div class="video-item">
     <div class="video-box" @click="coverClick(videoInfo.vid)">
@@ -30,43 +62,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "VideoItem",
-  props: {
-    videoInfo: {
-      type: Object,
-      default() {
-        return {};
-      }
-    },
-    isVideo: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data() {
-    return {
-      url: "",
-      showVideo: false
-    };
-  },
-  watch: {
-    isVideo() {
-      this.showVideo = this.isVideo;
-    }
-  },
-  methods: {
-    coverClick(id) {
-      this.$emit("coverClick", { id, index: this.videoInfo.index });
-    },
-    canPlayed() {
-      this.$refs.video.play();
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .video-item {

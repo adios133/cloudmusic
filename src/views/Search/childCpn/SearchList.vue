@@ -1,3 +1,50 @@
+<script setup lang="ts">
+import { computed } from "vue";
+import mitter from "@/mitt";
+import useStore from "@/store";
+import { useRouter } from "vue-router";
+defineOptions({
+  name: "SearchList"
+});
+const { searchList = [] } = defineProps<{
+  searchList: any[];
+}>();
+const router = useRouter();
+const store = useStore();
+const searchListFixed = computed(() => {
+  const list = [];
+  searchList.forEach((item: any) => {
+    const t1: any = {};
+    t1.al = item.album;
+    t1.ar = item.artists;
+    t1.name = item.name;
+    t1.id = item.id;
+    list.push(t1);
+  });
+  return list;
+});
+const goPlay = (id: string, index: number) => {
+  // 记录历史
+  let arr = [];
+  const item = JSON.parse(localStorage.getItem("history"));
+  const noSame = item && !item.some((el: any) => el == searchList[index].name);
+  if (item && noSame) {
+    arr = [...item, searchList[index].name];
+  } else {
+    arr.push(searchList[index].name);
+  }
+  localStorage.setItem("history", JSON.stringify(arr));
+  // 播放页
+  store.setState(false);
+  store.setLine(0);
+  mitter.emit("playsong", id);
+  router.push("/playing/" + id);
+  store.setFm(false);
+  // 数据不一样,不搞列表了只有选中的一个单曲循环
+  store.setPlaylist([searchListFixed[index]]);
+};
+</script>
+
 <template>
   <div class="search-list">
     <div
@@ -10,57 +57,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "SearchList",
-  props: {
-    searchList: {
-      type: Array,
-      default() {
-        return [];
-      }
-    }
-  },
-  computed: {
-    searchListFixed() {
-      const list = [];
-      this.searchList.forEach((item) => {
-        const t1 = {};
-        t1.al = item.album;
-        t1.ar = item.artists;
-        t1.name = item.name;
-        t1.id = item.id;
-        list.push(t1);
-      });
-      return list;
-    }
-  },
-  methods: {
-    goPlay(id, index) {
-      // 记录历史
-      let arr = [];
-      const item = JSON.parse(localStorage.getItem("history"));
-      const noSame =
-        item && !item.some((el) => el == this.searchList[index].name);
-      if (item && noSame) {
-        arr = [...item, this.searchList[index].name];
-      } else {
-        arr.push(this.searchList[index].name);
-      }
-      localStorage.setItem("history", JSON.stringify(arr));
-      // 播放页
-      this.$store.commit("setState", false);
-      this.$store.commit("setLine", 0);
-      this.$bus.$emit("playsong", id);
-      this.$router.push("/playing/" + id);
-      this.$store.commit("setFm", false);
-      // 数据不一样,不搞列表了只有选中的一个单曲循环
-      this.$store.commit("setPlaylist", [this.searchListFixed[index]]);
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 @border: 1px solid #eee;

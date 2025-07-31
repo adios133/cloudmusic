@@ -1,17 +1,15 @@
+<script setup lang="ts">
+defineOptions({
+  name: "PlayBg"
+});
+defineProps<{ picUrl: string }>();
+</script>
+
 <template>
   <div class="play-bg">
     <img :src="picUrl" alt="" />
   </div>
 </template>
-
-<script>
-export default {
-  name: "PlayBg",
-  props: {
-    picUrl: String
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .play-bg {

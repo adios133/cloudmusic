@@ -21,4 +21,7 @@ instance.interceptors.response.use(
     throw err;
   }
 );
+// function request<T>() {
+//   return instance;
+// }
 export default instance;

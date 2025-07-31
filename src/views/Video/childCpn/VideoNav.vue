@@ -1,3 +1,36 @@
+<script setup lang="ts">
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
+import { ref, useTemplateRef } from "vue";
+defineOptions({
+  name: "VideoNav"
+});
+const { cateList = [] } = defineProps<{
+  cateList: any[];
+}>();
+const emits = defineEmits<{
+  cateClick: [id: string];
+}>();
+const navItemsRef = useTemplateRef("navItem");
+const scrollRef = useTemplateRef("scroll");
+const currentIndex = ref(0);
+const itemClick = (index: number, params: string) => {
+  currentIndex.value = index;
+  emits("cateClick", params);
+  // animation
+  /* 获取点击包裹父元素宽度，
+         当点击元素左边距与父元素宽度（即最右边距离小于窗口宽度时，就固定滚动位置了）
+      */
+  const width = (navItemsRef.value[index].parentNode as HTMLDivElement)
+    .offsetWidth;
+  const finalX = width - window.innerWidth;
+  if (width - navItemsRef.value[index].offsetLeft > window.innerWidth) {
+    scrollRef.value.scrollTo(-navItemsRef.value[index].offsetLeft, 0, 300);
+  } else {
+    scrollRef.value.scrollTo(-finalX, 0, 300);
+  }
+};
+</script>
+
 <template>
   <div class="video-nav">
     <scroll :scrollX="true" ref="scroll">
@@ -13,22 +46,6 @@
     </scroll>
   </div>
 </template>
-
-<script>
-import { navFun } from "common/mixin";
-export default {
-  name: "VideoNav",
-  mixins: [navFun],
-  props: {
-    cateList: {
-      type: Array,
-      default() {
-        return [];
-      }
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 @color: #d43c33;

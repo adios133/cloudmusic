@@ -27,77 +27,58 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import SongListNav from "./childCpn/SongListNav.vue";
 import SongListCategory from "./childCpn/SongListCategory.vue";
 import Scroll from "@/components/common/Scroll/BetterScroll.vue";
 import ListItem from "@/components/content/ListItem/ListItem.vue";
-
 import { getListCategory, getSongList } from "@/api/songlist";
-
-import Vue from "vue";
 import { Toast } from "vant";
-Vue.use(Toast);
-
-export default {
-  name: "SongList",
-  components: {
-    SongListNav,
-    Scroll,
-    SongListCategory,
-    ListItem
-  },
-  data() {
-    return {
-      tagList: [],
-      songList: [],
-      limit: 50, //每页多少
-      offset: 0, //分页数据
-      tag: ""
-    };
-  },
-  methods: {
-    // 获取分类列表
-    _getListCategory() {
-      getListCategory().then((res) => {
-        Toast.clear();
-        this.tagList = res.tags;
-        this.tagList.unshift({ name: "全部" });
-      });
-    },
-    // 获取列表对应歌单，limit ，order没用上，可以用但没必要
-    _getSongList(cat, offset, limit, order) {
-      getSongList(cat, offset, limit, order).then((res) => {
-        Toast.clear();
-        this.songList.push(...res.playlists);
-        this.$refs.scroll.scroll.finishPullUp();
-      });
-    },
-    // 点击分类切换
-    cateClick(tag) {
-      this.offset = 0;
-      this.songList = [];
-      this.tag = tag;
-      Toast.loading("加载中...");
-      this._getSongList(tag);
-    },
-    // 上拉加载更多
-    pullingUpLoad() {
-      this.offset += 1;
-      this._getSongList(this.tag, this.offset);
-    },
-    // 点击事件
-    goListDetail(id) {
-      this.$router.push("/listdetail/" + id);
-    }
-  },
-  created() {
-    // 上来加载全部分类
-    Toast.loading("加载中...");
-    this._getListCategory();
-    this._getSongList();
-  }
+import { ref, useTemplateRef } from "vue";
+import { useRouter } from "vue-router";
+defineOptions({
+  name: "SongList"
+});
+const router = useRouter();
+const tagList = ref<any[]>([]);
+const songList = ref<any[]>([]);
+const limit = ref(50);
+const offset = ref(0);
+const tag = ref("");
+const scrollRef = useTemplateRef("scroll");
+const _getListCategory = async () => {
+  const res = await getListCategory();
+  Toast.clear();
+  tagList.value = res.tags;
+  tagList.value.unshift({ name: "全部" });
 };
+const _getSongList = async (cat?, offset?, limit?, order?) => {
+  const res = await getSongList(cat, offset, limit, order);
+  Toast.clear();
+  songList.value.push(...res.playlists);
+  scrollRef.value.scroll.finishPullUp();
+};
+// 点击分类切换
+const cateClick = (tags) => {
+  offset.value = 0;
+  songList.value = [];
+  tag.value = tags;
+  Toast.loading("加载中...");
+  _getSongList(tags);
+};
+const pullingUpLoad = () => {
+  offset.value++;
+  _getSongList(tag.value, offset.value);
+};
+// 点击事件
+const goListDetail = (id: string) => {
+  router.push("/listdetail/" + id);
+};
+
+// created
+Toast.loading("加载中...");
+_getListCategory();
+_getSongList();
 </script>
 
 <style lang="less" scoped>

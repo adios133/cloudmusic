@@ -1,12 +1,12 @@
-import request from './request'
+import request from "./request";
 
-export function getListDetail(id) {
+export function getListDetail(id: string) {
   return request({
-    url:'/playlist/detail',
-    params:{
+    url: "/playlist/detail",
+    params: {
       id
     }
-  })
+  });
 }
 export class ListInfo {
   constructor(playlist) {
@@ -20,8 +20,8 @@ export class ListInfo {
 }
 export class CreatorInfo {
   constructor(creator) {
-    this.avatar = creator.avatarUrl
-    this.name = creator.nickname
-    this.uid = creator.userId
+    this.avatar = creator.avatarUrl;
+    this.name = creator.nickname;
+    this.uid = creator.userId;
   }
 }

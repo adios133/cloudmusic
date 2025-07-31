@@ -1,3 +1,12 @@
+<script setup lang="ts">
+defineOptions({
+  name: "SearchHot"
+});
+const { hotSearch = [] } = defineProps<{
+  hotSearch: any[];
+}>();
+</script>
+
 <template>
   <div class="search-hot">
     <div class="title">热搜榜</div>
@@ -14,20 +23,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "SearchHot",
-  props: {
-    hotSearch: {
-      type: Array,
-      default() {
-        return [];
-      }
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .search-hot {

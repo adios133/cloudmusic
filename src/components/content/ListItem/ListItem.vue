@@ -6,9 +6,9 @@ const {
   desc = "歌单",
   playCount = 0
 } = defineProps<{
-  imgSrc: string;
-  desc: string;
-  playCount: number;
+  imgSrc?: string;
+  desc?: string;
+  playCount?: number;
 }>();
 </script>
 

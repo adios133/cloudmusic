@@ -5,7 +5,7 @@ export function padLeftZero(str: string) {
 // 防抖函数
 export function debounce(callback: (...args: any[]) => any, delay: number) {
   let timer = null;
-  return function (...args) {
+  return function (...args: any[]) {
     if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
       callback.apply(this, args);

@@ -1,15 +1,15 @@
+<script setup lang="ts">
+defineOptions({
+  name: "RecommendPlayAll"
+});
+</script>
+
 <template>
   <div class="play-all">
     <span class="iconfont icon-play1"></span>
     <i>播放全部</i>
   </div>
 </template>
-
-<script>
-export default {
-  name: "RecommendPlayAll"
-};
-</script>
 
 <style lang="less" scoped>
 .play-all {

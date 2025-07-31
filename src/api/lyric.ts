@@ -1,10 +1,10 @@
-import request from './request'
+import request from "./request";
 
-export function getLyric(id) {
+export function getLyric(id: string) {
   return request({
-    url:'/lyric',
-    params:{
+    url: "/lyric",
+    params: {
       id
     }
-  })
+  });
 }

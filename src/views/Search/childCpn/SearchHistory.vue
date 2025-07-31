@@ -1,3 +1,22 @@
+<script setup lang="ts">
+import mitter from "@/mitt";
+import { ref, onMounted } from "vue";
+defineOptions({
+  name: "SearchHistory"
+});
+const searchHistory = ref<any[]>([]);
+const clearHistory = () => {
+  searchHistory.value = [];
+  localStorage.removeItem("history");
+};
+const itemClick = (e: MouseEvent) => {
+  mitter.emit("fillWord", (e.target as HTMLSpanElement).innerText);
+};
+onMounted(() => {
+  searchHistory.value = JSON.parse(localStorage.getItem("history"));
+});
+</script>
+
 <template>
   <div class="search-history">
     <span class="title">历史</span>
@@ -13,30 +32,6 @@
     ></span>
   </div>
 </template>
-
-<script>
-export default {
-  name: "SearchHistory",
-  data() {
-    return {
-      searchHistory: []
-    };
-  },
-  methods: {
-    clearHistory() {
-      this.searchHistory = null;
-      localStorage.removeItem("history");
-    },
-    // 点击历史，自动填入input
-    itemClick(e) {
-      this.$bus.$emit("fillWord", e.target.innerText);
-    }
-  },
-  mounted() {
-    this.searchHistory = JSON.parse(localStorage.getItem("history"));
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .search-history {

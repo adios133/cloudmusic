@@ -1,36 +1,37 @@
-import request from './request'
+import request from "./request";
 
 export function getFm() {
-  const timestamp = +new Date()
+  const timestamp = +new Date();
   return request({
-    url:'/personal_fm',
-    params:{
+    url: "/personal_fm",
+    params: {
       timestamp
     }
-  })
+  });
 }
-export function getMusicInfo(ids) {
-  return request({
-    url:'/song/detail',
-    params:{
+export function getMusicInfo(ids: string) {
+  return request<any>({
+    url: "/song/detail",
+    params: {
       ids
     }
-  })
+  });
 }
 
-export function likeSong(id,like) {
+export function likeSong(id: string, like: boolean) {
   return request({
-    url:'/like',
-    params:{
-      id,like
+    url: "/like",
+    params: {
+      id,
+      like
     }
-  })
+  });
 }
-export function trashSong(id) {
+export function trashSong(id: string) {
   return request({
-    url:'/fm_trash',
-    params:{
+    url: "/fm_trash",
+    params: {
       id
     }
-  })
+  });
 }

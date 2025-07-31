@@ -1,3 +1,47 @@
+<script setup lang="ts">
+import { Toast } from "vant";
+import mitter from "@/mitt";
+import useStore from "@/store";
+import { useRouter } from "vue-router";
+defineOptions({
+  name: "MusicItem"
+});
+const {
+  isRecommend = false,
+  songInfo = {},
+  isCount = false,
+  rank = 0
+} = defineProps<{
+  isRecommend?: boolean;
+  songInfo?: any;
+  isCount?: boolean;
+  rank?: number;
+}>();
+const emits = defineEmits<{
+  saveList: [];
+}>();
+const store = useStore();
+const router = useRouter();
+const toPlay = () => {
+  if (songInfo.noCopyrightRcmd) {
+    Toast.fail({
+      message: "暂无版权",
+      duration: 1500
+    });
+    return;
+  }
+  // 向父组件发送事件,将列表保存在vuex中
+  emits("saveList");
+  // 跳转到playing页面
+  router.push("/playing/" + songInfo.id);
+  // 向playbar发送事件(事件总线),获取播放url
+  store.setState(false);
+  store.setLine(0);
+  store.setFm(false);
+  mitter.emit("playsong", songInfo.id);
+};
+</script>
+
 <template>
   <div class="music-item" v-if="songInfo.name" @click="toPlay">
     <div class="cover">
@@ -36,55 +80,6 @@
     </div>
   </div>
 </template>
-
-<script>
-import Vue from "vue";
-import { Toast } from "vant";
-Vue.use(Toast);
-export default {
-  name: "MusicItem",
-  props: {
-    isRecommend: {
-      type: Boolean,
-      default: false
-    },
-    songInfo: {
-      type: Object,
-      default() {
-        return {};
-      }
-    },
-    isCount: {
-      type: Boolean,
-      default: false
-    },
-    rank: {
-      type: Number,
-      default: 0
-    }
-  },
-  methods: {
-    toPlay() {
-      if (this.songInfo.noCopyrightRcmd) {
-        Toast.fail({
-          message: "暂无版权",
-          duration: 1500
-        });
-        return;
-      }
-      // 向父组件发送事件,将列表保存在vuex中
-      this.$emit("saveList");
-      // 跳转到playing页面
-      this.$router.push("/playing/" + this.songInfo.id);
-      // 向playbar发送事件(事件总线),获取播放url
-      this.$store.commit("setState", false);
-      this.$store.commit("setLine", 0);
-      this.$store.commit("setFm", false);
-      this.$bus.$emit("playsong", this.songInfo.id);
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .music-item {

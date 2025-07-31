@@ -1,9 +1,9 @@
-import request from './request'
-export function getMusicUrl(id) {
+import request from "./request";
+export function getMusicUrl(id: string) {
   return request({
-    url:'/song/url',
-    params:{
+    url: "/song/url",
+    params: {
       id
     }
-  })
+  });
 }

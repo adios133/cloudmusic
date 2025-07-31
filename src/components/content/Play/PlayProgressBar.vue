@@ -1,3 +1,49 @@
+<script setup lang="ts">
+import { padLeftZero } from "@/common/utils";
+import { Loading as VanLoading } from "vant";
+import { ref, useTemplateRef, onMounted } from "vue";
+import mitter from "@/mitt";
+defineOptions({
+  name: "PlayProgressBar"
+});
+const data = ref({
+  bufferedtime: 0,
+  currentTime: 0,
+  duration: 0.01, // not 0
+  id: ""
+});
+const barRef = useTemplateRef("bar");
+const seekTo = (e: PointerEvent) => {
+  const x = e.pageX - barRef.value.offsetLeft;
+  const percent = x / barRef.value.offsetWidth;
+  mitter.emit("seekTo", percent);
+};
+const times = (num: number) => {
+  const seconds = Number(num.toFixed(0));
+  const m = Math.floor(seconds / 60).toString();
+  const s = (seconds % 60).toString();
+  return padLeftZero(m) + ":" + padLeftZero(s);
+};
+const _emiterListener = () => {
+  // 监听音乐播放进度条改变
+  mitter.on("playingsong", (payload: any) => {
+    data.value = payload;
+  });
+  mitter.on("playsong", (id: string) => {
+    // 将进度条归零，duration为零 0/0 不会变，给个0.1归零，显示duration是处理过的四舍五入，还会是0
+    data.value = {
+      bufferedtime: 0,
+      currentTime: 0,
+      duration: 0.01,
+      id
+    };
+  });
+};
+onMounted(() => {
+  _emiterListener();
+});
+</script>
+
 <template>
   <div class="progress-bar">
     <div class="current-time">{{ times(data.currentTime) }}</div>
@@ -26,55 +72,6 @@
     <div class="duration">{{ times(data.duration) }}</div>
   </div>
 </template>
-
-<script>
-import { padLeftZero } from "@/common/utils";
-import Vue from "vue";
-import { Loading } from "vant";
-Vue.use(Loading);
-export default {
-  name: "PlayProgressBar",
-  data() {
-    return {
-      // 给个初始值，不然还没触发发事件时，渲染使用filters没有值会报错
-      data: {
-        bufferedtime: 0,
-        currentTime: 0,
-        duration: 0.01,
-        id: ""
-      }
-    };
-  },
-  methods: {
-    seekTo(e) {
-      const x = e.pageX - this.$refs.bar.offsetLeft;
-      const percent = x / this.$refs.bar.offsetWidth;
-      this.$bus.$emit("seekTo", percent);
-    },
-    times(num) {
-      const seconds = num.toFixed(0);
-      const m = Math.floor(seconds / 60).toString();
-      const s = (seconds % 60).toString();
-      return padLeftZero(m) + ":" + padLeftZero(s);
-    }
-  },
-  mounted() {
-    // 监听音乐播放进度条改变
-    this.$bus.$on("playingsong", (data) => {
-      this.data = data;
-    });
-    this.$bus.$on("playsong", (id) => {
-      // 将进度条归零，duration为零 0/0 不会变，给个0.1归零，显示duration是处理过的四舍五入，还会是0
-      this.data = {
-        bufferedtime: 0,
-        currentTime: 0,
-        duration: 0.01,
-        id
-      };
-    });
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .progress-bar {

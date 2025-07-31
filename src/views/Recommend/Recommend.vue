@@ -1,6 +1,61 @@
+<script setup lang="ts">
+import { getRecommend } from "@/api/recommend";
+import { Toast } from "vant";
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
+import MusicItem from "@/components/content/MusicItem/MusicItem.vue";
+import RecommendCover from "./childCpn/RecommendCover.vue";
+import RecommendPlayAll from "./childCpn/RecommendPlayAll.vue";
+import RecommendNav from "./childCpn/RecommendNav.vue";
+import { ref, onBeforeUpdate, useTemplateRef } from "vue";
+import { GRADIENT_DISTANCE } from "@/common/const";
+import { useRouter } from "vue-router";
+import useStore from "@/store";
+defineOptions({
+  name: "Rrecommend"
+});
+const router = useRouter();
+const store = useStore();
+const opacity = ref(0);
+const isShow = ref(false);
+const show = ref(false);
+const recList = ref<any[]>([]);
+const contentRef = useTemplateRef("content");
+const playAllRef = useTemplateRef("playall2");
+const scrolling = (position: any) => {
+  opacity.value = -position.y / GRADIENT_DISTANCE;
+  isShow.value =
+    -position.y >=
+    playAllRef.value.$el.offsetTop + contentRef.value.offsetTop - 44;
+};
+const _getRecommend = async () => {
+  try {
+    const res = await getRecommend();
+    Toast.clear();
+    recList.value = res.data.dailySongs;
+  } catch (err) {
+    Toast.fail({
+      message: err.response.data.msg,
+      duration: 1500,
+      onClose: () => {
+        router.push("/login");
+      }
+    });
+  }
+};
+const saveList = () => {
+  store.setPlaylist(recList.value);
+};
+Toast.loading("加载中...");
+_getRecommend();
+
+onBeforeUpdate(() => {
+  show.value = true;
+});
+</script>
+
 <template>
   <div class="recommend">
-    <recommend-nav :opicity="opicity" />
+    <recommend-nav :opacity="opacity" />
     <recommend-play-all class="fakeall" v-show="isShow" ref="playall1" />
     <scroll class="rec-scroll" :probeType="3" @scrolling="scrolling">
       <recommend-cover :imgUrl="recList[0]" />
@@ -19,69 +74,6 @@
     </scroll>
   </div>
 </template>
-
-<script>
-import { getRecommend } from "@/api/recommend";
-import Vue from "vue";
-import { Toast } from "vant";
-Vue.use(Toast);
-
-import Scroll from "@/components/common/Scroll/BetterScroll.vue";
-import MusicItem from "@/components/content/MusicItem/MusicItem.vue";
-import RecommendCover from "./childCpn/RecommendCover.vue";
-import RecommendPlayAll from "./childCpn/RecommendPlayAll.vue";
-import RecommendNav from "./childCpn/RecommendNav.vue";
-
-import { barCeiling } from "@/common/mixin";
-
-export default {
-  name: "Rrecommend",
-  mixins: [barCeiling],
-  components: {
-    Scroll,
-    RecommendCover,
-    MusicItem,
-    RecommendPlayAll,
-    RecommendNav
-  },
-  data() {
-    return {
-      recList: [],
-      // opicity:0,
-      // isShow:false,
-      show: false
-    };
-  },
-  methods: {
-    _getRecommend() {
-      getRecommend()
-        .then((res) => {
-          Toast.clear();
-          this.recList = res.data.dailySongs;
-        })
-        .catch((err) => {
-          Toast.fail({
-            message: err.response.data.msg,
-            duration: 1500,
-            onClose: () => {
-              this.$router.push("/login");
-            }
-          });
-        });
-    },
-    saveList() {
-      this.$store.commit("setPlaylist", this.recList);
-    }
-  },
-  created() {
-    Toast.loading("加载中...");
-    this._getRecommend();
-  },
-  beforeUpdate() {
-    this.show = true;
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .recommend {
