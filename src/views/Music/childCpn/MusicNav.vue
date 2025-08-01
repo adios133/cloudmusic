@@ -1,3 +1,23 @@
+<script setup lang="ts">
+import NavBar from "@/components/common/NavBar/NavBar.vue";
+import { ref } from "vue";
+defineOptions({
+  name: "MusicNav"
+});
+const emits = defineEmits<{
+  musicNavClick: [idx: number];
+}>();
+const currentIndex = ref(0);
+const itemList = ["创建的歌单", "收藏的歌单"];
+const itemClick = (index: number) => {
+  currentIndex.value = index;
+  emits("musicNavClick", index);
+};
+defineExpose({
+  currentIndex
+});
+</script>
+
 <template>
   <div class="music-nav">
     <nav-bar>
@@ -15,29 +35,6 @@
     </nav-bar>
   </div>
 </template>
-
-<script>
-import NavBar from "@/components/common/NavBar/NavBar.vue";
-
-export default {
-  name: "MusicNav",
-  components: {
-    NavBar
-  },
-  data() {
-    return {
-      itemList: ["创建的歌单", "收藏的歌单"],
-      currentIndex: 0
-    };
-  },
-  methods: {
-    itemClick(index) {
-      this.currentIndex = index;
-      this.$emit("musicNavClick", index);
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .item {

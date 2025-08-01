@@ -1,3 +1,25 @@
+<script setup lang="ts">
+import NavBar from "@/components/common/NavBar/NavBar.vue";
+import { useRouter } from "vue-router";
+import { ref } from "vue";
+defineOptions({
+  name: "RecentNav"
+});
+const emits = defineEmits<{
+  switchItem: [idx: number];
+}>();
+const router = useRouter();
+const title = ["最近一周", "所有时间"];
+const currentIndex = ref(0);
+const switchItem = (index: number) => {
+  currentIndex.value = index;
+  emits("switchItem", index);
+};
+const goBack = () => {
+  router.go(-1);
+};
+</script>
+
 <template>
   <div class="recent-nav">
     <nav-bar>
@@ -19,32 +41,6 @@
     </nav-bar>
   </div>
 </template>
-
-<script>
-import NavBar from "@/components/common/NavBar/NavBar.vue";
-
-export default {
-  name: "RecentNav",
-  components: {
-    NavBar
-  },
-  data() {
-    return {
-      title: ["最近一周", "所有时间"],
-      currentIndex: 0
-    };
-  },
-  methods: {
-    switchItem(index) {
-      this.currentIndex = index;
-      this.$emit("switchItem", index);
-    },
-    goBack() {
-      this.$router.go(-1);
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .recent-nav {

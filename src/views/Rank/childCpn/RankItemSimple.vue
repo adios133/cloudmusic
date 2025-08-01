@@ -1,3 +1,18 @@
+<script setup lang="ts">
+defineOptions({
+  name: "RankItemSimple"
+});
+const {
+  imgSrc = "",
+  desc = "歌单",
+  updateFrequency = ""
+} = defineProps<{
+  imgSrc: string;
+  desc: string;
+  updateFrequency: string;
+}>();
+</script>
+
 <template>
   <div class="list-item">
     <img src="@/assets/img/default/default.jpg" alt="" v-if="imgSrc === ''" />
@@ -6,26 +21,6 @@
     <div class="info">{{ updateFrequency }}</div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "RankItemSimple",
-  props: {
-    imgSrc: {
-      type: String,
-      default: ""
-    },
-    desc: {
-      type: String,
-      default: "歌单"
-    },
-    updateFrequency: {
-      type: String,
-      default: ""
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .list-item {

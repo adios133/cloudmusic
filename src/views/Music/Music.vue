@@ -1,3 +1,79 @@
+<script setup lang="ts">
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
+import MusicNav from "./childCpn/MusicNav.vue";
+import MusicItem from "./childCpn/MusicListItem.vue";
+import { getUserList } from "@/api/music";
+import { getUserId } from "@/api/login";
+import { Toast } from "vant";
+import { ref, useTemplateRef } from "vue";
+import useStore from "@/store";
+defineOptions({
+  name: "Music"
+});
+const store = useStore();
+const createList = ref<any[]>([]);
+const subscribedList = ref<any[]>([]);
+const scrollRef = useTemplateRef("scroll");
+const subscribledRef = useTemplateRef("subscribled");
+const navRef = useTemplateRef("musicNav");
+const _getUserId = async (): Promise<string> => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await getUserId();
+      if (res.profile) {
+        store.setUid(res.profile.userId);
+        resolve(res.profile.userId);
+      } else {
+        reject("需要登录");
+      }
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+// 请求 封装获取用户歌单函数
+const _getUserList = async (uid: string, limit?: number, offset?: number) => {
+  const res = await getUserList(uid, limit, offset);
+  Toast.clear();
+  res.playlist.forEach((item) => {
+    // 区分收藏的和自己创建的
+    if (item.subscribed) {
+      subscribedList.value.push(item);
+    } else {
+      createList.value.push(item);
+    }
+  });
+};
+// 操作方法
+const musicNavClick = (index: number) => {
+  if (index === 0) {
+    scrollRef.value.scrollTo(0, 0, 300);
+  } else {
+    scrollRef.value.scrollTo(0, -subscribledRef.value.offsetTop, 300);
+  }
+};
+const scrolling = (position: any) => {
+  if (-position.y < subscribledRef.value.offsetTop) {
+    navRef.value.currentIndex = 0;
+  } else {
+    navRef.value.currentIndex = 1;
+  }
+};
+const _init = async () => {
+  try {
+    const res = await _getUserId();
+    Toast.loading("加载中...");
+    _getUserList(res);
+  } catch (err) {
+    Toast.fail({
+      message: err,
+      duration: 1500
+    });
+  }
+};
+_init();
+</script>
+
 <template>
   <div id="music">
     <music-nav @musicNavClick="musicNavClick" ref="musicNav" />
@@ -26,78 +102,6 @@
     </scroll>
   </div>
 </template>
-
-<script>
-import Scroll from "@/components/common/Scroll/BetterScroll.vue";
-import MusicNav from "./childCpn/MusicNav.vue";
-import MusicItem from "./childCpn/MusicListItem.vue";
-
-import { getUserID } from "@/common/mixin";
-import { getUserList } from "@/api/music";
-
-import Vue from "vue";
-import { Toast } from "vant";
-Vue.use(Toast);
-export default {
-  name: "Music",
-  mixins: [getUserID],
-  components: {
-    Scroll,
-    MusicNav,
-    MusicItem
-  },
-  data() {
-    return {
-      createList: [],
-      subscribedList: []
-    };
-  },
-  methods: {
-    // 请求 封装获取用户歌单函数
-    _getUserList(uid, limit, offset) {
-      getUserList(uid, limit, offset).then((res) => {
-        Toast.clear();
-        res.playlist.forEach((item) => {
-          // 区分收藏的和自己创建的
-          if (item.subscribed) {
-            this.subscribedList.push(item);
-          } else {
-            this.createList.push(item);
-          }
-        });
-      });
-    },
-    // 操作方法
-    musicNavClick(index) {
-      if (index === 0) {
-        this.$refs.scroll.scrollTo(0, 0, 300);
-      } else {
-        this.$refs.scroll.scrollTo(0, -this.$refs.subscribled.offsetTop, 300);
-      }
-    },
-    scrolling(position) {
-      if (-position.y < this.$refs.subscribled.offsetTop) {
-        this.$refs.musicNav.currentIndex = 0;
-      } else {
-        this.$refs.musicNav.currentIndex = 1;
-      }
-    }
-  },
-  created() {
-    this._getUserId()
-      .then((res) => {
-        Toast.loading("加载中...");
-        this._getUserList(res);
-      })
-      .catch((err) => {
-        Toast.fail({
-          message: err,
-          duration: 1500
-        });
-      });
-  }
-};
-</script>
 
 <style lang="less" scoped>
 #music {

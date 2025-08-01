@@ -1,3 +1,40 @@
+<script setup lang="ts">
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
+import RankHeader from "./childCpn/RankHeader.vue";
+import RankItem from "./childCpn/RankItem.vue";
+import RankItemSimple from "./childCpn/RankItemSimple.vue";
+import { getRank } from "@/api/rank";
+import { Toast } from "vant";
+import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
+
+defineOptions({
+  name: "Rank"
+});
+const router = useRouter();
+const rankList = ref<any[]>([]);
+const offcialRank = computed(() => {
+  return rankList.value.filter((item) => item.tracks.length > 0);
+});
+const otherRank = computed(() => {
+  return rankList.value.filter((item) => item.tracks.length === 0);
+});
+const _getRank = async () => {
+  const res = await getRank();
+  Toast.clear();
+  rankList.value = res.list;
+};
+const listClick = (id: string) => {
+  router.push("/listdetail/" + id);
+};
+
+const _init = () => {
+  Toast.loading("加载中...");
+  _getRank();
+};
+_init();
+</script>
+
 <template>
   <div class="rank">
     <rank-header />
@@ -27,57 +64,6 @@
     </scroll>
   </div>
 </template>
-
-<script>
-import Scroll from "@/components/common/Scroll/BetterScroll.vue";
-import RankHeader from "./childCpn/RankHeader.vue";
-import RankItem from "./childCpn/RankItem.vue";
-import RankItemSimple from "./childCpn/RankItemSimple.vue";
-
-import { getRank } from "@/api/rank";
-
-import Vue from "vue";
-import { Toast } from "vant";
-Vue.use(Toast);
-
-export default {
-  name: "Rank",
-  components: {
-    Scroll,
-    RankHeader,
-    RankItem,
-    RankItemSimple
-  },
-  data() {
-    return {
-      rankList: []
-    };
-  },
-  computed: {
-    offcialRank() {
-      return this.rankList.filter((item) => item.tracks.length > 0);
-    },
-    otherRank() {
-      return this.rankList.filter((item) => item.tracks.length === 0);
-    }
-  },
-  methods: {
-    _getRank() {
-      getRank().then((res) => {
-        Toast.clear();
-        this.rankList = res.list;
-      });
-    },
-    listClick(id) {
-      this.$router.push("/listdetail/" + id);
-    }
-  },
-  created() {
-    Toast.loading("加载中...");
-    this._getRank();
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .rank-scroll {

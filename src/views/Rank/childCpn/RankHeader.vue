@@ -1,3 +1,15 @@
+<script setup lang="ts">
+import NavBar from "@/components/common/NavBar/NavBar.vue";
+import { useRouter } from "vue-router";
+defineOptions({
+  name: "RankHeader"
+});
+const router = useRouter();
+const goBack = () => {
+  router.go(-1);
+};
+</script>
+
 <template>
   <div class="rank-head">
     <nav-bar>
@@ -10,21 +22,6 @@
     </nav-bar>
   </div>
 </template>
-
-<script>
-import NavBar from "@/components/common/NavBar/NavBar.vue";
-export default {
-  name: "RankHeader",
-  components: {
-    NavBar
-  },
-  methods: {
-    goBack() {
-      this.$router.go(-1);
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .rank-head {

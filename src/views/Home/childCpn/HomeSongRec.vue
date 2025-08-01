@@ -1,3 +1,18 @@
+<script setup lang="ts">
+import ListItem from "@/components/content/ListItem/ListItem.vue";
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
+import { useRouter } from "vue-router";
+defineOptions({
+  name: "HomeSongRec"
+});
+const { recommendList = [] } = defineProps<{ recommendList: any[] }>();
+const router = useRouter();
+// 点击跳转到歌单详情
+const songClick = (id: string) => {
+  router.push("/listdetail/" + id);
+};
+</script>
+
 <template>
   <div class="home-song-rec" v-if="recommendList[0]">
     <scroll :scrollX="true" class="home-scroll">
@@ -16,33 +31,6 @@
     </scroll>
   </div>
 </template>
-
-<script>
-import ListItem from "@/components/content/ListItem/ListItem.vue";
-import Scroll from "@/components/common/Scroll/BetterScroll.vue";
-
-export default {
-  name: "HomeSongRec",
-  components: {
-    ListItem,
-    Scroll
-  },
-  props: {
-    recommendList: {
-      type: Array,
-      default() {
-        return [];
-      }
-    }
-  },
-  methods: {
-    // 点击跳转到歌单详情
-    songClick(id) {
-      this.$router.push("/listdetail/" + id);
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .home-song-rec {

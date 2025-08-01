@@ -1,3 +1,65 @@
+<script setup lang="ts">
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
+import ProfileBackground from "./childCpn/ProfileBackground.vue";
+import ProfileUserCart from "./childCpn/ProfileUserCart.vue";
+import ProfileFavor from "./childCpn/ProfileFavor.vue";
+import { getUserInfo, getLikeId } from "@/api/profile";
+import { getUserId } from "@/api/login";
+import useStore from "@/store";
+import { ref, onActivated } from "vue";
+import { useRoute } from "vue-router";
+defineOptions({
+  name: "Profile"
+});
+const route = useRoute();
+const store = useStore();
+const userInfo = ref<{ [k: string]: any }>({});
+const likeListId = ref("");
+const _getUserId = (): Promise<string> => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await getUserId();
+      if (res.profile) {
+        store.setUid(res.profile.userId);
+        resolve(res.profile.userId);
+      } else {
+        reject("需要登录");
+      }
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+const _getUserInfo = async (id: string) => {
+  const res = await getUserInfo(id);
+  userInfo.value = res.profile;
+  // 等级不在对象之内，
+  userInfo.value.level = res.level;
+  _getLikeId(store.state.userId);
+};
+const _getLikeId = async (uid: string) => {
+  const res = await getLikeId(uid);
+  // 用户歌单第一个歌单为喜欢歌单
+  likeListId.value = res.playlist[0].id.toString();
+};
+onActivated(() => {
+  if (route.meta.__fromPath__ === "/login") {
+    _getUserInfo(store.state.userId);
+  }
+});
+const _init = async () => {
+  // keepalive 只会调用一次
+  if (store.state.userId === "") {
+    // this._getUserId() mixin ,返回 id
+    const res = await _getUserId();
+    _getUserInfo(res);
+  } else {
+    _getUserInfo(store.state.userId);
+  }
+};
+_init();
+</script>
+
 <template>
   <div id="profile">
     <scroll class="profile-scroll">
@@ -10,91 +72,6 @@
     </scroll>
   </div>
 </template>
-
-<script>
-import Scroll from "@/components/common/Scroll/BetterScroll.vue";
-import ProfileBackground from "./childCpn/ProfileBackground.vue";
-import ProfileUserCart from "./childCpn/ProfileUserCart.vue";
-import ProfileFavor from "./childCpn/ProfileFavor.vue";
-
-import { getUserInfo, getLikeId } from "@/api/profile";
-
-import { getUserID } from "@/common/mixin";
-
-import Vue from "vue";
-import { Toast } from "vant";
-Vue.use(Toast);
-
-export default {
-  name: "Profile",
-  mixins: [getUserID],
-  components: {
-    ProfileBackground,
-    Scroll,
-    ProfileUserCart,
-    ProfileFavor
-  },
-  data() {
-    return {
-      userInfo: {},
-      likeListId: "",
-      path: ""
-    };
-  },
-  beforeRouteEnter(to, from, next) {
-    /* 使用组件内导航守卫，记录来时路由，
-      由于beforeRouteEnter 不能访问this，使用next回调将来时path存在data中
-    */
-    next((vm) => {
-      vm.path = from.path;
-    });
-  },
-  created() {
-    // keepalive 只会调用一次
-    if (this.$store.state.userId === "") {
-      // this._getUserId() mixin ,返回 id
-      this._getUserId().then((res) => {
-        this._getUserInfo(res);
-      });
-    } else {
-      this._getUserInfo(this.$store.state.userId);
-    }
-  },
-  activated() {
-    // 但是当是通过login进来时，需要刷新页面
-    if (this.path === "/login") {
-      this._getUserInfo(this.$store.state.userId);
-    }
-  },
-  methods: {
-    // get a problem , 服务端设置了缓存2分钟，导致获取时删除cookie不足2min 还是上次的结果,解决在请求时 加上时间戳 only getId就行
-    //  使用混入
-    // _getUserId() {
-    //   getUserId().then(res=> {
-    //     if(res.profile) {
-    //       this.$store.commit("setUid",res.profile.userId)
-    //       this._getUserInfo(res.profile.userId)
-    //     }
-    //   })
-    // },
-
-    _getUserInfo(id) {
-      getUserInfo(id).then((res) => {
-        this.userInfo = res.profile;
-        // 等级不在对象之内，
-        this.userInfo.level = res.level;
-        this._getLikeId(this.$store.state.userId);
-      });
-    },
-    _getLikeId(uid) {
-      getLikeId(uid).then((res) => {
-        // 用户歌单第一个歌单为喜欢歌单
-        this.likeListId = res.playlist[0].id.toString();
-      });
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .profile-scroll {

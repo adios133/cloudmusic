@@ -1,3 +1,17 @@
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+defineOptions({
+  name: "RankItem"
+});
+const { rankInfo = {} } = defineProps<{
+  rankInfo: { [k: string]: any };
+}>();
+const router = useRouter();
+const goDetail = (id: string) => {
+  router.push("/listdetail/" + id);
+};
+</script>
+
 <template>
   <div
     class="rank-item"
@@ -23,26 +37,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "RankItem",
-  components: {},
-  props: {
-    rankInfo: {
-      type: Object,
-      default() {
-        return {};
-      }
-    }
-  },
-  methods: {
-    goDetail(id) {
-      this.$router.push("/listdetail/" + id);
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .rank-item {

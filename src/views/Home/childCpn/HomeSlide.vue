@@ -2,18 +2,24 @@
 import { Popup as VanPopup } from "vant";
 import { getUserInfo } from "@/api/profile";
 import { getSignIn, logOut } from "@/api/home";
-import { getUserID } from "@/common/mixin";
-import { ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import { getUserId } from "@/api/login";
+import { ref, watch, onActivated } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import useStore from "@/store";
 defineOptions({
   name: "HomeSlide"
 });
 const { isShow = false } = defineProps<{
   isShow: boolean;
 }>();
-
+const emits = defineEmits<{
+  closeSlide: [];
+}>();
+const route = useRoute();
+const router = useRouter();
+const store = useStore();
 const show = ref(false);
-const userInfo = ref({});
+const userInfo = ref<any>({});
 const msg = ref("签到");
 watch(
   () => isShow,
@@ -21,93 +27,70 @@ watch(
     show.value = val;
   }
 );
-const closeSlide = () => {};
-const logIn = () => {};
-const goCloud = () => {};
-const signIn = () => {};
-const aboutMe = () => {};
-const onLogOut = () => {};
-// export default {
-//   name: "HomeSlide",
-//   mixins: [getUserID],
-//   props: {
-//     isShow: {
-//       type: Boolean,
-//       default: false
-//     }
-//   },
-//   data() {
-//     return {
-//       show: false,
-//       userInfo: {},
-//       msg: ""
-//     };
-//   },
-//   watch: {
-//     isShow() {
-//       this.show = this.isShow;
-//     }
-//   },
-//   beforeRouteEnter(to, from, next) {
-//     /* 使用组件内导航守卫，记录来时路由，
-//       由于beforeRouteEnter 不能访问this，使用next回调将来时path存在data中
-//     */
-//     next((vm) => {
-//       vm.path = from.path;
-//     });
-//   },
-//   created() {
-//     // keepalive 只会调用一次
-//     if (this.$store.state.userId === "") {
-//       // this._getUserId() mixin ,返回 id
-//       this._getUserId().then((res) => {
-//         this._getUserInfo(res);
-//       });
-//     } else {
-//       this._getUserInfo(this.$store.state.userId);
-//     }
-//   },
-//   activated() {
-//     // 但是当是通过login进来时，需要刷新页面
-//     if (this.path === "/login") {
-//       this._getUserInfo(this.$store.state.userId);
-//     }
-//   },
-//   methods: {
-//     closeSlide() {
-//       this.$emit("closeSlide");
-//     },
-//     logIn() {
-//       if (this.userInfo.nickname) return;
-//       this.$router.push("/login");
-//     },
-//     logOut() {
-//       logOut().then(() => {
-//         location.reload();
-//       });
-//     },
-//     _getUserInfo(id) {
-//       getUserInfo(id).then((res) => {
-//         this.userInfo = res.profile;
-//         // 等级不在对象之内，
-//         this.userInfo.level = res.level;
-//       });
-//     },
-//     goCloud() {
-//       this.$router.push("/cloud");
-//     },
-//     signIn() {
-//       getSignIn().then((res) => {
-//         if (res.code === 200) {
-//           this.msg = "已签到";
-//         }
-//       });
-//     },
-//     aboutMe() {
-//       location.href = "https://github.com/adios133/cloudmusic";
-//     }
-//   }
-// };
+const _getUserId = (): Promise<string> => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await getUserId();
+      if (res.profile) {
+        store.setUid(res.profile.userId);
+        resolve(res.profile.userId);
+      } else {
+        reject("需要登录");
+      }
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+const closeSlide = () => {
+  emits("closeSlide");
+};
+const logIn = () => {
+  if (userInfo.value.nickname) return;
+  router.push("/login");
+};
+const goCloud = () => {
+  router.push("/cloud");
+};
+const signIn = async () => {
+  const res = await getSignIn();
+  if (res.code === 200) {
+    msg.value = "已签到";
+  }
+};
+const aboutMe = () => {
+  location.href = "https://github.com/adios133/cloudmusic";
+};
+const onLogOut = async () => {
+  await logOut();
+  location.reload();
+};
+const _getUserInfo = async (id: string) => {
+  const res = await getUserInfo(id);
+  userInfo.value = res.profile;
+  // 等级不在对象之内，
+  userInfo.value.level = res.level;
+};
+
+// create
+const init = async () => {
+  // keepalive 只会调用一次
+  if (store.state.userId === "") {
+    // this._getUserId() mixin ,返回 id
+    const res = await _getUserId();
+    _getUserInfo(res);
+  } else {
+    _getUserInfo(store.state.userId);
+  }
+};
+init();
+
+onActivated(() => {
+  // 但是当是通过login进来时，需要刷新页面
+  if (route.meta.__fromPath__ === "/login") {
+    _getUserInfo(store.state.userId);
+  }
+});
 </script>
 
 <template>

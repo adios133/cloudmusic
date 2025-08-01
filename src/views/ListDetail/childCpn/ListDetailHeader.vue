@@ -1,3 +1,13 @@
+<script setup lang="ts">
+defineOptions({
+  name: "ListDetailHeader"
+});
+const { listInfo = {}, creatorInfo = {} } = defineProps<{
+  listInfo: any;
+  creatorInfo: any;
+}>();
+</script>
+
 <template>
   <div class="list-header">
     <div class="bg">
@@ -18,26 +28,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "ListDetailHeader",
-  props: {
-    listInfo: {
-      type: Object,
-      default() {
-        return {};
-      }
-    },
-    creatorInfo: {
-      type: Object,
-      default() {
-        return {};
-      }
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .list-header {

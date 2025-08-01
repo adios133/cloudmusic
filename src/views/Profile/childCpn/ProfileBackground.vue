@@ -1,21 +1,18 @@
+<script setup lang="ts">
+defineOptions({
+  name: "ProfileBackground"
+});
+const { picUrl = "" } = defineProps<{
+  picUrl: string;
+}>();
+</script>
+
 <template>
   <div class="profile-bg">
     <img :src="picUrl" alt="" v-if="picUrl != ''" />
     <img src="@/assets/img/default/bgImg2.jpg" alt="" v-else />
   </div>
 </template>
-
-<script>
-export default {
-  name: "ProfileBackground",
-  props: {
-    picUrl: {
-      type: String,
-      default: ""
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .profile-bg img {

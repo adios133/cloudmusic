@@ -1,3 +1,17 @@
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+defineOptions({
+  name: "MusicListItem"
+});
+const { listInfo = {} } = defineProps<{
+  listInfo: { [k: string]: any };
+}>();
+const router = useRouter();
+const itemClick = (id: string) => {
+  router.push("/listdetail/" + id);
+};
+</script>
+
 <template>
   <div
     class="music-list-item"
@@ -13,25 +27,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "MusicListItem",
-  props: {
-    listInfo: {
-      type: Object,
-      default() {
-        return {};
-      }
-    }
-  },
-  methods: {
-    itemClick(id) {
-      this.$router.push("/listdetail/" + id);
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .music-list-item {

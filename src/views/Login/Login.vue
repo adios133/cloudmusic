@@ -1,3 +1,64 @@
+<script setup lang="ts">
+import { logIn } from "@/api/login";
+import { Toast } from "vant";
+import { useRouter, useRoute } from "vue-router";
+import { ref } from "vue";
+import useStore from "@/store";
+defineOptions({
+  name: "Login"
+});
+const route = useRoute();
+const router = useRouter();
+const store = useStore();
+const fromPath = <string>route.meta.__fromPath__;
+const phone = ref("");
+const password = ref("");
+const goLogin = async () => {
+  // 前端验证
+  const phoneReg =
+    /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
+  const passwordReg = /^[a-zA-Z]\w{5,17}$/;
+  if (!phoneReg.test(phone.value)) {
+    Toast.fail({
+      message: "手机号格式不正确",
+      duration: 1500
+    });
+    return;
+  }
+  if (!passwordReg.test(password.value)) {
+    Toast.fail({
+      message: "密码格式不正确",
+      duration: 1500
+    });
+    return;
+  }
+  const res = await logIn(phone.value, password.value);
+  if (res.code === 200) {
+    store.setUid(res.profile.userId);
+    Toast.success({
+      message: "登陆成功",
+      duration: 1200,
+      onClose: () => {
+        router.push(fromPath);
+        location.reload();
+      }
+    });
+  }
+  if (res.code === 502) {
+    Toast.fail({
+      message: res.message,
+      duration: 1500
+    });
+  }
+  if (res.code === 400) {
+    Toast.fail({
+      message: "手机号错误",
+      duration: 1500
+    });
+  }
+};
+</script>
+
 <template>
   <div id="login">
     <h3 class="welcome">欢迎回来</h3>
@@ -7,8 +68,7 @@
         <input
           type="text"
           placeholder="请输入手机号"
-          id="phone"
-          @input="getFormData"
+          v-model="phone"
           focus="true"
         />
       </div>
@@ -17,9 +77,8 @@
         <input
           type="password"
           placeholder="请输入密码"
-          id="password"
+          v-model="password"
           autocomplete="false"
-          @input="getFormData"
         />
       </div>
       <div class="loginBtn" @click="goLogin">登录</div>
@@ -34,78 +93,6 @@
     </div>
   </div>
 </template>
-
-<script>
-import { logIn } from "@/api/login";
-import Vue from "vue";
-import { Toast } from "vant";
-Vue.use(Toast);
-export default {
-  name: "Login",
-  data() {
-    return {
-      phone: "",
-      password: "",
-      topath: ""
-    };
-  },
-  // 记录来时路由
-  beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      vm.topath = from.path;
-    });
-  },
-  methods: {
-    getFormData(e) {
-      const name = e.target.id;
-      this[name] = e.target.value;
-    },
-    goLogin() {
-      // 前端验证
-      const phoneReg =
-        /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
-      const passwordReg = /^[a-zA-Z]\w{5,17}$/;
-      if (!phoneReg.test(this.phone)) {
-        Toast.fail({
-          message: "手机号格式不正确",
-          duration: 1500
-        });
-      } else if (!passwordReg.test(this.password)) {
-        Toast.fail({
-          message: "密码格式不正确",
-          duration: 1500
-        });
-      } else {
-        logIn(this.phone, this.password).then((res) => {
-          if (res.code === 200) {
-            this.$store.commit("setUid", res.profile.userId);
-            Toast.success({
-              message: "登陆成功",
-              duration: 1200,
-              onClose: () => {
-                this.$router.push(`${this.topath}`);
-                location.reload();
-              }
-            });
-          }
-          if (res.code === 502) {
-            Toast.fail({
-              message: res.message,
-              duration: 1500
-            });
-          }
-          if (res.code === 400) {
-            Toast.fail({
-              message: "手机号错误",
-              duration: 1500
-            });
-          }
-        });
-      }
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 #login {

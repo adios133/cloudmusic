@@ -1,3 +1,12 @@
+<script setup lang="ts">
+defineOptions({
+  name: "ListDetailPLayAll"
+});
+const { num = 0 } = defineProps<{
+  num: number;
+}>();
+</script>
+
 <template>
   <div class="list-playall">
     <span class="iconfont icon-play1"></span>
@@ -5,18 +14,6 @@
     <span class="number">({{ num }})</span>
   </div>
 </template>
-
-<script>
-export default {
-  name: "ListDetailPLayAll",
-  props: {
-    num: {
-      type: Number,
-      default: 0
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .list-playall {

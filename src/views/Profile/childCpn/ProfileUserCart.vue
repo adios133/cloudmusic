@@ -1,3 +1,18 @@
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+defineOptions({
+  name: "ProfileUserCart"
+});
+const { userInfo = {} } = defineProps<{
+  userInfo: { [k: string]: any };
+}>();
+const router = useRouter();
+const logIn = () => {
+  if (userInfo.nickname) return;
+  router.push("/login");
+};
+</script>
+
 <template>
   <div class="user-cart">
     <!-- v-if -->
@@ -22,26 +37,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "ProfileUserCart",
-  props: {
-    userInfo: {
-      type: Object,
-      default() {
-        return {};
-      }
-    }
-  },
-  methods: {
-    logIn() {
-      if (this.userInfo.nickname) return;
-      this.$router.push("/login");
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .user-cart {

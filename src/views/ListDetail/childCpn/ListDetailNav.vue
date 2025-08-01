@@ -1,10 +1,26 @@
+<script setup lang="ts">
+import NavBar from "@/components/common/NavBar/NavBar.vue";
+import { useRouter } from "vue-router";
+defineOptions({
+  name: "ListDetailNav"
+});
+const { opacity = 0 } = defineProps<{
+  opacity: number;
+  name: string;
+}>();
+const router = useRouter();
+const goBack = () => {
+  router.go(-1);
+};
+</script>
+
 <template>
   <div
     class="list-nav"
     :style="{
-      'background-color': `rgba(255,255,255,${opicity})`,
-      color: `rgb(${255 * (1 - opicity)},${255 * (1 - opicity)},${
-        255 * (1 - opicity)
+      'background-color': `rgba(255,255,255,${opacity})`,
+      color: `rgb(${255 * (1 - opacity)},${255 * (1 - opacity)},${
+        255 * (1 - opacity)
       })`
     }"
   >
@@ -13,34 +29,11 @@
         <span class="iconfont icon-back1 back" @click="goBack"></span>
       </template>
       <template #center>
-        <div class="center">{{ opicity > 0.5 ? name : "歌单详情" }}</div>
+        <div class="center">{{ opacity > 0.5 ? name : "歌单详情" }}</div>
       </template>
     </nav-bar>
   </div>
 </template>
-
-<script>
-import NavBar from "@/components/common/NavBar/NavBar.vue";
-
-export default {
-  name: "ListDetailNav",
-  components: {
-    NavBar
-  },
-  props: {
-    opicity: {
-      type: Number,
-      default: 0
-    },
-    name: String
-  },
-  methods: {
-    goBack() {
-      this.$router.go(-1);
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .list-nav {

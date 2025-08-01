@@ -1,58 +1,41 @@
+<script setup lang="ts">
+import { fixNumber } from "@/common/utils";
+defineOptions({
+  name: "ListDetailCount"
+});
+const {
+  shareCount = 0,
+  commentCount = 0,
+  subscribedCount = 0
+} = defineProps<{
+  shareCount: number;
+  commentCount: number;
+  subscribedCount: number;
+}>();
+</script>
+
 <template>
   <div class="list-detail-count">
     <div class="subscribed">
       <span
         ><span class="iconfont icon-icons-"></span
-        >{{ fixedNum(subscribedCount) }}</span
+        >{{ fixNumber(subscribedCount) }}</span
       >
     </div>
     <div class="comment">
       <span
         ><span class="iconfont icon-comment"></span
-        >{{ fixedNum(commentCount) }}</span
+        >{{ fixNumber(commentCount) }}</span
       >
     </div>
     <div class="share">
       <span
         ><span class="iconfont icon-share"></span
-        >{{ fixedNum(shareCount) }}</span
+        >{{ fixNumber(shareCount) }}</span
       >
     </div>
   </div>
 </template>
-
-<script>
-import { fixedNum } from "@/common/mixin";
-export default {
-  name: "ListDetailCount",
-  mixins: [fixedNum],
-  props: {
-    shareCount: {
-      type: Number,
-      default: 0
-    },
-    commentCount: {
-      type: Number,
-      default: 0
-    },
-    subscribedCount: {
-      type: Number,
-      default: 0
-    }
-  },
-  methods: {
-    fixedNum(num) {
-      if (num > 100000000) {
-        return (num / 100000000).toFixed(1) + "亿";
-      } else if (num > 10000) {
-        return (num / 10000).toFixed(1) + "万";
-      } else {
-        return num;
-      }
-    }
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .list-detail-count {
@@ -67,7 +50,7 @@ export default {
   font-size: 16px;
   background-color: #fff;
   border-radius: 30px;
-  box-shadow: 0 2px 3px 3px rgba($color: #111, $alpha: 0.08);
+  box-shadow: 0 2px 3px 3px rgba(0, 0, 0, 0.08);
   z-index: 4;
   div {
     width: 33.333%;

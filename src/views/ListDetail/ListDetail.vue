@@ -1,6 +1,54 @@
+<script setup lang="ts">
+import { getListDetail, ListInfo, CreatorInfo } from "@/api/listdetail";
+import ListDetailHeader from "./childCpn/ListDetailHeader.vue";
+import ListDetailCount from "./childCpn/ListDetailCount.vue";
+import Scroll from "@/components/common/Scroll/BetterScroll.vue";
+import ListDetailPLayAll from "./childCpn/ListDetailPLayAll.vue";
+import MusicItem from "@/components/content/MusicItem/MusicItem.vue";
+import ListDetailNav from "./childCpn/ListDetailNav.vue";
+import { GRADIENT_DISTANCE } from "@/common/const";
+import { ref, useTemplateRef } from "vue";
+import { Toast } from "vant";
+import { useRoute } from "vue-router";
+import useStore from "@/store";
+defineOptions({
+  name: "ListDetail"
+});
+const route = useRoute();
+const store = useStore();
+const isShow = ref(false);
+const opacity = ref(0);
+const listInfo = ref<{ [k: string]: any }>({});
+const creatorInfo = ref<{ [k: string]: any }>({});
+const songList = ref<any[]>([]);
+const playAllRef = useTemplateRef("playall2");
+const contentRef = useTemplateRef("content");
+const scrolling = (position) => {
+  opacity.value = -position.y / GRADIENT_DISTANCE;
+  isShow.value =
+    -position.y >=
+    playAllRef.value.$el.offsetTop + contentRef.value.offsetTop - 44;
+};
+const _getListDetail = async (id: string) => {
+  const res = await getListDetail(id);
+  Toast.clear();
+  listInfo.value = new ListInfo(res.playlist);
+  creatorInfo.value = new CreatorInfo(res.playlist.creator);
+  songList.value = res.playlist.tracks;
+};
+const saveList = () => {
+  store.setPlaylist(songList.value);
+};
+const init = () => {
+  Toast.loading("加载中...");
+  _getListDetail(route.params.id as string);
+};
+init();
+</script>
+
 <template>
   <div class="list-detail">
-    <list-detail-nav :opicity="opicity" :name="listInfo.name" />
+    <list-detail-nav :opacity="opacity" :name="listInfo.name" />
     <list-detail-pLay-all
       :num="songList.length"
       class="fake-title"
@@ -24,58 +72,6 @@
     </scroll>
   </div>
 </template>
-
-<script>
-import { getListDetail, ListInfo, CreatorInfo } from "@/api/listdetail";
-
-import ListDetailHeader from "./childCpn/ListDetailHeader.vue";
-import ListDetailCount from "./childCpn/ListDetailCount.vue";
-import Scroll from "@/components/common/Scroll/BetterScroll.vue";
-import ListDetailPLayAll from "./childCpn/ListDetailPLayAll.vue";
-import MusicItem from "@/components/content/MusicItem/MusicItem.vue";
-import ListDetailNav from "./childCpn/ListDetailNav.vue";
-import { barCeiling } from "@/common/mixin";
-
-import Vue from "vue";
-import { Toast } from "vant";
-Vue.use(Toast);
-export default {
-  name: "ListDetail",
-  mixins: [barCeiling],
-  components: {
-    ListDetailHeader,
-    ListDetailCount,
-    Scroll,
-    ListDetailPLayAll,
-    MusicItem,
-    ListDetailNav
-  },
-  data() {
-    return {
-      listInfo: {},
-      creatorInfo: {},
-      songList: []
-    };
-  },
-  methods: {
-    _getListDetail(id) {
-      getListDetail(id).then((res) => {
-        Toast.clear();
-        this.listInfo = new ListInfo(res.playlist);
-        this.creatorInfo = new CreatorInfo(res.playlist.creator);
-        this.songList = res.playlist.tracks;
-      });
-    },
-    saveList() {
-      this.$store.commit("setPlaylist", this.songList);
-    }
-  },
-  created() {
-    Toast.loading("加载中...");
-    this._getListDetail(this.$route.params.id);
-  }
-};
-</script>
 
 <style lang="less" scoped>
 .list-detail {
