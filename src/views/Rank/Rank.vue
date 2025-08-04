@@ -4,7 +4,7 @@ import RankHeader from "./childCpn/RankHeader.vue";
 import RankItem from "./childCpn/RankItem.vue";
 import RankItemSimple from "./childCpn/RankItemSimple.vue";
 import { getRank } from "@/api/rank";
-import { Toast } from "vant";
+import { closeToast, showLoadingToast } from "vant";
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 
@@ -21,7 +21,7 @@ const otherRank = computed(() => {
 });
 const _getRank = async () => {
   const res = await getRank();
-  Toast.clear();
+  closeToast();
   rankList.value = res.list;
 };
 const listClick = (id: string) => {
@@ -29,7 +29,7 @@ const listClick = (id: string) => {
 };
 
 const _init = () => {
-  Toast.loading("加载中...");
+  showLoadingToast("加载中...");
   _getRank();
 };
 _init();

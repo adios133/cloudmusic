@@ -4,7 +4,7 @@ import MusicNav from "./childCpn/MusicNav.vue";
 import MusicItem from "./childCpn/MusicListItem.vue";
 import { getUserList } from "@/api/music";
 import { getUserId } from "@/api/login";
-import { Toast } from "vant";
+import { closeToast, showFailToast, showLoadingToast } from "vant";
 import { ref, useTemplateRef } from "vue";
 import useStore from "@/store";
 defineOptions({
@@ -34,7 +34,7 @@ const _getUserId = async (): Promise<string> => {
 // 请求 封装获取用户歌单函数
 const _getUserList = async (uid: string, limit?: number, offset?: number) => {
   const res = await getUserList(uid, limit, offset);
-  Toast.clear();
+  closeToast();
   res.playlist.forEach((item) => {
     // 区分收藏的和自己创建的
     if (item.subscribed) {
@@ -62,10 +62,10 @@ const scrolling = (position: any) => {
 const _init = async () => {
   try {
     const res = await _getUserId();
-    Toast.loading("加载中...");
+    showLoadingToast("加载中...");
     _getUserList(res);
   } catch (err) {
-    Toast.fail({
+    showFailToast({
       message: err,
       duration: 1500
     });

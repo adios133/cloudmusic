@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Toast } from "vant";
+import { showFailToast } from "vant";
 import mitter from "@/mitt";
 import useStore from "@/store";
 import { useRouter } from "vue-router";
@@ -24,7 +24,7 @@ const store = useStore();
 const router = useRouter();
 const toPlay = () => {
   if (songInfo.noCopyrightRcmd) {
-    Toast.fail({
+    showFailToast({
       message: "暂无版权",
       duration: 1500
     });

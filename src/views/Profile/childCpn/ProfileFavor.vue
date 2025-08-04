@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { watch } from "vue";
-import { Toast } from "vant";
+import { showFailToast } from "vant";
 import { useRouter } from "vue-router";
 import useStore from "@/store";
 defineOptions({
@@ -26,7 +26,7 @@ watch(
 const itemClick = (index: number) => {
   // 如果没有登陆，提示用户登录，停止向下执行,toast，自己封装 or 直接使用vant插件
   if ((index === 0 || index === 1) && store.state.userId == "") {
-    Toast.fail({
+    showFailToast({
       message: "需要登录",
       duration: 1500
     });

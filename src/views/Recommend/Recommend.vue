@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getRecommend } from "@/api/recommend";
-import { Toast } from "vant";
+import { closeToast, showFailToast, showLoadingToast } from "vant";
 import Scroll from "@/components/common/Scroll/BetterScroll.vue";
 import MusicItem from "@/components/content/MusicItem/MusicItem.vue";
 import RecommendCover from "./childCpn/RecommendCover.vue";
@@ -30,10 +30,10 @@ const scrolling = (position: any) => {
 const _getRecommend = async () => {
   try {
     const res = await getRecommend();
-    Toast.clear();
+    closeToast();
     recList.value = res.data.dailySongs;
   } catch (err) {
-    Toast.fail({
+    showFailToast({
       message: err.response.data.msg,
       duration: 1500,
       onClose: () => {
@@ -45,7 +45,7 @@ const _getRecommend = async () => {
 const saveList = () => {
   store.setPlaylist(recList.value);
 };
-Toast.loading("加载中...");
+showLoadingToast("加载中...");
 _getRecommend();
 
 onBeforeUpdate(() => {

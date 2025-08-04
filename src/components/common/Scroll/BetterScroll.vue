@@ -47,7 +47,7 @@ const wrapper = useTemplateRef("wrapper");
 
 let scroll = null;
 const _createScrollInstance = () => {
-  new BScroll(wrapper.value, {
+  scroll = new BScroll(wrapper.value, {
     click: click,
     observeDOM: true,
     observeImage: true,

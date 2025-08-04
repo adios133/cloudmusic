@@ -140,6 +140,7 @@ mitter.on("fmSongEnd", () => {
       </van-swipe>
       <play-progress-bar />
       <fm-controller
+        :like="false"
         @nextFm="nextFm"
         @likeSong="onLikeSong"
         @trashSong="onTrashSong"

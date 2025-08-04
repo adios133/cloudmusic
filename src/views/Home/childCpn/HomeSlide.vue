@@ -74,13 +74,18 @@ const _getUserInfo = async (id: string) => {
 
 // create
 const init = async () => {
-  // keepalive 只会调用一次
-  if (store.state.userId === "") {
-    // this._getUserId() mixin ,返回 id
-    const res = await _getUserId();
-    _getUserInfo(res);
-  } else {
-    _getUserInfo(store.state.userId);
+  try {
+    // keepalive 只会调用一次
+    if (store.state.userId === "") {
+      // this._getUserId() mixin ,返回 id
+      const res = await _getUserId();
+      _getUserInfo(res);
+    } else {
+      _getUserInfo(store.state.userId);
+    }
+  } catch (err) {
+    console.log(err);
+  } finally {
   }
 };
 init();
@@ -95,7 +100,7 @@ onActivated(() => {
 
 <template>
   <van-popup
-    v-model="show"
+    v-model:show="show"
     position="left"
     :style="{ height: '100%', width: '70%' }"
     duration=".2"

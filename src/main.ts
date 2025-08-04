@@ -2,7 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router/index";
 import { createPinia } from "pinia";
-import FastClick from "fastclick";
+// import FastClick from "fastclick";
 // vant
 // showToast
 import "vant/es/toast/style";
@@ -13,5 +13,5 @@ import "vant/es/notify/style";
 // showImagePreview
 import "vant/es/image-preview/style";
 
-FastClick(document.body);
+// FastClick(document.body);
 createApp(App).use(router).use(createPinia()).mount("#app");

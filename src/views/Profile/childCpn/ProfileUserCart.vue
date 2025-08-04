@@ -49,7 +49,7 @@ const logIn = () => {
   background-color: #fff;
   border: 1px solid transparent;
   border-radius: 20px;
-  box-shadow: 1px 1px 2px 2px rgba($color: #aaa, $alpha: 0.05);
+  box-shadow: 1px 1px 2px 2px rgba(170, 170, 170, 0.05);
   opacity: 0.95;
   .avatar {
     position: absolute;
@@ -60,7 +60,7 @@ const logIn = () => {
     height: 80px;
     border-radius: 50px;
     transform: translate(-50%, 0);
-    box-shadow: 1px 1px 2px 2px rgba($color: #aaa, $alpha: 0.1);
+    box-shadow: 1px 1px 2px 2px rgba(170, 170, 170, 0.1);
     opacity: 1;
     img {
       width: 100%;

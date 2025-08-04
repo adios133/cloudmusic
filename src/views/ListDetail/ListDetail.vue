@@ -8,7 +8,7 @@ import MusicItem from "@/components/content/MusicItem/MusicItem.vue";
 import ListDetailNav from "./childCpn/ListDetailNav.vue";
 import { GRADIENT_DISTANCE } from "@/common/const";
 import { ref, useTemplateRef } from "vue";
-import { Toast } from "vant";
+import { closeToast, showLoadingToast } from "vant";
 import { useRoute } from "vue-router";
 import useStore from "@/store";
 defineOptions({
@@ -31,7 +31,7 @@ const scrolling = (position) => {
 };
 const _getListDetail = async (id: string) => {
   const res = await getListDetail(id);
-  Toast.clear();
+  closeToast();
   listInfo.value = new ListInfo(res.playlist);
   creatorInfo.value = new CreatorInfo(res.playlist.creator);
   songList.value = res.playlist.tracks;
@@ -40,7 +40,7 @@ const saveList = () => {
   store.setPlaylist(songList.value);
 };
 const init = () => {
-  Toast.loading("加载中...");
+  showLoadingToast("加载中...");
   _getListDetail(route.params.id as string);
 };
 init();

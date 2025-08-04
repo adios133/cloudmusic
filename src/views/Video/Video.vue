@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Toast } from "vant";
+import { closeToast, showLoadingToast, showFailToast } from "vant";
 import { getVideoCate, getViedoList, getVideoUrl } from "@/api/video";
 import Scroll from "@/components/common/Scroll/BetterScroll.vue";
 import VideoNav from "./childCpn/VideoNav.vue";
@@ -22,7 +22,7 @@ const currentPlayId = ref("");
 const _getViedoList = async (id: string, offse?: number) => {
   const res = await getViedoList(id, offse);
   // 加载更多，使用push
-  Toast.clear();
+  closeToast();
   // 为每个对追加index属性，以便后续点击确定获取是哪个的url，由于有上拉加载更多，且使用push，后续的index需要处理
   res.datas.map((item, index) => {
     item.data.index = index + offset.value * res.datas.length;
@@ -38,7 +38,7 @@ const cateClick = (id: string) => {
   offset.value = 0;
   videoGroup.value = [];
   groupId.value = id;
-  Toast.loading("加载中...");
+  showLoadingToast("加载中...");
   _getViedoList(id);
 };
 const coverClick = (info: any) => {
@@ -56,7 +56,7 @@ onActivated(() => {
   getVideoCate()
     .then((res) => {
       // 变量存储
-      Toast.loading("加载中...");
+      showLoadingToast("加载中...");
       // pop删除最后一个，最后一个为mv，里面的数据和其他的不一样，直接删除
       res.data.pop();
       cateList.value = res.data;
@@ -65,7 +65,7 @@ onActivated(() => {
       _getViedoList(groupId.value);
     })
     .catch((err) => {
-      Toast.fail({
+      showFailToast({
         message: err.response.data.msg,
         duration: 1500
       });

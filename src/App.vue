@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Mainbar from "@/components/content/MainBar/Mainbar.vue";
 defineOptions({
   name: "App"
 });
@@ -12,6 +13,7 @@ defineOptions({
       </keep-alive>
     </transition>
   </router-view>
+  <Mainbar />
 </template>
 
 <style>
@@ -20,7 +22,7 @@ defineOptions({
 .scale-slide-enter-active,
 .scale-slide-leave-active {
   position: absolute;
-  transition: all 0.85s ease;
+  transition: all 0.4s ease;
 }
 
 .scale-slide-enter-from {
@@ -37,5 +39,6 @@ defineOptions({
 
 .scale-slide-leave-to {
   transform: scale(0.8);
+  opacity: 0;
 }
 </style>

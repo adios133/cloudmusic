@@ -3,7 +3,7 @@ import RecentNav from "./childCpn/RecentNav.vue";
 import MusicItem from "@/components/content/MusicItem/MusicItem.vue";
 import Scroll from "@/components/common/Scroll/BetterScroll.vue";
 import { getRecent } from "@/api/recent";
-import { Toast } from "vant";
+import { closeToast, showLoadingToast, showFailToast } from "vant";
 import { ref, useTemplateRef, onActivated } from "vue";
 import { useRouter } from "vue-router";
 import useStore from "@/store";
@@ -36,7 +36,7 @@ const _getUserId = async (): Promise<string> => {
 // get list based on userId
 const _getRecent = async (uid: string, type?: number) => {
   const res = await getRecent(uid, type);
-  Toast.clear();
+  closeToast();
   scrollRef.value.scrollTo(0, 0, 300);
   if (type === 0) {
     // playcount在外,组织进入song中,做到与其他页面统一
@@ -59,7 +59,7 @@ const _getRecent = async (uid: string, type?: number) => {
 };
 // click to switch list
 const switchItem = (idx: number) => {
-  Toast.loading("加载中...");
+  showLoadingToast("加载中...");
   if (idx === 1) {
     index.value = 0;
     _getRecent(store.state.userId, 0);
@@ -74,10 +74,10 @@ const saveList = () => {
 const checkIsLogin = async () => {
   try {
     const res = await _getUserId();
-    Toast.loading("加载中...");
+    showLoadingToast("加载中...");
     _getRecent(res, index.value);
   } catch (err) {
-    Toast.fail({
+    showFailToast({
       message: err,
       duration: 1500,
       onClose: () => {

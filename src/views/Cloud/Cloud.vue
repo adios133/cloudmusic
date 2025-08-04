@@ -3,7 +3,7 @@ import CloudNav from "./childCpn/CloudNav.vue";
 import Scroll from "@/components/common/Scroll/BetterScroll.vue";
 import { getCloudMusic } from "@/api/cloud";
 import CloudItem from "./childCpn/CloudItem.vue";
-import { Toast } from "vant";
+import { closeToast, showLoadingToast } from "vant";
 import { ref, useTemplateRef } from "vue";
 import useStore from "@/store";
 defineOptions({
@@ -16,7 +16,7 @@ const scrollRef = useTemplateRef("scroll");
 const store = useStore();
 const _getCloudMusic = async (limit?: number, offset?: number) => {
   const res = await getCloudMusic(limit, offset);
-  Toast.clear();
+  closeToast();
   songList.value.push(...res.data);
 };
 const pullingUpLoad = () => {
@@ -32,7 +32,7 @@ const saveList = () => {
   });
   store.setPlaylist(list);
 };
-Toast.loading({
+showLoadingToast({
   message: "加载中"
 });
 _getCloudMusic();

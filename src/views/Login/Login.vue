@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { logIn } from "@/api/login";
-import { Toast } from "vant";
+import { showFailToast, showSuccessToast } from "vant";
 import { useRouter, useRoute } from "vue-router";
 import { ref } from "vue";
 import useStore from "@/store";
@@ -19,14 +19,14 @@ const goLogin = async () => {
     /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
   const passwordReg = /^[a-zA-Z]\w{5,17}$/;
   if (!phoneReg.test(phone.value)) {
-    Toast.fail({
+    showFailToast({
       message: "手机号格式不正确",
       duration: 1500
     });
     return;
   }
   if (!passwordReg.test(password.value)) {
-    Toast.fail({
+    showFailToast({
       message: "密码格式不正确",
       duration: 1500
     });
@@ -35,7 +35,7 @@ const goLogin = async () => {
   const res = await logIn(phone.value, password.value);
   if (res.code === 200) {
     store.setUid(res.profile.userId);
-    Toast.success({
+    showSuccessToast({
       message: "登陆成功",
       duration: 1200,
       onClose: () => {
@@ -45,13 +45,13 @@ const goLogin = async () => {
     });
   }
   if (res.code === 502) {
-    Toast.fail({
+    showFailToast({
       message: res.message,
       duration: 1500
     });
   }
   if (res.code === 400) {
-    Toast.fail({
+    showFailToast({
       message: "手机号错误",
       duration: 1500
     });
