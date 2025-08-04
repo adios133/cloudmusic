@@ -2,9 +2,10 @@ import axios, {
   AxiosError,
   AxiosInstance,
   InternalAxiosRequestConfig,
-  AxiosResponse
+  AxiosResponse,
+  AxiosRequestConfig
 } from "axios";
-// 有点难搞
+import { showLoadingToast, closeToast, showFailToast } from "vant";
 interface ResponseType<T = any> {
   code: number | string;
   data: T;
@@ -40,5 +41,18 @@ class HttpRequest {
     );
   }
 }
-const http = new HttpRequest();
+const http: <T>(config?: AxiosRequestConfig) => Promise<ResponseType<T>> =
+  new HttpRequest().instance;
+
+export const request = async (config?: AxiosRequestConfig) => {
+  try {
+    showLoadingToast("");
+    http(config);
+  } catch (err) {
+    console.log(err);
+    showFailToast(err);
+  } finally {
+    closeToast();
+  }
+};
 export default http;

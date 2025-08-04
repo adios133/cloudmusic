@@ -1,6 +1,6 @@
-import request from "./request";
+import request from "@/utils/request";
 
-export function getFm() {
+export function getFm(): AxiosResponseFormat<any> {
   const timestamp = +new Date();
   return request({
     url: "/personal_fm",
@@ -9,8 +9,8 @@ export function getFm() {
     }
   });
 }
-export function getMusicInfo(ids: string) {
-  return request<any>({
+export function getMusicInfo(ids: string): AxiosResponseFormat<any> {
+  return request({
     url: "/song/detail",
     params: {
       ids
@@ -18,7 +18,7 @@ export function getMusicInfo(ids: string) {
   });
 }
 
-export function likeSong(id: string, like: boolean) {
+export function likeSong(id: string, like: boolean): AxiosResponseFormat<any> {
   return request({
     url: "/like",
     params: {
@@ -27,7 +27,7 @@ export function likeSong(id: string, like: boolean) {
     }
   });
 }
-export function trashSong(id: string) {
+export function trashSong(id: string): AxiosResponseFormat<any> {
   return request({
     url: "/fm_trash",
     params: {

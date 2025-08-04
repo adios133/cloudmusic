@@ -19,7 +19,7 @@ const {
   pullDownRefresh = false,
   click = true,
   scrollX = false,
-  scrollY = false,
+  scrollY = true,
   momentum = true
 } = defineProps<{
   probeType?: number;

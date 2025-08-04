@@ -1,6 +1,6 @@
-import request from "./request";
+import request from "@/utils/request";
 // 热门分类列表
-export function getListCategory() {
+export function getListCategory(): AxiosResponseFormat<any> {
   return request({
     url: "/playlist/hot"
   });
@@ -12,7 +12,7 @@ export function getSongList(
   offset = 0,
   limit = 50,
   order = "hot"
-) {
+): AxiosResponseFormat<any> {
   return request({
     url: "/top/playlist",
     params: {

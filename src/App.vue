@@ -22,7 +22,7 @@ defineOptions({
 .scale-slide-enter-active,
 .scale-slide-leave-active {
   position: absolute;
-  transition: all 0.4s ease;
+  transition: all 0.3s ease;
 }
 
 .scale-slide-enter-from {

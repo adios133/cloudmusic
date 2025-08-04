@@ -103,7 +103,7 @@ onActivated(() => {
     v-model:show="show"
     position="left"
     :style="{ height: '100%', width: '70%' }"
-    duration=".2"
+    duration="0.2"
     @click-overlay="closeSlide"
     class="page"
   >

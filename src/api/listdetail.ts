@@ -1,6 +1,6 @@
-import request from "./request";
+import request from "@/utils/request";
 
-export function getListDetail(id: string) {
+export function getListDetail(id: string): AxiosResponseFormat<any> {
   return request({
     url: "/playlist/detail",
     params: {
@@ -9,6 +9,12 @@ export function getListDetail(id: string) {
   });
 }
 export class ListInfo {
+  public coverUrl: string;
+  public name: string;
+  public id: string;
+  public shareCount: number;
+  public commentCount: number;
+  public subscribedCount: number;
   constructor(playlist) {
     this.coverUrl = playlist.coverImgUrl;
     this.name = playlist.name;
@@ -19,7 +25,10 @@ export class ListInfo {
   }
 }
 export class CreatorInfo {
-  constructor(creator) {
+  public avatar: string;
+  public name: string;
+  public uid: string;
+  constructor(creator: any) {
     this.avatar = creator.avatarUrl;
     this.name = creator.nickname;
     this.uid = creator.userId;

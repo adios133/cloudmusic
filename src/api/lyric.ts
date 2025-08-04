@@ -1,6 +1,6 @@
-import request from "./request";
+import request from "@/utils/request";
 
-export function getLyric(id: string) {
+export function getLyric(id: string): AxiosResponseFormat<any> {
   return request({
     url: "/lyric",
     params: {

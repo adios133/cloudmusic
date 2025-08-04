@@ -1,5 +1,10 @@
-import request from "./request";
-export function getUserList(uid: string, limit = 30, offset = 0) {
+import request from "@/utils/request";
+
+export function getUserList(
+  uid: string,
+  limit = 30,
+  offset = 0
+): AxiosResponseFormat<any> {
   return request({
     url: "/user/playlist",
     params: {

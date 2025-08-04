@@ -2,8 +2,8 @@
 /* 获取根元素html，定义变量 */
 :root {
   --color-text: #666;
-  --color-high-text: #D43C33;
-  --color-tint: #EC4141;
+  --color-high-text: #d43c33;
+  --color-tint: #ec4141;
   --color-background: #fff;
   --font-size: 14px;
   --line-height: 1.5;
@@ -18,12 +18,12 @@
 }
 
 body {
-  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   user-select: none; /* 禁止用户鼠标在页面上选中文字/图片等 */
   -webkit-tap-highlight-color: transparent; /* webkit是苹果浏览器引擎，tap点击，highlight背景高亮，color颜色，颜色用数值调节 */
-  background: var(--color-background);  /*使用变量*/
+  background: var(--color-background); /*使用变量*/
   color: var(--color-text);
-  width: 100vw;
 }
 
 a {
@@ -31,10 +31,9 @@ a {
   text-decoration: none;
 }
 
-
 .clear-fix::after {
   clear: both;
-  content: '';
+  content: "";
   display: block;
   width: 0;
   height: 0;
@@ -53,7 +52,7 @@ a {
   background-color: transparent;
   transform: rotate(135deg);
   display: inline-block;
-  margin-left: .1rem;
+  margin-left: 0.1rem;
 }
 
 .left {
@@ -64,3 +63,11 @@ a {
   float: right;
 }
 
+#app {
+  width: 100vw;
+  height: 100vh;
+}
+#app[data-platform="mobile"] {
+  display: flex;
+  flex-direction: column;
+}

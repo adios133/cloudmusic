@@ -55,7 +55,7 @@ const goPlay = (item: any, index: number) => {
 
 <template>
   <van-popup
-    v-model="show"
+    v-model:show="show"
     position="bottom"
     :style="{ height: '70%', width: '100%' }"
     duration=".2"
